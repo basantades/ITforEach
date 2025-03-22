@@ -1,6 +1,8 @@
 #!/bin/bash
 echo "Creando environment.ts en Vercel..."
 
+mkdir -p src/environments
+
 cat <<EOT > src/environments/environment.ts
 export const environment = {
   production: true,

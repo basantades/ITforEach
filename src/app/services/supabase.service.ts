@@ -12,11 +12,15 @@ export class SupabaseService {
     this.supabase = createClient(environment.supabaseUrl, environment.supabaseAnonKey);
   }
 
+  get client(): SupabaseClient {
+    return this.supabase;
+  }
+
   signInWithGithub() {
     return this.supabase.auth.signInWithOAuth({
       provider: 'github',
       options: {
-        redirectTo: 'http://localhost:4200'  // Asegúrate que este esté en los redirect URLs de Supabase
+        redirectTo: environment.redirectUrl
       }
     });
   }

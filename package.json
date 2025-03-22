@@ -2,6 +2,7 @@
   "name": "itfor-each",
   "version": "0.0.0",
   "scripts": {
+    "vercel-build": "bash vercel-build.sh && ng build",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",

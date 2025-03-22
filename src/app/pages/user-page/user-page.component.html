@@ -1,0 +1,23 @@
+<div>
+    @if (loading) {
+      <p>Cargando usuario...</p>
+    } @else if (error) {
+      <p>{{ error }}</p>
+    } @else if (user) {
+      <div>
+        <img [src]="user.avatarUrl" alt="Avatar" />
+        <h2>{{ user.fullName }}</h2>
+        <p>{{ user.githubUsername }}</p>
+        <p>{{ user.email }}</p>
+  
+        @if (user.bio) {
+          <p>{{ user.bio }}</p>
+        }
+  
+        @if (user.website) {
+          <a [href]="user.website" target="_blank">Website</a>
+        }
+      </div>
+    }
+  </div>
+  

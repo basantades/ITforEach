@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { User } from '../../interfaces/user';
+import { SelectRepoComponent } from '../../components/blocks/select-repo/select-repo.component';
 
 @Component({
   selector: 'app-user-page',
-  imports: [],
+  imports: [SelectRepoComponent],
   templateUrl: './user-page.component.html',
   styleUrl: './user-page.component.scss'
 })

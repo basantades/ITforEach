@@ -34,15 +34,24 @@ export class ProjectsService {
   }
 
   // 🔥 Obtener proyecto por ID (con .single() para recibir un solo objeto)
-  async getById(id: number): Promise<Project> {
-    const { data, error } = await this.supabaseService.client
-      .from(this.table)
-      .select('*')
-      .eq('id', id)
-      .single();
 
-    if (error) throw error;
-    return data as Project;
+  async getById(id: number): Promise<Project | null> {
+    try {
+      const { data, error } = await this.supabaseService.client
+        .from(this.table)
+        .select('*')
+        .eq('id', id)
+        .single();
+  
+      if (error) {
+        console.error('Error fetching project:', error);
+        return null;
+      }
+      return data as Project;
+    } catch (err) {
+      console.error('Unexpected error in getById:', err);
+      return null;
+    }
   }
 
   // 🔥 Actualizar proyecto por ID (solo si es el autor, eso ya lo compruebas fuera)

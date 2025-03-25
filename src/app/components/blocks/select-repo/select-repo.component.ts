@@ -17,7 +17,11 @@ export class SelectRepoComponent implements OnInit {
   constructor(private githubService: GithubService) {}
 
   ngOnInit(): void {
-    this.fetchRepos();
+    this.githubService.getUserPublicRepos().then(repos => {
+      this.repos = repos;
+    }).catch(err => {
+      this.error = err.message || 'Error al obtener los repositorios';
+    });
   }
 
   async fetchRepos(): Promise<void> {

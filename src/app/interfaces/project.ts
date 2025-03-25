@@ -1,4 +1,5 @@
-export interface Project {
+
+      export interface Project {
         id?: number;
         created_at?: string;
         updated_at?: string;
@@ -15,5 +16,5 @@ export interface Project {
         github_updated_at?: string;
         main_image_url?: string;
         extra_images_urls?: string[];
+        collaborators?: string[]; 
       }
-      

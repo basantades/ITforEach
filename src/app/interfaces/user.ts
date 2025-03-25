@@ -5,9 +5,5 @@ export interface User {
     fullName: string;
     avatarUrl: string;
     email: string;
-    // Campos personalizados
-    bio?: string;
-    website?: string;
-    twitter?: string;
-    linkedin?: string;
+
   }

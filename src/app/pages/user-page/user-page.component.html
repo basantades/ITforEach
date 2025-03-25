@@ -10,13 +10,6 @@
         <p>{{ user.githubUsername }}</p>
         <p>{{ user.email }}</p>
   
-        @if (user.bio) {
-          <p>{{ user.bio }}</p>
-        }
-  
-        @if (user.website) {
-          <a [href]="user.website" target="_blank">Website</a>
-        }
       </div>
     }
   </div>

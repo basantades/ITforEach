@@ -11,7 +11,7 @@ export interface Project {
         repository_url?: string;
         homepage_url?: string;
         topics?: string[];
-        languages?: any; // Puedes tipar esto mejor si defines el formato de languages
+        languages?: Record<string, number>;
         github_updated_at?: string;
         main_image_url?: string;
         extra_images_urls?: string[];

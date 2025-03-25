@@ -27,20 +27,23 @@ export class GithubService {
   async getUserPublicRepos(): Promise<any[]> {
     const token = await this.getGitHubToken();
     if (!token) throw new Error('GitHub token not found');
-
+  
     const response = await fetch('https://api.github.com/user/repos?visibility=public', {
       headers: {
         Authorization: `token ${token}`
       }
     });
-
+  
     if (!response.ok) {
       const errorData = await response.json();
       console.error('GitHub API Error (repos):', errorData);
       throw new Error(`Failed to fetch repositories: ${errorData.message}`);
     }
-
-    return await response.json();
+  
+    const repos = await response.json();
+  
+    // 🔥 Filtrar solo repos donde el usuario es administrador
+    return repos.filter((repo: any) => repo.permissions?.admin === true);
   }
 
   async getGitHubUser(): Promise<any> {

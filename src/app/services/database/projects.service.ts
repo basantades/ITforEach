@@ -12,7 +12,7 @@ export class ProjectsService {
   constructor(private supabaseService: SupabaseService) {}
 
   // 🔥 Crear un proyecto
-  async create(project: Partial<Project>) {
+  async create(project: Partial<Project>): Promise<Project> {
     const { data, error } = await this.supabaseService.client
       .from(this.table)
       .insert(project)
@@ -20,21 +20,21 @@ export class ProjectsService {
       .single();
 
     if (error) throw error;
-    return data;
+    return data as Project;
   }
 
   // 🔥 Obtener todos los proyectos (público)
-  async getAll() {
+  async getAll(): Promise<Project[]> {
     const { data, error } = await this.supabaseService.client
       .from(this.table)
       .select('*');
 
     if (error) throw error;
-    return data;
+    return data as Project[];
   }
 
   // 🔥 Obtener proyecto por ID (con .single() para recibir un solo objeto)
-  async getById(id: number) {
+  async getById(id: number): Promise<Project> {
     const { data, error } = await this.supabaseService.client
       .from(this.table)
       .select('*')
@@ -42,11 +42,11 @@ export class ProjectsService {
       .single();
 
     if (error) throw error;
-    return data;
+    return data as Project;
   }
 
   // 🔥 Actualizar proyecto por ID (solo si es el autor, eso ya lo compruebas fuera)
-  async update(id: number, project: Partial<Project>) {
+  async update(id: number, project: Partial<Project>): Promise<Project> {
     const { data, error } = await this.supabaseService.client
       .from(this.table)
       .update(project)
@@ -55,11 +55,11 @@ export class ProjectsService {
       .single();
 
     if (error) throw error;
-    return data;
+    return data as Project;
   }
 
   // 🔥 Eliminar proyecto por ID
-  async delete(id: number) {
+  async delete(id: number): Promise<boolean> {
     const { error } = await this.supabaseService.client
       .from(this.table)
       .delete()

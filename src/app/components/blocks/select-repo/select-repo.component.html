@@ -1,17 +1,19 @@
+
+
 <h2>Selecciona un repositorio</h2>
 
-@if (loading) {
+@if (loading()) {
   <p>Cargando repositorios...</p>
-} @else if (error) {
-  <p>{{ error }}</p>
+} @else if (error()) {
+  <p>{{ error() }}</p>
 } @else {
-  <select (change)="onRepoSelect(repos[$any($event.target).selectedIndex])">
-    @for (repo of repos; track repo.id) {
+  <select (change)="onRepoSelect(repos()[$any($event.target).selectedIndex])">
+    @for (repo of repos(); track repo.name) {
       <option>{{ repo.name }}</option>
     }
   </select>
 
-  @if (selectedRepo) {
+  @if (selectedRepo()) {
     <button (click)="confirmSelection()">Confirmar selección</button>
   }
 }

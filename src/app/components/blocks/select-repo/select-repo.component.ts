@@ -1,48 +1,48 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Signal, signal, Output, EventEmitter, inject } from '@angular/core';
 import { GithubService } from '../../../services/api/github.service';
+import { Repo } from '../../../interfaces/repo';
 
 @Component({
   selector: 'app-select-repo',
-  imports: [],
   templateUrl: './select-repo.component.html',
   styleUrl: './select-repo.component.scss'
 })
+export class SelectRepoComponent {
+  private githubService = inject(GithubService);
 
-export class SelectRepoComponent implements OnInit {
-  repos: any[] = [];
-  selectedRepo: any = null;
-  loading = false;
-  error: string | null = null;
+  repos = signal<Repo[]>([]);
+  selectedRepo = signal<Repo | null>(null);
+  loading = signal(false);
+  error = signal<string | null>(null);
 
-  constructor(private githubService: GithubService) {}
+  @Output() repoSelected = new EventEmitter<Repo>(); // 🔥 Emite el repo seleccionado al padre
 
-  ngOnInit(): void {
-    this.githubService.getUserPublicRepos().then(repos => {
-      this.repos = repos;
-    }).catch(err => {
-      this.error = err.message || 'Error al obtener los repositorios';
-    });
+  constructor() {
+    this.fetchRepos();
   }
 
-  async fetchRepos(): Promise<void> {
-    this.loading = true;
-    this.error = null;
+  async fetchRepos() {
+    this.loading.set(true);
+    this.error.set(null);
+
     try {
-      this.repos = await this.githubService.getUserPublicRepos();
+      const repoList = await this.githubService.getUserPublicRepos();
+      this.repos.set(repoList);
     } catch (err: any) {
-      this.error = err.message || 'Error al obtener los repositorios';
+      this.error.set(err.message || 'Error al obtener los repositorios');
     } finally {
-      this.loading = false;
+      this.loading.set(false);
     }
   }
 
-  onRepoSelect(repo: any): void {
-    this.selectedRepo = repo;
+  onRepoSelect(repo: Repo) {
+    this.selectedRepo.set(repo);
   }
 
-  confirmSelection(): void {
-    if (this.selectedRepo) {
-      console.log('Repositorio seleccionado:', this.selectedRepo);
+  confirmSelection() {
+    const repo = this.selectedRepo();
+    if (repo) {
+      this.repoSelected.emit(repo); // 🔥 Solo emitimos si no es null
     }
   }
 }

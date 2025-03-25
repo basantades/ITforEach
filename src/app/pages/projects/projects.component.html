@@ -1,0 +1,16 @@
+<h1>Mis Proyectos</h1>
+
+<!-- 🔥 Botón para mostrar el selector de repos -->
+@if (!showRepoSelector() && !selectedRepo()) {
+  <button (click)="toggleRepoSelector()">Publicar nuevo proyecto</button>
+}
+
+<!-- 🔥 Muestra el selector de repos cuando el usuario hace clic -->
+@if (showRepoSelector() && !selectedRepo()) {
+  <app-select-repo (repoSelected)="onRepoSelected($event)"></app-select-repo>
+}
+
+<!-- 🔥 Muestra el formulario de creación cuando se elige un repo -->
+@if (selectedRepo()) {
+  <app-create-project [repoData]="projectData"></app-create-project>
+}

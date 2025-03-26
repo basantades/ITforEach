@@ -1,5 +1,5 @@
-import { Component, Input, Signal, signal, inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Component, Input, Signal, signal, inject, OnInit } from '@angular/core';
+import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Project } from '../../../interfaces/project';
 import { ProjectsService } from '../../../services/database/projects.service';
 import { JsonPipe } from '@angular/common';
@@ -11,11 +11,12 @@ import { JsonPipe } from '@angular/common';
   templateUrl: './create-project.component.html',
   styleUrl: './create-project.component.scss'
 })
-export class CreateProjectComponent {
+export class CreateProjectComponent implements OnInit {
   private fb = inject(FormBuilder);
   private projectsService = inject(ProjectsService);
 
   @Input() repoData!: Signal<Project>;
+  languages = signal<Record<string, number>>({});
 
   projectForm = signal(
     this.fb.group({
@@ -26,6 +27,22 @@ export class CreateProjectComponent {
     })
   );
 
+  ngOnInit() {
+    const repo = this.repoData();
+
+    if (repo.repository_url) {
+      const languagesUrl = repo.repository_url.replace('github.com', 'api.github.com/repos') + '/languages'; // ✅ CORRECTO
+
+      fetch(languagesUrl)
+        .then(response => response.json())
+        .then(languages => {
+          console.log('📊 Lenguajes obtenidos en create-project:', languages);
+          this.languages.set(languages);
+        })
+        .catch(error => console.error('❌ Error obteniendo lenguajes:', error));
+    }
+  }
+
   async saveProject() {
     if (this.projectForm().invalid) return;
 
@@ -33,12 +50,15 @@ export class CreateProjectComponent {
 
     const newProject: Project = {
       ...this.repoData(),
+      languages: this.languages(), // 🔥 Guardamos los lenguajes obtenidos en el proyecto
       ...formValue,
       status: (formValue.status ?? 'undefined') as Project['status'],
       about_project: formValue.about_project ?? undefined,
       main_image_url: formValue.main_image_url ?? undefined,
       extra_images_urls: formValue.extra_images_urls ?? [],
     };
+
+    console.log('🛠 Proyecto a guardar:', newProject);
 
     try {
       await this.projectsService.create(newProject);

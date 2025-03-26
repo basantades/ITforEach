@@ -16,7 +16,7 @@
       }
     </p>
     <p><strong>Temas:</strong> {{ repoData().topics?.join(', ') || 'No definidos' }}</p>
-    <p><strong>Lenguajes:</strong> {{ repoData().languages ? (repoData().languages | json) : 'No definidos' }}</p>
+    <p><strong>Lenguajes:</strong> {{ languages() ? (languages() | json) : 'No definidos' }}</p>
     <p><strong>Última actualización en GitHub:</strong> {{ repoData().github_updated_at }}</p>
   </div>
 }

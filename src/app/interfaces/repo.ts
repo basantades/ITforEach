@@ -1,13 +1,12 @@
 export interface Repo {
     name: string;
     description?: string;
-    repository_url: string;
-    homepage_url?: string;
+    html_url: string;
+    homepage?: string;
     topics?: string[];
     languages?: Record<string, number>;
-    github_updated_at: string;
-    collaborators?: string[]; 
-    
+    updated_at: string;
+
     // 🔥 Solo para filtrar qué repos puede publicar el usuario
     permissions: {
       admin: boolean;

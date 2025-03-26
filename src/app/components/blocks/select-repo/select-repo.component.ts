@@ -42,7 +42,7 @@ export class SelectRepoComponent {
   confirmSelection() {
     const repo = this.selectedRepo();
     if (repo) {
-      this.repoSelected.emit(repo); // 🔥 Solo emitimos si no es null
+      this.repoSelected.emit(repo);
     }
   }
 }

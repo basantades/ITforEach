@@ -38,7 +38,6 @@ export class CreateProjectComponent {
       about_project: formValue.about_project ?? undefined,
       main_image_url: formValue.main_image_url ?? undefined,
       extra_images_urls: formValue.extra_images_urls ?? [],
-      collaborators: this.repoData().collaborators ?? []
     };
 
     try {

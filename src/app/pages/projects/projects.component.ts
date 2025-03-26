@@ -42,34 +42,18 @@ export class ProjectsPageComponent {
     const repo = this.selectedRepo();
     const user = this.user();
 
-    if (!repo || !user) {
-      return {
-        user_id: '', // ⚠️ Si no hay usuario, lo dejamos vacío
-        name: '',
-        description: '',
-        repository_url: '',
-        homepage_url: '',
-        topics: [],
-        languages: {},
-        github_updated_at: '',
-        collaborators: [],
-        status: 'undefined',
-        about_project: '',
-        main_image_url: '',
-        extra_images_urls: []
-      };
-    }
+    console.log('📊 Lenguajes del repo seleccionado:', repo?.languages);
 
+  
     return {
-      user_id: user.id, // 🔥 Ahora sí asignamos el ID del usuario autenticado
-      name: repo.name,
-      description: repo.description,
-      repository_url: repo.repository_url,
-      homepage_url: repo.homepage_url,
-      topics: repo.topics,
-      languages: repo.languages,
-      github_updated_at: repo.github_updated_at,
-      collaborators: repo.collaborators ?? [],
+      user_id: user?.id ?? '', // Si no hay usuario, dejamos un string vacío
+      name: repo?.name ?? '',
+      description: repo?.description ?? 'Sin descripción',
+      repository_url: repo?.html_url ?? '',
+      homepage_url: repo?.homepage ?? '',
+      topics: repo?.topics ?? [],
+      languages: repo?.languages ?? {},
+      github_updated_at: repo?.updated_at ?? '',
       status: 'undefined',
       about_project: '',
       main_image_url: '',
@@ -83,5 +67,6 @@ export class ProjectsPageComponent {
 
   onRepoSelected(repo: Repo) {
     this.selectedRepo.set(repo);
+    this.showRepoSelector.set(false); // 🔥 Ocultar selector cuando ya hay un repo seleccionado
   }
 }

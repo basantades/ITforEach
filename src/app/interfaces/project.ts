@@ -16,5 +16,4 @@
         github_updated_at?: string;
         main_image_url?: string;
         extra_images_urls?: string[];
-        collaborators?: string[]; 
       }

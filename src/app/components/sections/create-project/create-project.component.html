@@ -11,14 +11,13 @@
     </p>
     <p>
       <strong>Homepage:</strong>
-      <a *ngIf="repoData().homepage_url" [href]="repoData().homepage_url" target="_blank">
-        {{ repoData().homepage_url }}
-      </a>
+      @if (repoData().homepage_url) {
+        <a [href]="repoData().homepage_url" target="_blank">{{ repoData().homepage_url }}</a>
+      }
     </p>
     <p><strong>Temas:</strong> {{ repoData().topics?.join(', ') || 'No definidos' }}</p>
     <p><strong>Lenguajes:</strong> {{ repoData().languages ? (repoData().languages | json) : 'No definidos' }}</p>
     <p><strong>Última actualización en GitHub:</strong> {{ repoData().github_updated_at }}</p>
-    <p><strong>Colaboradores:</strong> {{ repoData().collaborators?.join(', ') || 'Ninguno' }}</p>
   </div>
 }
 

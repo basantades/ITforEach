@@ -2,7 +2,7 @@
 
 
 @if (user()) {
-    <a [routerLink]="['/', user()?.githubUsername, 'projects']" class="btn">
+    <a [routerLink]="['/', 'projects', user()?.githubUsername]" class="btn">
       Mis Proyectos
     </a>
   }

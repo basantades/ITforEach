@@ -45,6 +45,7 @@ export class ProjectsPageComponent {
   
     return {
       user_id: user?.id ?? '', // Si no hay usuario, dejamos un string vacío
+      githubUsername: user?.githubUsername ?? '',
       name: repo?.name ?? '',
       description: repo?.description ?? 'Sin descripción',
       repository_url: repo?.html_url ?? '',

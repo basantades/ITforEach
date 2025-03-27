@@ -18,6 +18,8 @@
     <p><strong>Temas:</strong> {{ repoData().topics?.join(', ') || 'No definidos' }}</p>
     <p><strong>Lenguajes:</strong> {{ languages() ? (languages() | json) : 'No definidos' }}</p>
     <p><strong>Última actualización en GitHub:</strong> {{ repoData().github_updated_at }}</p>
+    <!-- <p><strong>GitHub Username:</strong> {{ githubUsername() || 'No definido' }}</p> 🔥 Mostrar githubUsername -->
+
   </div>
 }
 

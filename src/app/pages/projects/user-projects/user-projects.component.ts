@@ -1,17 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { ProjectsService } from '../../../services/database/projects.service';
 import { DeleteProjectButtonComponent } from "./delete-project-button/delete-project-button.component";
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-user-projects',
   templateUrl: './user-projects.component.html',
   styleUrls: ['./user-projects.component.css'],
-  imports: [DeleteProjectButtonComponent]
+  imports: [DeleteProjectButtonComponent, RouterModule]
 })
 export class UserProjectsComponent implements OnInit {
   userProjects: any[] = [];
 
   constructor(private projectsService: ProjectsService) {}
+
 
   ngOnInit(): void {
     this.loadUserProjects();

@@ -71,23 +71,20 @@ export class ProjectsService {
     return data as Project[];
   }
 
-  async getById(id: number): Promise<Project | null> {
-    try {
-      const { data, error } = await this.supabaseService.client
-        .from(this.table)
-        .select('*')
-        .eq('id', id)
-        .single();
-
-      if (error) {
-        console.error('Error fetching project:', error);
-        return null;
-      }
-      return data as Project;
-    } catch (err) {
-      console.error('Unexpected error in getById:', err);
+  async getByUsernameAndProjectName(username: string, projectName: string): Promise<Project | null> {
+    const { data, error } = await this.supabaseService.client
+      .from(this.table)
+      .select('*')
+      .eq('user_id', username)  
+      .eq('name', projectName)
+      .single();
+  
+    if (error) {
+      console.error('Error al obtener el proyecto:', error);
       return null;
     }
+  
+    return data as Project;
   }
 
   async update(id: number, project: Partial<Project>): Promise<Project> {

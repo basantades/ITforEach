@@ -1,0 +1,58 @@
+@if (errorMessage) {
+    <div>
+      <p class="error">{{ errorMessage }}</p>
+    </div>
+  }
+  
+  @if (project) {
+    <div>
+      <h1>{{ project.name }}</h1>
+      <p><strong>Estado:</strong> {{ project.status }}</p>
+      <p><strong>Descripción:</strong> {{ project.description || 'No disponible' }}</p>
+      <p><strong>Acerca del proyecto:</strong> {{ project.about_project || 'No disponible' }}</p>
+  
+      <p><strong>Repositorio:</strong> 
+        @if (project.repository_url) {
+          <a [href]="project.repository_url" target="_blank">{{ project.repository_url }}</a>
+        } @else {
+          <span>No disponible</span>
+        }
+      </p>
+  
+      <p><strong>Página principal:</strong> 
+        @if (project.homepage_url) {
+          <a [href]="project.homepage_url" target="_blank">{{ project.homepage_url }}</a>
+        } @else {
+          <span>No disponible</span>
+        }
+      </p>
+  
+      <p><strong>Temas:</strong> {{ project.topics?.join(', ') || 'No disponible' }}</p>
+
+      <!-- <p><strong>Lenguajes:</strong> 
+        @if (project.languages) {
+          @for (let lang of objectKeys(project.languages); track lang) {
+            <span>{{ lang }} ({{ project.languages[lang] }}%)</span>
+          }
+        } @else {
+          <span>No disponible</span>
+        }
+      </p> -->
+  
+      <p><strong>Última actualización en GitHub:</strong> {{ project.github_updated_at || 'No disponible' }}</p>
+  
+      @if (project.main_image_url) {
+        <img [src]="project.main_image_url" alt="Imagen principal del proyecto">
+      }
+<!--   
+      @if (project.extra_images_urls?.length) {
+        <div>
+            <h3>Imágenes adicionales:</h3>
+            @for (let img of project.extra_images_urls; track img) {
+              <img [src]="img" alt="Imagen adicional">
+            }
+          </div>
+      } -->
+    </div>
+  }
+  

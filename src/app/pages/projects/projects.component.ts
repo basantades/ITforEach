@@ -25,26 +25,25 @@ export class ProjectsPageComponent {
   constructor() {
     this.route.data.subscribe(({ user }) => {
       if (!user) {
-        this.router.navigate(['/login']); // 🔥 Si no hay usuario, redirigir a login
+        this.router.navigate(['/login']);
         return;
       }
       this.user.set(user);
 
-      // 🔥 Validar que la URL coincide con el usuario autenticado
       const githubUsernameFromUrl = this.route.snapshot.paramMap.get('githubUsername');
       if (user.githubUsername !== githubUsernameFromUrl) {
-        this.router.navigate([`/${user.githubUsername}/projects`]); // 🔥 Redirige a la URL correcta
+        this.router.navigate([`/${user.githubUsername}/projects`]);
       }
     });
   }
 
-  // 🔥 Computed Signal que garantiza que siempre haya un Project válido
+  // Computed Signal que garantiza un Project válido
   projectData = computed<Project>(() => {
     const repo = this.selectedRepo();
     const user = this.user();
   
     return {
-      user_id: user?.id ?? '', // Si no hay usuario, dejamos un string vacío
+      user_id: user?.id ?? '',
       githubUsername: user?.githubUsername ?? '',
       name: repo?.name ?? '',
       description: repo?.description ?? 'Sin descripción',
@@ -66,6 +65,6 @@ export class ProjectsPageComponent {
 
   onRepoSelected(repo: Repo) {
     this.selectedRepo.set(repo);
-    this.showRepoSelector.set(false); // 🔥 Ocultar selector cuando ya hay un repo seleccionado
+    this.showRepoSelector.set(false);
   }
 }

@@ -18,13 +18,12 @@
     <p><strong>Temas:</strong> {{ repoData().topics?.join(', ') || 'No definidos' }}</p>
     <p><strong>Lenguajes:</strong> {{ languages() ? (languages() | json) : 'No definidos' }}</p>
     <p><strong>Última actualización en GitHub:</strong> {{ repoData().github_updated_at }}</p>
-    <!-- <p><strong>GitHub Username:</strong> {{ githubUsername() || 'No definido' }}</p> 🔥 Mostrar githubUsername -->
-
+    <p><strong>GitHub Username:</strong> {{ githubUsername() || 'No definido' }}</p> 
   </div>
 }
 
 <!-- 🚀 Datos que el usuario puede editar -->
-<form [formGroup]="projectForm()" (ngSubmit)="saveProject()">
+<form [formGroup]="projectForm" (ngSubmit)="saveProject()">
   <label for="status">Estado:</label>
   <select id="status" formControlName="status">
     <option value="undefined">Indefinido</option>
@@ -40,5 +39,5 @@
   <label for="main_image_url">Imagen Principal:</label>
   <input id="main_image_url" type="text" formControlName="main_image_url" />
 
-  <button type="submit" [disabled]="projectForm().invalid">Guardar Proyecto</button>
+  <button type="submit" [disabled]="projectForm.invalid">Guardar Proyecto</button>
 </form>

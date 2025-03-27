@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { ProjectsService } from '../../../../services/database/projects.service';
 
 @Component({
   selector: 'app-delete-project-button',
@@ -11,6 +12,8 @@ export class DeleteProjectButtonComponent {
 
   confirmDelete: boolean = false;
 
+  constructor(private projectsService: ProjectsService) {}
+
   showConfirmation(): void {
     this.confirmDelete = true;
   }
@@ -20,7 +23,12 @@ export class DeleteProjectButtonComponent {
   }
 
   deleteProject(): void {
-    this.projectDeleted.emit(this.projectId); // Emite el evento al componente padre
-    this.confirmDelete = false;
+    // Llama al servicio para eliminar el proyecto
+    this.projectsService.delete(this.projectId).then(() => {
+      this.projectDeleted.emit(this.projectId); // Emite el evento al componente padre
+      this.confirmDelete = false;
+    }).catch((error) => {
+      console.error(`❌ Error al eliminar el proyecto con ID ${this.projectId}:`, error);
+    });
   }
 }

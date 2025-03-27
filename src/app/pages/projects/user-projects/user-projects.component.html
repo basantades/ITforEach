@@ -13,9 +13,10 @@
         <h3>{{ project.name }}</h3>
         <p>{{ project.description }}</p>
         <app-delete-project-button
-        [projectId]="project.id"
-        (projectDeleted)="onProjectDeleted(project.id.toString())">
-      </app-delete-project-button>
+          [projectId]="project.id"
+          (projectDeleted)="onProjectDeleted($event)">
+        </app-delete-project-button>
+        
       </li>
     }
   </ul>

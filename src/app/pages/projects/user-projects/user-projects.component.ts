@@ -30,8 +30,8 @@ export class UserProjectsComponent implements OnInit {
   }
 
   // Add this method to handle the projectDeleted event
-onProjectDeleted(projectId: string): void {
-  // Implement logic to handle project deletion
-  console.log(`Project with ID ${projectId} was deleted.`);
-}
+  onProjectDeleted(projectId: number): void {
+    // Actualiza la lista de proyectos eliminando el proyecto correspondiente
+    this.userProjects = this.userProjects.filter(project => project.id !== projectId);
+  }
 }

@@ -103,20 +103,18 @@ export class ProjectsService {
   }
 
   async delete(id: number): Promise<boolean> {
-    const { data, error: fetchError } = await this.supabaseService.client
-      .from(this.table)
-      .select('*')
-      .eq('id', id);
-    console.log('🔍 Proyecto encontrado antes de eliminar:', data);
-  
-    if (fetchError) throw fetchError;
+    const session = await this.supabaseService.getSession();
+    const userId = session?.data?.session?.user?.id;
   
     const { error } = await this.supabaseService.client
       .from(this.table)
       .delete()
       .eq('id', id);
   
-    if (error) throw error;
-    return true;
+    if (error) {
+      console.error('❌ Error al eliminar el proyecto:', error);
+      throw error;
+    }
+      return true;
   }
 }

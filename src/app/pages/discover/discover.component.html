@@ -1,0 +1,25 @@
+    <h1>Descubre proyectos</h1>
+  
+    <div class="projects-grid">
+        @for (project of projects; track project.id) {
+            <div class="project-card">
+                <a [routerLink]="['/', project.githubUsername, project.name]" >
+                  <div >
+                    <img [src]="project.main_image_url || 'assets/default-placeholder.png'" alt="{{ project.name }}" class="project-image">
+                    <h2>{{ project.name }}</h2>
+                  </div>
+                </a>
+                <p class="status">{{ project.status }}</p>
+                <p class="github-username">{{ project.githubUsername }}</p>
+              </div>
+        }
+      </div>
+  
+   
+  <div class="pagination">
+    @if (totalProjects > pageSize) {
+      <button (click)="prevPage()" [disabled]="page === 1">⬅️ Anterior</button>
+      <span>Página {{ page }}</span>
+      <button (click)="nextPage()" [disabled]="page * pageSize >= totalProjects">Siguiente ➡️</button>
+    }
+  </div>

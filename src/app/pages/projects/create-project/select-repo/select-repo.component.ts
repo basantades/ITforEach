@@ -1,6 +1,6 @@
 import { Component, Signal, signal, Output, EventEmitter, inject } from '@angular/core';
-import { GithubService } from '../../../services/api/github.service';
-import { Repo } from '../../../interfaces/repo';
+import { GithubService } from '../../../../services/api/github.service';
+import { Repo } from '../../../../interfaces/repo';
 
 @Component({
   selector: 'app-select-repo',

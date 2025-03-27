@@ -75,7 +75,7 @@ export class ProjectsService {
     const { data, error } = await this.supabaseService.client
       .from(this.table)
       .select('*')
-      .eq('user_id', username)  
+      .eq('githubUsername', username)  
       .eq('name', projectName)
       .single();
   
@@ -113,5 +113,22 @@ export class ProjectsService {
       throw error;
     }
       return true;
+  }
+  async getPaginated(page: number, pageSize: number = 24): Promise<{ data: Project[], total: number }> {
+    const from = (page - 1) * pageSize;
+    const to = from + pageSize - 1;
+  
+    const { data, error, count } = await this.supabaseService.client
+      .from(this.table)
+      .select('*', { count: 'exact' }) // Obtener total de registros
+      .order('created_at', { ascending: false }) // Ordenar por fecha de creación
+      .range(from, to); // Paginación
+  
+    if (error) {
+      console.error('❌ Error al obtener proyectos paginados:', error);
+      throw error;
+    }
+  
+    return { data: data as Project[], total: count ?? 0 };
   }
 }

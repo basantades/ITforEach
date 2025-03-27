@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-user-projects',
   templateUrl: './user-projects.component.html',
-  styleUrls: ['./user-projects.component.css'],
+  styleUrls: ['./user-projects.component.scss'],
   imports: [DeleteProjectButtonComponent, RouterModule]
 })
 export class UserProjectsComponent implements OnInit {
@@ -19,10 +19,26 @@ export class UserProjectsComponent implements OnInit {
     this.loadUserProjects();
   }
 
+  // loadUserProjects(): void {
+  //   this.projectsService.getUserProjects().then(
+  //     (projects) => {
+  //       this.userProjects = projects;
+  //     }
+  //   ).catch(
+  //     (error) => {
+  //       console.error('Error fetching user projects', error);
+  //     }
+  //   );
+  // }
+
   loadUserProjects(): void {
     this.projectsService.getUserProjects().then(
       (projects) => {
-        this.userProjects = projects;
+        console.log('Proyectos obtenidos:', projects); // Verifica que githubUsername esté presente
+        this.userProjects = projects.map(project => ({
+          ...project,
+          githubUsername: project.githubUsername || 'usuario-desconocido' // Fallback por si es null
+        }));
       }
     ).catch(
       (error) => {

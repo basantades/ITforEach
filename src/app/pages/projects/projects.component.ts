@@ -5,11 +5,12 @@ import { Project } from '../../interfaces/project';
 import { User } from '../../interfaces/user';
 import { SelectRepoComponent } from "../../components/blocks/select-repo/select-repo.component";
 import { CreateProjectComponent } from "../../components/sections/create-project/create-project.component";
+import { UserProjectsComponent } from "./user-projects/user-projects.component";
 
 @Component({
   selector: 'app-projects',
   standalone: true,
-  imports: [SelectRepoComponent, CreateProjectComponent],
+  imports: [SelectRepoComponent, CreateProjectComponent, UserProjectsComponent],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss'
 })

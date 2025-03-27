@@ -48,6 +48,27 @@ export class ProjectsService {
     return data as Project[];
   }
 
+  async getUserProjects(): Promise<Project[]> {
+    const session = await this.supabaseService.getSession();
+    const token = session?.data?.session?.access_token;
+  
+    if (!token) {
+      throw new Error('❌ No hay token de sesión, el usuario no está autenticado.');
+    }
+  
+    const { data, error } = await this.supabaseService.client
+      .from(this.table)
+      .select('*')
+      .eq('user_id', session?.data?.session?.user?.id || ''); // Filtra por el ID del usuario autenticado
+  
+    if (error) {
+      console.error('❌ Error al obtener proyectos del usuario:', error);
+      throw error;
+    }
+  
+    return data as Project[];
+  }
+
   // 🔥 Obtener proyecto por ID (con .single() para recibir un solo objeto)
 
   async getById(id: number): Promise<Project | null> {

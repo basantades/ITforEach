@@ -31,8 +31,9 @@ export class ProjectsService {
     if (!data) {
       throw new Error('❌ La inserción no devolvió datos.');
     }
+    
   
-    return data;
+    return data as Project;
   }
   
   

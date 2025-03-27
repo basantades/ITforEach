@@ -11,17 +11,31 @@ export class ProjectsService {
 
   constructor(private supabaseService: SupabaseService) {}
 
-  // 🔥 Crear un proyecto
   async create(project: Partial<Project>): Promise<Project> {
+    const session = await this.supabaseService.getSession();
+    const token = session?.data?.session?.access_token;
+  
+    if (!token) {
+      throw new Error('❌ No hay token de sesión, el usuario no está autenticado.');
+    }
+  
     const { data, error } = await this.supabaseService.client
-      .from(this.table)
-      .insert(project)
-      .select()
-      .single();
-
-    if (error) throw error;
-    return data as Project;
+    .from(this.table)
+    .insert(project);
+  
+    if (error) {
+      console.error('❌ Error al insertar proyecto en Supabase:', error);
+      throw error;
+    }
+  
+    if (!data) {
+      throw new Error('❌ La inserción no devolvió datos.');
+    }
+  
+    return data;
   }
+  
+  
 
   // 🔥 Obtener todos los proyectos (público)
   async getAll(): Promise<Project[]> {

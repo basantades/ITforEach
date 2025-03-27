@@ -25,6 +25,15 @@ export class SupabaseService {
     });
   }
 
+  async getCurrentUser() {
+    const { data, error } = await this.supabase.auth.getUser();
+    if (error) {
+      console.error("❌ Error obteniendo usuario:", error);
+      return null;
+    }
+    return data?.user ?? null;
+  }
+
   getSession() {
     return this.supabase.auth.getSession();
   }
@@ -32,4 +41,6 @@ export class SupabaseService {
   logout() {
     return this.supabase.auth.signOut();
   }
+
+  
 }

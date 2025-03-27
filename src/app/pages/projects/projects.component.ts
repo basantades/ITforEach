@@ -41,9 +41,6 @@ export class ProjectsPageComponent {
   projectData = computed<Project>(() => {
     const repo = this.selectedRepo();
     const user = this.user();
-
-    console.log('📊 Lenguajes del repo seleccionado:', repo?.languages);
-
   
     return {
       user_id: user?.id ?? '', // Si no hay usuario, dejamos un string vacío

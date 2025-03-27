@@ -3,6 +3,7 @@ import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Project } from '../../../interfaces/project';
 import { ProjectsService } from '../../../services/database/projects.service';
 import { JsonPipe } from '@angular/common';
+import { SupabaseService } from '../../../services/supabase/supabase.service';
 
 @Component({
   selector: 'app-create-project',
@@ -43,10 +44,25 @@ export class CreateProjectComponent implements OnInit {
     }
   }
 
+  constructor(private supabaseService: SupabaseService) {}
+
+
   async saveProject() {
     if (this.projectForm().invalid) return;
 
     const formValue = this.projectForm().value;
+
+
+    const user = await this.supabaseService.getCurrentUser();
+    console.log('🆔 ID del usuario autenticado:', user?.id);
+    const session = await this.supabaseService.client.auth.getSession();
+console.log("🔑 Token de sesión:", session?.data?.session?.access_token);
+    
+    if (!user) {
+      console.error("❌ No hay usuario autenticado, no se puede crear el proyecto");
+      return;
+    }
+
 
     const newProject: Project = {
       ...this.repoData(),

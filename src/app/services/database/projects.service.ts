@@ -35,15 +35,6 @@ export class ProjectsService {
     return data as Project;
   }
 
-  async getAll(): Promise<Project[]> {
-    const { data, error } = await this.supabaseService.client
-      .from(this.table)
-      .select('*');
-
-    if (error) throw error;
-    return data as Project[];
-  }
-
   async getUserProjects(): Promise<Project[]> {
     const session = await this.supabaseService.getSession();
     const token = session?.data?.session?.access_token;
@@ -84,18 +75,6 @@ export class ProjectsService {
       return null;
     }
   
-    return data as Project;
-  }
-
-  async update(id: number, project: Partial<Project>): Promise<Project> {
-    const { data, error } = await this.supabaseService.client
-      .from(this.table)
-      .update(project)
-      .eq('id', id)
-      .select()
-      .single();
-
-    if (error) throw error;
     return data as Project;
   }
 

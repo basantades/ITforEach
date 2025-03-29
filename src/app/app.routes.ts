@@ -10,7 +10,7 @@ import { DiscoverComponent } from './pages/discover/discover.component';
 export const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'user', component: UserPageComponent },
-    { path: 'descubre', component: DiscoverComponent },
+    { path: 'discover', component: DiscoverComponent },
 
   {
     path: 'projects/:githubUsername',

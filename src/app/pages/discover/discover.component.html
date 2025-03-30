@@ -8,7 +8,8 @@
                     <img 
                     [src]="projectsService.transformImageUrl(project.main_image_url ?? '', 500) || 'assets/default-placeholder.png'" 
                     alt="{{ project.name }}" 
-                    class="project-image">                    <h2>{{ project.name }}</h2>
+                    class="project-image">
+                    <h2>{{ project.name }}</h2>
                   </div>
                 </a>
                 <p class="status">{{ project.status }}</p>

@@ -15,7 +15,7 @@ import { ImageUploadComponent } from './image-upload/image-upload.component';
 })
 export class CreateProjectComponent implements OnInit {
   private fb = inject(FormBuilder);
-  private projectsService = inject(ProjectsService);
+  projectsService = inject(ProjectsService);
   imageUrl = signal<string | null>(null);
 
   @Input() repoData!: Signal<Project>;
@@ -30,6 +30,7 @@ export class CreateProjectComponent implements OnInit {
   });
 
   constructor(private supabaseService: SupabaseService) {}
+  
 
   async ngOnInit() {
     const repo = this.repoData();

@@ -37,15 +37,13 @@
   <textarea id="about_project" formControlName="about_project"></textarea>
 
   <label for="main_image_url">Imagen Principal:</label>
-<div class="flex items-center gap-2">
-  <input id="main_image_url" type="text" formControlName="main_image_url" class="flex-1" (input)="onUrlChanged($event)" />
-  <app-image-upload (imageUploaded)="onImageUploaded($event)"></app-image-upload>
-</div>
+    <app-image-upload (imageUploaded)="onImageUploaded($event)"></app-image-upload>
 
-<!-- Muestra la imagen si existe una URL -->
 @if (imageUrl()) {
   <div>
-    <img [src]="imageUrl()" alt="Imagen subida" />
+    <img 
+    [src]="projectsService.transformImageUrl(imageUrl() ?? '', 500) || 'assets/default-placeholder.png'" 
+    class="project-image">
   </div>
 }
 

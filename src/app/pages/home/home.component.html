@@ -1,8 +1,11 @@
-<app-login-button></app-login-button>
 
 
 @if (user()) {
     <a [routerLink]="['/', 'projects', user()?.githubUsername]" class="btn">
       Mis Proyectos
     </a>
+  }
+  @else {
+    <app-login-button></app-login-button>
+
   }

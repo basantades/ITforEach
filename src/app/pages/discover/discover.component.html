@@ -6,9 +6,11 @@
                 <a [routerLink]="['/', project.githubUsername, project.name]" >
                   <div >
                     <img 
-                    [src]="projectsService.transformImageUrl(project.main_image_url ?? '', 500) || 'assets/default-placeholder.png'" 
+                    [ngSrc]="projectsService.transformImageUrl(project.main_image_url ?? '', 500) || 'assets/default-placeholder.png'" 
                     alt="{{ project.name }}" 
-                    class="project-image">
+                    width="500" 
+                    height="281"
+                    priority>
                     <h2>{{ project.name }}</h2>
                   </div>
                 </a>

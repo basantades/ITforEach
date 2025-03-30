@@ -1,0 +1,16 @@
+<nav class="hidden lg:flex gap-12 items-center">
+    <a routerLink="/">
+        <img src="/assets/img/ITforEach-logo.svg" alt="ITforEach Logo" class="h-16 w-auto logo-slide-left" />
+      </a>
+    <a routerLink="/discover" >Descubre</a>
+<div >
+    @if (user()) {
+        <a [routerLink]="['/', 'projects', user()?.githubUsername]" class="btn">
+          Mis Proyectos
+        </a>
+      }
+      @else {
+        <app-login-button></app-login-button>
+    
+      }</div>
+</nav>

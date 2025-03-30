@@ -2,9 +2,10 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ProjectsService } from '../../services/database/projects.service';
 import { Project } from '../../interfaces/project';
 import { RouterModule } from '@angular/router';
+import { NgOptimizedImage } from '@angular/common';
 @Component({
   selector: 'app-discover',
-  imports: [ RouterModule ],
+  imports: [ RouterModule, NgOptimizedImage ],
   templateUrl: './discover.component.html',
   styleUrl: './discover.component.scss'
 })

@@ -110,4 +110,12 @@ export class ProjectsService {
   
     return { data: data as Project[], total: count ?? 0 };
   }
+
+
+  transformImageUrl(originalUrl: string, width: number = 500): string {
+    if (!originalUrl) return '';
+  
+    // Reemplazamos '/upload/' para agregar la transformación de Cloudinary
+    return originalUrl.replace('/upload/', `/upload/c_scale,w_${width}/`);
+  }
 }

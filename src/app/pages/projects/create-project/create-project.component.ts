@@ -4,17 +4,19 @@ import { Project } from '../../../interfaces/project';
 import { ProjectsService } from '../../../services/database/projects.service';
 import { JsonPipe } from '@angular/common';
 import { SupabaseService } from '../../../services/supabase/supabase.service';
+import { ImageUploadComponent } from './image-upload/image-upload.component';
 
 @Component({
   selector: 'app-create-project',
   standalone: true,
-  imports: [ReactiveFormsModule, JsonPipe], 
+  imports: [ReactiveFormsModule, JsonPipe, ImageUploadComponent], 
   templateUrl: './create-project.component.html',
   styleUrl: './create-project.component.scss'
 })
 export class CreateProjectComponent implements OnInit {
   private fb = inject(FormBuilder);
   private projectsService = inject(ProjectsService);
+  imageUrl = signal<string | null>(null);
 
   @Input() repoData!: Signal<Project>;
   languages = signal<Record<string, number>>({});
@@ -75,5 +77,17 @@ export class CreateProjectComponent implements OnInit {
     } catch (error) {
       console.error('Error al guardar:', error);
     }
+  }
+  
+  onImageUploaded(url: string) {
+    this.imageUrl.set(url); // Usamos .set() para actualizar el signal
+    this.projectForm.get('main_image_url')?.setValue(url); // También actualizamos el formulario
+  }
+
+  onUrlChanged(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const url = input.value.trim(); // Eliminamos espacios en blanco
+
+    this.imageUrl.set(url || null);
   }
 }

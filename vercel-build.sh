@@ -9,5 +9,6 @@ export const environment = {
   supabaseUrl: '${SUPABASE_URL}',
   supabaseAnonKey: '${SUPABASE_ANON_KEY}',
   redirectUrl: '${REDIRECT_URL}'
+  cloudinaryUrl: '${CLOUDINARY_URL}'
 };
 EOT

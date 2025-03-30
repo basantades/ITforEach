@@ -10,7 +10,7 @@ import { RouterModule } from '@angular/router';
 })
 
 export class DiscoverComponent implements OnInit {
-  private projectsService = inject(ProjectsService);
+  projectsService = inject(ProjectsService);
   projects: Project[] = [];
   page = 1;
   pageSize = 24;

@@ -18,27 +18,20 @@ export class UserProjectsComponent implements OnInit {
   ngOnInit(): void {
     this.loadUserProjects();
   }
-
-  // loadUserProjects(): void {
-  //   this.projectsService.getUserProjects().then(
-  //     (projects) => {
-  //       this.userProjects = projects;
-  //     }
-  //   ).catch(
-  //     (error) => {
-  //       console.error('Error fetching user projects', error);
-  //     }
-  //   );
-  // }
-
   loadUserProjects(): void {
     this.projectsService.getUserProjects().then(
       (projects) => {
-        console.log('Proyectos obtenidos:', projects); // Verifica que githubUsername esté presente
-        this.userProjects = projects.map(project => ({
-          ...project,
-          githubUsername: project.githubUsername || 'usuario-desconocido' // Fallback por si es null
-        }));
+        this.userProjects = projects
+          .map(project => ({
+            ...project,
+            githubUsername: project.githubUsername || 'usuario-desconocido' // Fallback por si es null
+          }))
+          .sort((a, b) => {
+            // Ordenar por updated_at (más reciente primero)
+            const dateA = new Date(a.updated_at || '').getTime();
+            const dateB = new Date(b.updated_at || '').getTime();
+            return dateB - dateA; // Más reciente primero
+          });
       }
     ).catch(
       (error) => {

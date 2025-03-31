@@ -1,4 +1,4 @@
-import { Component, Signal, signal, computed, inject } from '@angular/core';
+import { Component, Signal, signal, computed, inject, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Repo } from '../../interfaces/repo';
 import { Project } from '../../interfaces/project';
@@ -6,6 +6,7 @@ import { User } from '../../interfaces/user';
 import { SelectRepoComponent } from './create-project/select-repo/select-repo.component';
 import { CreateProjectComponent } from "./create-project/create-project.component";
 import { UserProjectsComponent } from "./user-projects/user-projects.component";
+
 
 @Component({
   selector: 'app-projects',
@@ -17,6 +18,8 @@ import { UserProjectsComponent } from "./user-projects/user-projects.component";
 export class ProjectsPageComponent {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+
+  @ViewChild(UserProjectsComponent) userProjectsComponent!: UserProjectsComponent;
 
   user = signal<User | null>(null);
   showRepoSelector = signal(false);
@@ -67,4 +70,15 @@ export class ProjectsPageComponent {
     this.selectedRepo.set(repo);
     this.showRepoSelector.set(false);
   }
+
+  onProjectCreated() {
+    console.log('✅ Método onProjectCreated llamado.');
+    // Refrescar la lista de proyectos
+    if (this.userProjectsComponent) {
+      this.userProjectsComponent.loadUserProjects();
+    }
+    // Cerrar el formulario de creación de proyecto
+    this.selectedRepo.set(null);
+  }
+  
 }

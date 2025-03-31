@@ -2,6 +2,8 @@ import { Injectable, signal } from '@angular/core';
 import { createClient, SupabaseClient, AuthChangeEvent, Session } from '@supabase/supabase-js';
 import { environment } from '../../../environments/environment';
 import { User } from '../../interfaces/user';
+import { Router } from '@angular/router'; // Importar Router
+
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +12,7 @@ export class SupabaseService {
   private supabase: SupabaseClient;
   user = signal<User | null>(null); // Nuevo signal para almacenar el usuario
 
-  constructor() {
+  constructor(private router: Router) {
     this.supabase = createClient(environment.supabaseUrl, environment.supabaseAnonKey);
     this.loadUser(); // Cargar usuario al inicio
     this.listenToAuthChanges(); // Escuchar cambios de sesión
@@ -93,7 +95,11 @@ export class SupabaseService {
   }
 
   logout() {
-    return this.supabase.auth.signOut();
+    return this.supabase.auth.signOut().then(() => {
+      this.router.navigate(['/']); // Redirigir a la página de inicio
+    }).catch((error) => {
+      console.error('❌ Error al cerrar sesión:', error);
+    });
   }
 }
 

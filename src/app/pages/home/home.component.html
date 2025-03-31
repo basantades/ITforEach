@@ -3,12 +3,15 @@
 @if (user()) {
     <div>
       <h1>Bienvenido a ITforEach, {{ user()?.fullName }}</h1>
-      <h2>Comparte tus proyectos de GitHub en solo 3 clicks</h2>
+      <a [routerLink]="['/', 'projects', user()?.githubUsername]" class="btn">
+        <h2>Comparte tus proyectos de GitHub en solo 3 clicks</h2></a>
+      
     </div>
   }
   @else {
 <h1>Unete a ITforEach y comparte tus proyectos</h1>
 
-<a [routerLink]="['/', 'projects', user()?.githubUsername]" class="btn">M<h2>Login en 2 clicks con GitHub</h2></a>
+  <h2>Login en 2 clicks con GitHub</h2>
+  <app-login-button></app-login-button>
 
   }

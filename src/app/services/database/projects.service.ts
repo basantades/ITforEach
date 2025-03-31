@@ -27,12 +27,11 @@ export class ProjectsService {
       console.error('❌ Error al insertar proyecto en Supabase:', error);
       throw error;
     }
-
+    console.log('✅ Proyecto creado correctamente en la base de datos.');
     if (!data) {
-      throw new Error('❌ La inserción no devolvió datos.');
+      throw new Error('❌ No se pudo crear el proyecto, datos no válidos.');
     }
-
-    return data as Project;
+    return data[0] as Project;
   }
 
   async getUserProjects(): Promise<Project[]> {

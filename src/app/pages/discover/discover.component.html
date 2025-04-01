@@ -1,30 +1,54 @@
-    <h1>Descubre proyectos</h1>
-  
-    <div class="projects-grid">
-        @for (project of projects; track project.id) {
-            <div class="project-card">
-                <a [routerLink]="['/', project.githubUsername, project.name]" >
-                  <div >
-                    <img 
-                    [ngSrc]="projectsService.transformImageUrl(project.main_image_url ?? '', 500) || 'assets/default-placeholder.png'" 
-                    alt="{{ project.name }}" 
-                    width="500" 
-                    height="281"
-                    priority>
-                    <h2>{{ project.name }}</h2>
-                  </div>
-                </a>
-                <p class="status">{{ project.status }}</p>
-                <p class="github-username">{{ project.githubUsername }}</p>
-              </div>
-        }
+
+
+  <h1 class="text-3xl font-bold text-primary text-center my-6">Descubre proyectos</h1>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+  @for (project of projects; track project.id; let i = $index) {
+    <div class="p-2 opacity-0 animate-fade-zoom" [style.animationDelay]="i * 100 + 'ms'">
+      <a [routerLink]="['/', project.githubUsername, project.name]">
+        <div class="relative group overflow-hidden rounded-lg shadow-md bg-white">
+          <img 
+            [ngSrc]="projectsService.transformImageUrl(project.main_image_url ?? '', 500) || 'assets/default-placeholder.png'" 
+            alt="{{ project.name }}" 
+            width="500" 
+            height="281"
+            class="w-full h-auto transition-transform duration-300 ease-in-out group-hover:scale-110 group-hover:brightness-75"
+          >
+          <h2 
+            class="absolute text-center break-words inset-0 flex items-center justify-center text-white text-xl font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          >
+            {{ project.name }}
+          </h2>
+        </div>
+      </a>
+      <div class="p-2 flex items-center justify-between">
+        <a [routerLink]="['/', project.githubUsername]">
+          <p class="text-gray-500">{{ project.githubUsername }}</p>
+        </a>
+        <p class="text-sm text-gray-500">{{ project.status }}</p>
       </div>
-  
-   
-  <div class="pagination">
-    @if (totalProjects > pageSize) {
-      <button (click)="prevPage()" [disabled]="page === 1">⬅️ Anterior</button>
-      <span>Página {{ page }}</span>
-      <button (click)="nextPage()" [disabled]="page * pageSize >= totalProjects">Siguiente ➡️</button>
-    }
-  </div>
+    </div>
+  }
+</div>
+
+<div class="flex justify-center items-center gap-4 my-8">
+  @if (totalProjects > pageSize) {
+    <button 
+      (click)="prevPage()" 
+      [disabled]="page === 1"
+      class="px-4 py-2 bg-primary text-white rounded-md disabled:opacity-50 disabled:cursor-not-allowed transition hover:bg-primary/80"
+    >
+      ⬅️ Anterior
+    </button>
+    <span class="font-semibold">Página {{ page }}</span>
+    <button 
+      (click)="nextPage()" 
+      [disabled]="page * pageSize >= totalProjects"
+      class="px-4 py-2 bg-primary text-white rounded-md disabled:opacity-50 disabled:cursor-not-allowed transition hover:bg-primary/80"
+    >
+      Siguiente ➡️
+    </button>
+  }
+</div>
+
+

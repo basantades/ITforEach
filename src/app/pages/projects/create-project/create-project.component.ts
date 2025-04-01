@@ -1,4 +1,4 @@
-import { Component, Input, Signal, signal, inject, OnInit } from '@angular/core';
+import { Component, Input, Signal, signal, inject, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Project } from '../../../interfaces/project';
 import { ProjectsService } from '../../../services/database/projects.service';
@@ -14,6 +14,7 @@ import { ImageUploadComponent } from './image-upload/image-upload.component';
   styleUrl: './create-project.component.scss'
 })
 export class CreateProjectComponent implements OnInit {
+  @Output() projectCreated = new EventEmitter<void>();
   private fb = inject(FormBuilder);
   projectsService = inject(ProjectsService);
   imageUrl = signal<string | null>(null);
@@ -74,7 +75,7 @@ export class CreateProjectComponent implements OnInit {
 
     try {
       await this.projectsService.create(newProject);
-      alert('Proyecto guardado con éxito');
+      this.projectCreated.emit();
     } catch (error) {
       console.error('Error al guardar:', error);
     }

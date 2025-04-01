@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { SupabaseService } from '../supabase/supabase.service';
 import { Project } from '../../interfaces/project';
+import { ToastrService } from 'ngx-toastr'; // Importar ToastrService
+
 
 @Injectable({
   providedIn: 'root'
@@ -9,28 +11,36 @@ export class ProjectsService {
 
   private table = 'projects';
 
-  constructor(private supabaseService: SupabaseService) {}
+  constructor(private supabaseService: SupabaseService,
+    private toastr: ToastrService ) {}
 
-  async create(project: Partial<Project>): Promise<Project> {
+  async create(project: Partial<Project>): Promise<Project | null> {
     const session = await this.supabaseService.getSession();
     const token = session?.data?.session?.access_token;
 
     if (!token) {
+      this.toastr.error('No hay token de sesión, el usuario no está autenticado.', 'Error');
       throw new Error('❌ No hay token de sesión, el usuario no está autenticado.');
     }
 
     const { data, error } = await this.supabaseService.client
       .from(this.table)
-      .insert(project);
+      .insert(project)
+      .select()
+      ;
 
     if (error) {
       console.error('❌ Error al insertar proyecto en Supabase:', error);
+      this.toastr.error('Error al crear el proyecto.', 'Error');
       throw error;
     }
-    console.log('✅ Proyecto creado correctamente en la base de datos.');
-    if (!data) {
-      throw new Error('❌ No se pudo crear el proyecto, datos no válidos.');
+    if (!data || data.length === 0) {
+      this.toastr.warning('Proyecto creado, pero Supabase no devolvió datos.', 'Advertencia');
+      return null;
     }
+
+    this.toastr.success('Proyecto creado correctamente.', 'Éxito');
+    console.log('✅ Proyecto creado correctamente en la base de datos.');
     return data[0] as Project;
   }
 

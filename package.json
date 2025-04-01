@@ -11,7 +11,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^19.1.0",
+    "@angular/animations": "^19.2.3",
     "@angular/common": "^19.1.0",
     "@angular/compiler": "^19.1.0",
     "@angular/core": "^19.1.0",
@@ -22,6 +22,7 @@
     "@cloudinary/angular-5.x": "^1.5.4",
     "@cloudinary/url-gen": "^1.21.0",
     "@supabase/supabase-js": "^2.49.1",
+    "ngx-toastr": "^19.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"

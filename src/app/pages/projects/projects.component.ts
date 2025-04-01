@@ -72,13 +72,16 @@ export class ProjectsPageComponent {
   }
 
   onProjectCreated() {
-    console.log('✅ Método onProjectCreated llamado.');
+    console.log('✅ Proyecto creado.');
+  
+    // Resetear signals
+    this.showRepoSelector.set(false);
+    this.selectedRepo.set(null);
+  
     // Refrescar la lista de proyectos
     if (this.userProjectsComponent) {
       this.userProjectsComponent.loadUserProjects();
     }
-    // Cerrar el formulario de creación de proyecto
-    this.selectedRepo.set(null);
   }
   
 }

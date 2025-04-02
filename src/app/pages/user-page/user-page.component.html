@@ -9,11 +9,7 @@
   <p><strong>GitHub Username:</strong> {{ user()?.githubusername }}</p>
   <p><strong>Email:</strong> {{ user()?.email || 'No disponible' }}</p>
   <p><strong>Biografía:</strong> {{ user()?.bio || 'No disponible' }}</p>
-
-  <!-- Mostrar elementos exclusivos para el propietario -->
-  @if (authService.isOwnerSignal()) {
-    <button (click)="fetchGitHubUser()">Obtener datos de GitHub</button>
-    <p><strong>Enlaces Sociales:</strong></p>
+  <p><strong>Enlaces Sociales:</strong></p>
     @if ((user()?.sociallinks ?? []).length > 0) {
       <ul>
         @for (link of user()?.sociallinks; track link) {
@@ -32,7 +28,9 @@
         <span>No disponible</span>
       }
     </p>
-  } @else {
-    <p>Este es el perfil público del usuario.</p>
-  }
+
+  <!-- Mostrar elementos exclusivos para el propietario -->
+  @if (authService.isOwnerSignal()) {
+    <button (click)="getGitHubUser()">Obtener datos de GitHub</button>
+  } 
 </div>

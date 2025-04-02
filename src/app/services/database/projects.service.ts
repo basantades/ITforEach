@@ -43,33 +43,48 @@ export class ProjectsService {
     return data[0] as Project;
   }
 
-  async getUserProjects(): Promise<Project[]> {
-    const session = await this.supabaseService.getSession();
-    const token = session?.access_token;
-
-    if (!token) {
-      throw new Error('❌ No hay token de sesión, el usuario no está autenticado.');
+  async getUserProjects(username?: string): Promise<Project[]> {
+    if (username) {
+      // Obtener proyectos por username
+      const { data, error } = await this.supabaseService.client
+        .from(this.table)
+        .select('*')
+        .eq('githubusername', username);
+  
+      if (error) {
+        console.error('❌ Error al obtener proyectos por username:', error);
+        throw error;
+      }
+  
+      return data as Project[];
+    } else {
+      // Obtener proyectos del usuario autenticado
+      const session = await this.supabaseService.getSession();
+      const token = session?.access_token;
+  
+      if (!token) {
+        throw new Error('❌ No hay token de sesión, el usuario no está autenticado.');
+      }
+  
+      const userId = session?.user?.id;
+  
+      if (!userId) {
+        throw new Error('❌ No se pudo obtener el ID del usuario.');
+      }
+  
+      const { data, error } = await this.supabaseService.client
+        .from(this.table)
+        .select('*')
+        .eq('user_id', userId);
+  
+      if (error) {
+        console.error('❌ Error al obtener proyectos del usuario autenticado:', error);
+        throw error;
+      }
+  
+      return data as Project[];
     }
-
-    const userId = session?.user?.id;
-
-    if (!userId) {
-      throw new Error('❌ No se pudo obtener el ID del usuario.');
-    }
-
-    const { data, error } = await this.supabaseService.client
-      .from(this.table)
-      .select('*')
-      .eq('user_id', userId);
-
-    if (error) {
-      console.error('❌ Error al obtener proyectos del usuario:', error);
-      throw error;
-    }
-
-    return data as Project[];
   }
-
   async getByUsernameAndProjectName(username: string, projectName: string): Promise<Project | null> {
     const { data, error } = await this.supabaseService.client
       .from(this.table)

@@ -2,13 +2,14 @@ import { Component, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../services/supabase/auth.service';
 import { UserService } from '../../services/database/user.service';
-import { GithubUserService } from '../../services/api/github-user.service'; // Importar el servicio de GitHub
 import { User } from '../../interfaces/user';
+import { ProjectsByUserComponent } from "./projects-by-user/projects-by-user.component";
 
 @Component({
   selector: 'app-user-page',
   templateUrl: './user-page.component.html',
-  styleUrl: './user-page.component.scss'
+  styleUrl: './user-page.component.scss',
+  imports: [ProjectsByUserComponent]
 })
 export class UserPageComponent {
   user = signal<User | null>(null); // Datos del usuario de la ficha
@@ -17,7 +18,6 @@ export class UserPageComponent {
     private route: ActivatedRoute,
     private userService: UserService,
     public authService: AuthService,
-    private githubUserService: GithubUserService // Inyectar el servicio de GitHub
   ) {
     // Escuchar cambios en los parámetros de la ruta
     this.route.paramMap.subscribe(async (params) => {
@@ -33,13 +33,4 @@ export class UserPageComponent {
     });
   }
 
-  // Llamar al servicio de GitHub para obtener datos del usuario
-  async getGitHubUser() {
-    try {
-      const githubUser = await this.githubUserService.getGitHubUser();
-      console.log('Datos del usuario de GitHub:', githubUser);
-    } catch (error) {
-      console.error('Error al obtener datos del usuario de GitHub:', error);
-    }
-  }
 }

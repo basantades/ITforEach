@@ -1,3 +1,45 @@
+<section class="mx-auto max-w-7xl p-4">
+
+<div class="relative w-md mx-auto md:max-w-6xl mt-6 min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-xl mt-16">
+  <div class="px-6">
+      <div class="flex flex-wrap justify-center">
+          <div class="w-full flex justify-center">
+              <div class="relative">
+                <img 
+                [src]="user()?.avatarurl" 
+                alt="Avatar de {{ user()?.fullname || 'Usuario' }}" 
+                class="shadow-xl rounded-full align-middle border-none absolute -m-[90px]  max-w-[180px]"
+                />
+              </div>
+          </div>
+      </div>
+      <div class="text-center mt-24">
+          <h3 class="text-2xl text-slate-700 font-bold leading-normal mb-1">{{ user()?.fullname || 'Nombre Completo' }}</h3>
+          <div class="text-xs mt-0 mb-2 text-slate-400 font-bold uppercase">
+              <i class="fas fa-map-marker-alt mr-2 text-slate-400 opacity-75"></i>{{ user()?.githubusername }}
+          </div>
+      </div>
+      <div class="mt-6 py-6 border-t border-slate-200 text-center">
+          <div class="flex flex-wrap justify-center">
+              <div class="w-full px-4">
+                  <p class="font-light leading-relaxed text-slate-600 mb-4">{{ user()?.bio || '' }}</p>
+                  @if (user()?.website) {
+                    <a href="{{ user()?.website }}" class="font-normal text-slate-700 hover:text-slate-400">{{ user()?.website }}</a>
+                  }
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
 <div>
   <img 
   [src]="user()?.avatarurl" 
@@ -28,9 +70,12 @@
         <span>No disponible</span>
       }
     </p>
-
-  <!-- Mostrar elementos exclusivos para el propietario -->
-  @if (authService.isOwnerSignal()) {
-    <button (click)="getGitHubUser()">Obtener datos de GitHub</button>
-  } 
 </div>
+
+ <!-- Mostrar elementos exclusivos para el propietario -->
+ @if (authService.isOwnerSignal()) {
+  aqui boton para editar el perfil
+} 
+
+<app-projects-by-user [githubusername]="user()?.githubusername || ''"></app-projects-by-user>
+</section>

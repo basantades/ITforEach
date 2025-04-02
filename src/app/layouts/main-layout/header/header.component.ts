@@ -1,20 +1,17 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { SupabaseService } from '../../../services/supabase/supabase.service';
+import { AuthService } from '../../../services/supabase/auth.service';
 import { LoginButtonComponent } from "../../../components/ui/login-button/login-button.component";
+import { LogoutButtonComponent } from "../../../components/ui/logout-button/logout-button.component"; // Importar LogoutButtonComponent
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterLink, LoginButtonComponent],
+  imports: [RouterLink, LoginButtonComponent, LogoutButtonComponent], // Agregar LogoutButtonComponent a imports
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-  private supabase = inject(SupabaseService);
-  user = this.supabase.user; 
-
-  logout() {
-    this.supabase.logout();
-  }
+  private authService = inject(AuthService);
+  user = this.authService.userSignal; // Usar el signal del usuario desde AuthService
 }

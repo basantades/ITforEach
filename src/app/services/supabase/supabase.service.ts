@@ -1,75 +1,26 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { createClient, SupabaseClient, AuthChangeEvent, Session } from '@supabase/supabase-js';
 import { environment } from '../../../environments/environment';
-import { User } from '../../interfaces/user';
-import { Router } from '@angular/router'; // Importar Router
-
 
 @Injectable({
   providedIn: 'root'
 })
 export class SupabaseService {
   private supabase: SupabaseClient;
-  user = signal<User | null>(null); // Nuevo signal para almacenar el usuario
 
-  constructor(private router: Router) {
+  constructor() {
     this.supabase = createClient(environment.supabaseUrl, environment.supabaseAnonKey);
-    this.loadUser(); // Cargar usuario al inicio
-    this.listenToAuthChanges(); // Escuchar cambios de sesión
   }
 
-  private async loadUser() {
-    const { data, error } = await this.supabase.auth.getSession();
-    if (error) {
-      console.error("❌ Error obteniendo sesión:", error);
-      return;
-    }
-    if (data.session) {
-      this.setUserFromSession(data.session);
-    }
-  }
-
-  private listenToAuthChanges() {
-    this.supabase.auth.onAuthStateChange((event: AuthChangeEvent, session: Session | null) => {
-      if (event === "SIGNED_IN" || event === "TOKEN_REFRESHED") {
-        this.setUserFromSession(session);
-      } else if (event === "SIGNED_OUT") {
-        this.user.set(null);
-      }
-    });
-  }
-
-  private setUserFromSession(session: Session | null) {
-    if (!session) {
-      this.user.set(null);
-      return;
-    }
-    const userMetadata = session.user.user_metadata;
-    this.user.set({
-      user_id: session.user.id,
-      githubusername: userMetadata["user_name"],
-      fullname: userMetadata["full_name"],
-      avatarurl: userMetadata["avatar_url"],
-      email: session.user.email ?? ''
-    });
-  }
-
-  get client(): SupabaseClient {
-    return this.supabase;
-  }
-
-  signInWithGithub() {
-    return this.supabase.auth.signInWithOAuth({
-      provider: 'github',
-      options: {
-        redirectTo: environment.redirectUrl
-      }
-    });
-  }
-  
+  // Iniciar sesión con GitHub
   async loginWithGithub() {
     try {
-      const { error } = await this.signInWithGithub();
+      const { error } = await this.supabase.auth.signInWithOAuth({
+        provider: 'github',
+        options: {
+          redirectTo: environment.redirectUrl
+        }
+      });
       if (error) {
         console.error("❌ Error en login:", error);
       } else {
@@ -79,8 +30,27 @@ export class SupabaseService {
       console.error("❌ Error inesperado en login:", err);
     }
   }
-  
 
+  // Cerrar sesión
+  async logout() {
+    try {
+      await this.supabase.auth.signOut();
+    } catch (error) {
+      console.error('❌ Error al cerrar sesión:', error);
+    }
+  }
+
+  // Obtener la sesión actual
+  async getSession(): Promise<Session | null> {
+    const { data, error } = await this.supabase.auth.getSession();
+    if (error) {
+      console.error("❌ Error obteniendo sesión:", error);
+      return null;
+    }
+    return data.session;
+  }
+
+  // Obtener usuario actual
   async getCurrentUser() {
     const { data, error } = await this.supabase.auth.getUser();
     if (error) {
@@ -90,16 +60,13 @@ export class SupabaseService {
     return data?.user ?? null;
   }
 
-  getSession() {
-    return this.supabase.auth.getSession();
+  // Escuchar cambios en el estado de autenticación
+  onAuthStateChange(callback: (event: AuthChangeEvent, session: Session | null) => void) {
+    this.supabase.auth.onAuthStateChange(callback);
   }
 
-  logout() {
-    return this.supabase.auth.signOut().then(() => {
-      this.router.navigate(['/']); // Redirigir a la página de inicio
-    }).catch((error) => {
-      console.error('❌ Error al cerrar sesión:', error);
-    });
+  // Cliente de Supabase
+  get client(): SupabaseClient {
+    return this.supabase;
   }
 }
-

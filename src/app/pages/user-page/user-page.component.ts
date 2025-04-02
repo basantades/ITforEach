@@ -17,7 +17,7 @@ export class UserPageComponent {
     private route: ActivatedRoute,
     public authService: AuthService, // Servicio para autenticación
     private userService: UserService, // Servicio para obtener datos del usuario
-    private githubuserService: GithubUserService // Servicio para obtener datos de GitHub
+    public githubuserService: GithubUserService // Servicio para obtener datos de GitHub
   ) {
     // Obtener el usuario desde los datos de la ruta
     this.route.data.subscribe(async () => {
@@ -27,8 +27,8 @@ export class UserPageComponent {
       const userData = await this.userService.getUserByUsername(githubusernameFromUrl!);
       this.user.set(userData);
 
-      // Establecer el usuario autenticado en AuthService para verificar si es propietario
-      this.authService.setUser(userData, githubusernameFromUrl ?? undefined);
+      // Actualizar el estado de propietario en AuthService
+      this.authService.setOwnerStatus(githubusernameFromUrl ?? '');
     });
   }
 

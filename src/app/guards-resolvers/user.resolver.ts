@@ -13,24 +13,27 @@ export class UserResolver implements Resolve<User | null> {
   async resolve(route: ActivatedRouteSnapshot): Promise<User | null> {
     const session = await this.supabase.getSession();
 
-    if (!session.data.session) {
+    // Verificar si la sesión es nula
+    if (!session) {
       alert('Debes iniciar sesión para acceder a esta página.');
       this.router.navigate(['/']);
       return null;
     }
 
-    const userMetadata = session.data.session.user.user_metadata as {
-        user_name: string;
-        full_name: string;
-        avatar_url: string;
-      };
-      
-      const user: User = {
-        user_id: session.data.session.user.id,
-        githubusername: userMetadata.user_name,
-        fullname: userMetadata.full_name,
-        avatarurl: userMetadata.avatar_url,
-      };
+    // Extraer los metadatos del usuario desde la sesión
+    const userMetadata = session.user.user_metadata as {
+      user_name: string;
+      full_name: string;
+      avatar_url: string;
+    };
+
+    // Construir el objeto User
+    const user: User = {
+      user_id: session.user.id,
+      githubusername: userMetadata.user_name,
+      fullname: userMetadata.full_name,
+      avatarurl: userMetadata.avatar_url,
+    };
 
     return user;
   }

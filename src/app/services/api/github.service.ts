@@ -1,30 +1,24 @@
 import { Injectable } from '@angular/core';
 import { Repo } from '../../interfaces/repo';
-import { SupabaseService } from '../supabase/supabase.service';
+import { AuthService } from '../supabase/auth.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ProjectsService } from '../database/projects.service';
-
-
 
 @Injectable({
   providedIn: 'root'
 })
 export class GithubService {
-  constructor(private supabaseService: SupabaseService,
+  constructor(
+    private authService: AuthService,
     private router: Router,
     private toastr: ToastrService,
-    private projectsService: ProjectsService ) {}
-
-  /** Obtiene el token de GitHub desde la sesión activa en Supabase */
-  private async getGitHubToken(): Promise<string | null> {
-    const { data: { session } } = await this.supabaseService.getSession();
-    return session?.provider_token ?? null;
-  }
+    private projectsService: ProjectsService
+  ) {}
 
   /** Obtiene los repos públicos donde el usuario tiene permisos de admin */
   async getUserPublicRepos(): Promise<Repo[]> {
-    const token = await this.getGitHubToken();
+    const token = this.authService.getGitHubToken();
     if (!token) {
       this.handleAuthError('GitHub token not found. Please log in again.');
       return [];
@@ -82,7 +76,7 @@ export class GithubService {
   /** Maneja errores de autenticación y redirige a la home */
   private async handleAuthError(message: string): Promise<void> {
     this.toastr.error(message, 'Error de autenticación');
-    await this.supabaseService.logout(); // 🔹 Cierra la sesión
+    await this.authService.logout(); // 🔹 Cierra la sesión
     this.router.navigate(['/']); // 🔹 Redirigir a la home
   }
 }

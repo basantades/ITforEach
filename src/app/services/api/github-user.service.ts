@@ -1,20 +1,19 @@
 import { Injectable } from '@angular/core';
-import { SupabaseService } from '../supabase/supabase.service';
+import { AuthService } from '../supabase/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GithubUserService {
-  constructor(private supabaseService: SupabaseService) {}
+  constructor(private authService: AuthService) {}
 
-  private async getGitHubToken(): Promise<string | null> {
-    const { data: { session } } = await this.supabaseService.getSession();
-    return session?.provider_token ?? null;
-  }
-
+  // Obtener datos del usuario de GitHub
   async getGitHubUser(): Promise<any> {
-    const token = await this.getGitHubToken();
-    if (!token) throw new Error('GitHub token not found');
+    const token = this.authService.getGitHubToken(); // Obtener el token desde AuthService
+    if (!token) {
+      console.error('❌ No se encontró un token de GitHub.');
+      throw new Error('GitHub token not found');
+    }
 
     const response = await fetch('https://api.github.com/user', {
       headers: { Authorization: `token ${token}` }
@@ -28,5 +27,6 @@ export class GithubUserService {
 
     const userData = await response.json();
     console.log('GitHub User Data:', userData); // 🔍 Mostrar los datos obtenidos
-    return userData;  }
+    return userData;
+  }
 }

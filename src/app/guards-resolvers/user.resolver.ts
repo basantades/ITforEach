@@ -14,7 +14,8 @@ export class UserResolver implements Resolve<User | null> {
     const session = await this.supabase.getSession();
 
     if (!session.data.session) {
-      this.router.navigate(['/login']);
+      alert('Debes iniciar sesión para acceder a esta página.');
+      this.router.navigate(['/']);
       return null;
     }
 
@@ -29,7 +30,6 @@ export class UserResolver implements Resolve<User | null> {
         githubusername: userMetadata.user_name,
         fullname: userMetadata.full_name,
         avatarurl: userMetadata.avatar_url,
-        email: session.data.session.user.email ?? '' // 🔥 Evita undefined
       };
 
     return user;

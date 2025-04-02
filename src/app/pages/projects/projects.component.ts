@@ -33,9 +33,9 @@ export class ProjectsPageComponent {
       }
       this.user.set(user);
 
-      const githubUsernameFromUrl = this.route.snapshot.paramMap.get('githubUsername');
-      if (user.githubUsername !== githubUsernameFromUrl) {
-        this.router.navigate([`/${user.githubUsername}/projects`]);
+      const githubusernameFromUrl = this.route.snapshot.paramMap.get('githubusername');
+      if (user.githubusername !== githubusernameFromUrl) {
+        this.router.navigate([`/${user.githubusername}/projects`]);
       }
     });
   }
@@ -46,8 +46,8 @@ export class ProjectsPageComponent {
     const user = this.user();
   
     return {
-      user_id: user?.id ?? '',
-      githubUsername: user?.githubUsername ?? '',
+      user_id: user?.user_id ?? '',
+      githubusername: user?.githubusername ?? '',
       name: repo?.name ?? '',
       description: repo?.description ?? 'Sin descripción',
       repository_url: repo?.html_url ?? '',

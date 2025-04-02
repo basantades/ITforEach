@@ -4,7 +4,7 @@
         created_at?: string;
         updated_at?: string;
         user_id: string;
-        githubUsername: string;
+        githubusername: string;
         name: string;
         status: 'undefined' | 'in_progress' | 'testing' | 'completed' | 'paused';
       

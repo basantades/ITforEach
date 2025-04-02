@@ -26,6 +26,7 @@ export class GithubUserService {
       throw new Error(`Failed to fetch GitHub user: ${errorData.message}`);
     }
 
-    return await response.json();
-  }
+    const userData = await response.json();
+    console.log('GitHub User Data:', userData); // 🔍 Mostrar los datos obtenidos
+    return userData;  }
 }

@@ -9,16 +9,16 @@ import { DiscoverComponent } from './pages/discover/discover.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
-    { path: 'user/:githubUsername', component: UserPageComponent },
     { path: 'discover', component: DiscoverComponent },
 
   {
-    path: 'projects/:githubUsername',
+    path: 'projects/:githubusername',
     component: ProjectsPageComponent,
     canActivate: [AuthGuard], // 🔥 Protege la ruta, solo usuarios autenticados
     resolve: { user: UserResolver } // 🔥 Obtiene el usuario autenticado antes de cargar la página
   },
-  { path: ':githubUsername/:projectName', component: ProjectInfoComponent},
+  { path: ':githubusername/:projectName', component: ProjectInfoComponent},
+  { path: ':githubusername', component: UserPageComponent },
 
   { path: '**', redirectTo: '' } // Redirige cualquier otra ruta a la raíz
 ];

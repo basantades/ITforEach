@@ -46,10 +46,10 @@ export class SupabaseService {
     }
     const userMetadata = session.user.user_metadata;
     this.user.set({
-      id: session.user.id,
-      githubUsername: userMetadata["user_name"],
-      fullName: userMetadata["full_name"],
-      avatarUrl: userMetadata["avatar_url"],
+      user_id: session.user.id,
+      githubusername: userMetadata["user_name"],
+      fullname: userMetadata["full_name"],
+      avatarurl: userMetadata["avatar_url"],
       email: session.user.email ?? ''
     });
   }

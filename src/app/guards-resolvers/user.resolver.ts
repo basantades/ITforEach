@@ -25,10 +25,10 @@ export class UserResolver implements Resolve<User | null> {
       };
       
       const user: User = {
-        id: session.data.session.user.id,
-        githubUsername: userMetadata.user_name,
-        fullName: userMetadata.full_name,
-        avatarUrl: userMetadata.avatar_url,
+        user_id: session.data.session.user.id,
+        githubusername: userMetadata.user_name,
+        fullname: userMetadata.full_name,
+        avatarurl: userMetadata.avatar_url,
         email: session.data.session.user.email ?? '' // 🔥 Evita undefined
       };
 

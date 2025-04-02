@@ -1,5 +1,12 @@
+// @charset "UTF-8";
+// @import "tailwindcss/base";
+// @import "tailwindcss/components";
+// @import "tailwindcss/utilities";
+// @use 'ngx-toastr/toastr';
+
+
+@use 'ngx-toastr/toastr';
 @use  "tailwindcss";
-@import 'ngx-toastr/toastr';
 
 
 @layer base {

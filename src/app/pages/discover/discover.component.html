@@ -5,11 +5,12 @@
 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
   @for (project of projects; track project.id; let i = $index) {
     <div class="p-2 opacity-0 animate-fade-zoom" [style.animationDelay]="i * 100 + 'ms'">
-      <a [routerLink]="['/', project.githubUsername, project.name]">
+      <a [routerLink]="['/', project.githubusername, project.name]">
         <div class="relative group overflow-hidden rounded-lg shadow-md bg-white">
           <img 
             [ngSrc]="projectsService.transformImageUrl(project.main_image_url ?? '', 500) || 'assets/default-placeholder.png'" 
             alt="{{ project.name }}" 
+            priority
             width="500" 
             height="281"
             class="w-full h-auto transition-transform duration-300 ease-in-out group-hover:scale-110 group-hover:brightness-75"
@@ -22,8 +23,8 @@
         </div>
       </a>
       <div class="p-2 flex items-center justify-between">
-        <a [routerLink]="['/', project.githubUsername]">
-          <p class="text-gray-500">{{ project.githubUsername }}</p>
+        <a [routerLink]="['/', project.githubusername]">
+          <p class="text-gray-500">{{ project.githubusername }}</p>
         </a>
         <p class="text-sm text-gray-500">{{ project.status }}</p>
       </div>

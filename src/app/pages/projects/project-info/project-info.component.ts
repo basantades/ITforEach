@@ -19,7 +19,7 @@ export class ProjectInfoComponent implements OnInit {
 
   ngOnInit(): void {
     // Obtener parámetros de la ruta
-    const username = this.route.snapshot.paramMap.get('githubUsername');
+    const username = this.route.snapshot.paramMap.get('githubusername');
     const projectName = this.route.snapshot.paramMap.get('projectName');
 
     if (username && projectName) {

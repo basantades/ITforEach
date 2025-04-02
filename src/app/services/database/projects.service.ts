@@ -75,7 +75,7 @@ export class ProjectsService {
     const { data, error } = await this.supabaseService.client
       .from(this.table)
       .select('*')
-      .eq('githubUsername', username)  
+      .eq('githubusername', username)  
       .eq('name', projectName)
       .single();
   

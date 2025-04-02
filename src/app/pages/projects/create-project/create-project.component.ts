@@ -21,7 +21,7 @@ export class CreateProjectComponent implements OnInit {
 
   @Input() repoData!: Signal<Project>;
   languages = signal<Record<string, number>>({});
-  githubUsername = signal<string | null>(null);
+  githubusername = signal<string | null>(null);
 
   projectForm = this.fb.group({
     status: ['undefined', Validators.required],
@@ -47,7 +47,7 @@ export class CreateProjectComponent implements OnInit {
       ]);
 
       if (repoData.owner?.login) {
-        this.githubUsername.set(repoData.owner.login);
+        this.githubusername.set(repoData.owner.login);
       }
       this.languages.set(languages);
 
@@ -65,7 +65,7 @@ export class CreateProjectComponent implements OnInit {
     const newProject: Project = {
       ...this.repoData(),
       languages: this.languages(),
-      githubUsername: this.githubUsername() ?? '',
+      githubusername: this.githubusername() ?? '',
       ...formValue,
       status: (formValue.status ?? 'undefined') as Project['status'],
       about_project: formValue.about_project ?? '',

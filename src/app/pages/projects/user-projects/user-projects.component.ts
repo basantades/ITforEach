@@ -24,7 +24,7 @@ export class UserProjectsComponent implements OnInit {
         this.userProjects = projects
           .map(project => ({
             ...project,
-            githubUsername: project.githubUsername || 'usuario-desconocido' // Fallback por si es null
+            githubusername: project.githubusername || 'usuario-desconocido' // Fallback por si es null
           }))
           .sort((a, b) => {
             // Ordenar por updated_at (más reciente primero)

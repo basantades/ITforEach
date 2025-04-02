@@ -1,15 +1,38 @@
 <div>
-    @if (loading) {
-      <p>Cargando usuario...</p>
-    } @else if (error) {
-      <p>{{ error }}</p>
-    } @else if (user) {
-      <div>
-        <img [src]="user.avatarUrl" alt="Avatar" />
-        <h2>{{ user.fullName }}</h2>
-        <p>{{ user.githubUsername }}</p>
-  
-      </div>
+  <img 
+  [src]="user()?.avatarurl" 
+  alt="Avatar de {{ user()?.fullname || 'Usuario' }}" 
+  width="150" 
+  height="150"
+/>
+  <h1>Perfil de {{ user()?.fullname || 'Usuario' }}</h1>
+  <p><strong>GitHub Username:</strong> {{ user()?.githubusername }}</p>
+  <p><strong>Email:</strong> {{ user()?.email || 'No disponible' }}</p>
+  <p><strong>Biografía:</strong> {{ user()?.bio || 'No disponible' }}</p>
+
+  <!-- Mostrar elementos exclusivos para el propietario -->
+  @if (authService.isOwnerSignal()) {
+    <button (click)="fetchGitHubUser()">Obtener datos de GitHub</button>
+    <p><strong>Enlaces Sociales:</strong></p>
+    @if ((user()?.sociallinks ?? []).length > 0) {
+      <ul>
+        @for (link of user()?.sociallinks; track link) {
+          <li>{{ link }}</li>
+        }
+      </ul>
+    } @else {
+      <p>No hay enlaces sociales disponibles.</p>
     }
-  </div>
-  
+    <p><strong>Sitio Web:</strong> 
+      @if (user()?.website) {
+        <a [href]="user()?.website" target="_blank">
+          {{ user()?.website }}
+        </a>
+      } @else {
+        <span>No disponible</span>
+      }
+    </p>
+  } @else {
+    <p>Este es el perfil público del usuario.</p>
+  }
+</div>

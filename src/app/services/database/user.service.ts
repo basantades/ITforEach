@@ -10,33 +10,29 @@ export class UserService {
 
   /** 🔥 Obtiene el usuario desde la tabla `users`, o lo crea si no existe */
   async getOrCreateUser(): Promise<User | null> {
-    const { data: authUser, error: authError } = await this.supabaseService.client.auth.getUser();
-    if (authError || !authUser.user) {
-      console.error('❌ Error obteniendo usuario de auth:', authError);
+    const session = await this.supabaseService.getSession();
+    if (!session?.user) {
+      console.error('❌ No hay sesión activa o usuario autenticado.');
       return null;
     }
-
-    const userId = authUser.user.id;
-    const metadata = authUser.user.user_metadata || {};
-
-    // 🔍 Buscar usuario en `users`
+  
+    const userId = session.user.id;
+    const metadata = session.user.user_metadata || {};
+  
     const { data: existingUser, error: userError } = await this.supabaseService.client
       .from('users')
       .select('*')
       .eq('user_id', userId)
       .single();
-
+  
     if (existingUser) {
-      return existingUser; // ✅ Usuario ya existe, devolverlo
+      return existingUser;
     }
-
+  
     if (userError && userError.code !== 'PGRST116') {
-      console.error('❌ Error consultando users:', userError);
-      console.log('Detalles del error:', userError.details);
       return null;
     }
-
-    // 🆕 Crear usuario en `users`
+  
     const newUser: User = {
       user_id: userId,
       githubusername: metadata["user_name"] || '',
@@ -48,19 +44,21 @@ export class UserService {
       website: null,
       links: null
     };
-
+  
     const { data: newUserData, error: insertError } = await this.supabaseService.client
       .from('users')
-      .insert(newUser);
-
+      .insert(newUser)
+      .select()
+      .single();  // Agregamos `.select().single()` para asegurarnos de que devuelve datos
+  
     if (insertError) {
       console.error('❌ Error insertando usuario en users:', insertError);
-      console.log('Detalles del error:', insertError.details);
       return null;
     }
-
-    return newUserData; // ✅ Usuario creado correctamente
+  
+    return newUserData;
   }
+  
 
   /** 🔍 Obtiene un usuario por su GitHub username */
   async getUserByUsername(githubusername: string): Promise<User | null> {
@@ -78,19 +76,5 @@ export class UserService {
     return data as User;
   }
 
-  /** 🔄 Actualiza los datos de un usuario */
-  async updateUser(userId: string, updates: Partial<User>): Promise<User | null> {
-    const { data, error } = await this.supabaseService.client
-      .from('users')
-      .update(updates)
-      .eq('user_id', userId)
-      .single();
-
-    if (error) {
-      console.error('❌ Error actualizando usuario:', error);
-      return null;
-    }
-
-    return data as User;
-  }
+ 
 }

@@ -2,6 +2,8 @@ import { Injectable, signal } from '@angular/core';
 import { SupabaseService } from './supabase.service';
 import { User } from '../../interfaces/user';
 import { Session } from '@supabase/supabase-js';
+import { UserService } from '../database/user.service'; // Importar UserService
+
 import { Router } from '@angular/router'; // Importar Router
 
 
@@ -13,7 +15,7 @@ export class AuthService {
   isOwnerSignal = signal(false); // Indica si el usuario autenticado es el propietario
   private session: Session | null = null; // Sesión actual
 
-  constructor(private supabaseService: SupabaseService, private router: Router) { 
+  constructor(private supabaseService: SupabaseService, private userService: UserService, private router: Router) { 
     this.initializeAuthState();
   }
 
@@ -35,11 +37,13 @@ export class AuthService {
   }
 
   // Establecer el usuario desde la sesión
-  private setUserFromSession(session: Session | null) {
+
+  private async setUserFromSession(session: Session | null) {
     if (!session) {
       this.userSignal.set(null);
       return;
     }
+  
     const userMetadata = session.user.user_metadata;
     this.userSignal.set({
       user_id: session.user.id,
@@ -47,6 +51,8 @@ export class AuthService {
       fullname: userMetadata['full_name'],
       avatarurl: userMetadata['avatar_url']
     });
+  
+    await this.userService.getOrCreateUser(); // Llamar siempre que haya sesión
   }
 
   // Obtener el token de GitHub desde la sesión
@@ -56,7 +62,7 @@ export class AuthService {
 
   // Iniciar sesión con GitHub
   async loginWithGithub() {
-    await this.supabaseService.loginWithGithub();
+    await this.supabaseService.loginWithGithub(); // Solo realiza el login, sin más lógica aquí
   }
 
   // Cerrar sesión

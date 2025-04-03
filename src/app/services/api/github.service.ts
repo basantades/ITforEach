@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Repo } from '../../interfaces/repo';
-import { AuthService } from '../supabase/auth.service';
+import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ProjectsService } from '../database/projects.service';

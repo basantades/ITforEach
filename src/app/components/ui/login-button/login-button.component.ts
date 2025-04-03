@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SupabaseService } from '../../../services/supabase/supabase.service';
+import { SupabaseService } from '../../../services/auth/supabase.service';
 
 @Component({
   selector: 'app-login-button',

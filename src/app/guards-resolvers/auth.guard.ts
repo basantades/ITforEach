@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
-import { SupabaseService } from '../services/supabase/supabase.service';
+import { SupabaseService } from '../services/auth/supabase.service';
 
 @Injectable({
   providedIn: 'root'

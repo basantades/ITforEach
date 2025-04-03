@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SupabaseService } from '../supabase/supabase.service';
+import { SupabaseService } from '../auth/supabase.service';
 import { Project } from '../../interfaces/project';
 import { ToastrService } from 'ngx-toastr'; // Importar ToastrService
 

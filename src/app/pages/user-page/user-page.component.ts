@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AuthService } from '../../services/supabase/auth.service';
+import { AuthService } from '../../services/auth/auth.service';
 import { UserService } from '../../services/database/user.service';
 import { User } from '../../interfaces/user';
 import { ProjectsByUserComponent } from "./projects-by-user/projects-by-user.component";

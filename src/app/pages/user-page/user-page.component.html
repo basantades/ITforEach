@@ -77,8 +77,9 @@
   <button (click)="openModal()">Editar perfil</button>
 } 
 
-
+@if (user()?.githubusername) {
 <app-projects-by-user [githubusername]="user()?.githubusername || ''"></app-projects-by-user>
+}
 </section>
 
 

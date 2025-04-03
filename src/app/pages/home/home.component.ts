@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { AuthService } from '../../services/supabase/auth.service';
+import { AuthService } from '../../services/auth/auth.service';
 import { LoginButtonComponent } from "../../components/ui/login-button/login-button.component";
 
 @Component({

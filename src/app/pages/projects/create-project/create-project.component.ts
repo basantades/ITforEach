@@ -3,7 +3,7 @@ import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Project } from '../../../interfaces/project';
 import { ProjectsService } from '../../../services/database/projects.service';
 import { JsonPipe } from '@angular/common';
-import { SupabaseService } from '../../../services/supabase/supabase.service';
+import { SupabaseService } from '../../../services/auth/supabase.service';
 import { ImageUploadComponent } from './image-upload/image-upload.component';
 
 @Component({

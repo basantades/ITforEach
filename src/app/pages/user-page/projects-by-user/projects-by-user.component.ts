@@ -26,7 +26,8 @@ export class ProjectsByUserComponent implements OnInit {
 
   async loadProjectsByUser() {
     try {
-      const projects = await this.projectsService.getUserProjects(this.githubusername);
+      console.log('🔍 Cargando proyectos para:', this.githubusername); // Depuración
+      const projects = await this.projectsService.getUserProjects(this.githubusername); // Asegúrate de que se use githubusername
       this.projects = projects;
       this.totalProjects = projects.length; // Actualizar el total de proyectos
     } catch (error) {

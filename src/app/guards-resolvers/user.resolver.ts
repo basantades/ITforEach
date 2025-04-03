@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, Router } from '@angular/router';
-import { SupabaseService } from '../services/supabase/supabase.service';
+import { SupabaseService } from '../services/auth/supabase.service';
 import { User } from '../interfaces/user';
 
 @Injectable({

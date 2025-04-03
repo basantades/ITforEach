@@ -44,7 +44,12 @@ export class UserPageComponent {
     this.showModal.set(false);
   }
 
-  onProfileUpdated() {
-    this.closeModal();
+  async onProfileUpdated() {
+    const githubusername = this.user()?.githubusername;
+    if (githubusername) {
+      const updatedUserData = await this.userService.getUserByUsername(githubusername);
+      this.user.set(updatedUserData); // 🔥 Forzar actualización del signal con nuevos datos
+    }
+    this.closeModal(); // Cierra el modal después de actualizar
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, Signal, inject, effect } from '@angular/core';
+import { Component, Input, Signal, inject, effect, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../../services/database/user.service';
@@ -13,6 +13,7 @@ import { User } from '../../../interfaces/user';
 })
 export class EditProfileComponent {
   @Input() userSignal!: Signal<User | null>; // Recibe el signal del padre
+  @Output() profileUpdated = new EventEmitter<void>(); // 🔥 Emite evento al actualizar
   profileForm: FormGroup;
 
   private fb = inject(FormBuilder);
@@ -31,7 +32,6 @@ export class EditProfileComponent {
     effect(() => {
       const user = this.userSignal();
       if (user) {
-        console.log('🔄 Cargando datos del usuario:', user);
         this.loadUserData(user);
       }
     });
@@ -83,8 +83,8 @@ export class EditProfileComponent {
     };
 
     try {
-      const result = await this.userService.updateUser(user.user_id, updatedUser);
-      console.log('✅ Perfil actualizado correctamente:', result);
+      await this.userService.updateUser(user.user_id, updatedUser);
+      this.profileUpdated.emit(); // 🔥 Notificamos al padre que se ha actualizado el perfil
     } catch (error) {
       console.error('❌ Error al actualizar el perfil:', error);
     }

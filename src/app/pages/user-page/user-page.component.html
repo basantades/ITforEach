@@ -85,12 +85,5 @@
 
 <!-- 🛠 Modal para editar el perfil -->
 <app-modal [isOpen]="showModal()" (close)="closeModal()">
-  <app-edit-profile
-    (cancel)="closeModal()"
-    (profileUpdated)="onProfileUpdated()">
-  </app-edit-profile>
-</app-modal>
-
-<app-modal [isOpen]="showModal()" (close)="closeModal()">
-  <app-edit-profile [userSignal]="user"></app-edit-profile>
+  <app-edit-profile [userSignal]="user" (profileUpdated)="onProfileUpdated()"></app-edit-profile>
 </app-modal>

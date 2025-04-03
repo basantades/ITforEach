@@ -76,5 +76,20 @@ export class UserService {
     return data as User;
   }
 
- 
+ /** ✏️ Edita el usuario en la tabla `users` */
+async updateUser(userId: string, updates: Partial<User>): Promise<User | null> {
+  const { data, error } = await this.supabaseService.client
+    .from('users')
+    .update(updates)
+    .eq('user_id', userId)
+    .select()
+    .single();
+
+  if (error) {
+    console.error('❌ Error actualizando usuario:', error);
+    return null;
+  }
+
+  return data; // ✅ Retorna el usuario actualizado
+}
 }

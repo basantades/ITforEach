@@ -74,8 +74,23 @@
 
  <!-- Mostrar elementos exclusivos para el propietario -->
  @if (authService.isOwnerSignal()) {
-  aqui boton para editar el perfil
+  <button (click)="openModal()">Editar perfil</button>
 } 
+
 
 <app-projects-by-user [githubusername]="user()?.githubusername || ''"></app-projects-by-user>
 </section>
+
+
+
+<!-- 🛠 Modal para editar el perfil -->
+<app-modal [isOpen]="showModal()" (close)="closeModal()">
+  <app-edit-profile
+    (cancel)="closeModal()"
+    (profileUpdated)="onProfileUpdated()">
+  </app-edit-profile>
+</app-modal>
+
+<app-modal [isOpen]="showModal()" (close)="closeModal()">
+  <app-edit-profile [userSignal]="user"></app-edit-profile>
+</app-modal>

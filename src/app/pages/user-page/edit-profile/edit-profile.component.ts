@@ -49,7 +49,7 @@ export class EditProfileComponent {
     // Llenar el FormArray de redes sociales
     this.profileForm.setControl(
       'sociallinks',
-      this.fb.array(user.sociallinks?.map(link => this.fb.control(link)) || [])
+      this.fb.array((Array.isArray(user.sociallinks) ? user.sociallinks : []).map(link => this.fb.control(link || '')))
     );
   }
 

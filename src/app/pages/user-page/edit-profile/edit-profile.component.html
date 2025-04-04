@@ -1,20 +1,26 @@
 <form [formGroup]="profileForm" (ngSubmit)="saveProfile()" class=" mx-auto p-6 bg-white dark:bg-gray-900">
     <div class="mb-4">
       <label class="block text-gray-700 dark:text-gray-300 font-semibold">Nombre Completo</label>
-      <input type="text" formControlName="fullname" required
+      <input type="text" formControlName="fullname"
+        class="w-full p-3 mt-1 rounded-lg border border-gray-300 dark:border-gray-700 focus:ring-2 focus:ring-primary focus:outline-none transition"/>
+    </div>
+
+    <div class="mb-4">
+      <label class="block text-gray-700 dark:text-gray-300 font-semibold">Website</label>
+      <input type="text" formControlName="website"
         class="w-full p-3 mt-1 rounded-lg border border-gray-300 dark:border-gray-700 focus:ring-2 focus:ring-primary focus:outline-none transition"/>
     </div>
   
+    <div class="mb-4">
+      <label class="block text-gray-700 dark:text-gray-300 font-semibold">Sobre mi</label>
+      <textarea formControlName="bio" rows="3"
+        class="w-full p-3 mt-1 rounded-lg border border-gray-300 dark:border-gray-700 focus:ring-2 focus:ring-primary focus:outline-none transition resize-none"></textarea>
+    </div>
+
     <div class="mb-4">
       <label class="block text-gray-700 dark:text-gray-300 font-semibold">Email</label>
       <input type="email" formControlName="email"
         class="w-full p-3 mt-1 rounded-lg border border-gray-300 dark:border-gray-700 focus:ring-2 focus:ring-primary focus:outline-none transition"/>
-    </div>
-  
-    <div class="mb-4">
-      <label class="block text-gray-700 dark:text-gray-300 font-semibold">Biografía</label>
-      <textarea formControlName="bio" rows="3"
-        class="w-full p-3 mt-1 rounded-lg border border-gray-300 dark:border-gray-700 focus:ring-2 focus:ring-primary focus:outline-none transition resize-none"></textarea>
     </div>
   
     <div class="mb-4">
@@ -23,29 +29,36 @@
         @for (i of socialLinks.controls; track i; let idx = $index) {
           <div class="flex items-center gap-3 mt-2">
             <input type="text" formControlName="{{ idx }}" placeholder="URL de tu red social"
-              class="w-full p-2 rounded-lg border border-gray-300 dark:border-gray-700 focus:ring-2 focus:ring-primary focus:outline-none transition" />
-            <button type="button" (click)="removeSocialLink(idx)"
-              class="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition">
-              ❌
+              class="w-full p-2 rounded-lg border border-gray-300 dark:border-gray-700 focus:ring-2 focus:ring-primary focus:outline-none transition cursor-pointer" />
+              <button type="button" (click)="removeSocialLink(idx)"
+              class="w-10 h-10  p-2 rounded-lg bg-[#1F1F1F]  transition duration-300">
+              <svg xmlns="http://www.w3.org/2000/svg" class="text-white hover:text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
             </button>
           </div>
         }
       </div>
       <button type="button" (click)="addSocialLink()" [disabled]="socialLinks.length >= 10"
-        class="mt-3 p-2 w-full rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition disabled:opacity-50">
-        ➕ Agregar
+        class="mt-3 p-2 w-full rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition disabled:opacity-50 flex items-center justify-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-700 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+        </svg>
+        Agregar
       </button>
     </div>
-  
-    <div class="mb-4">
-      <label class="block text-gray-700 dark:text-gray-300 font-semibold">Website</label>
-      <input type="text" formControlName="website"
-        class="w-full p-3 mt-1 rounded-lg border border-gray-300 dark:border-gray-700 focus:ring-2 focus:ring-primary focus:outline-none transition"/>
+    <div class="mt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+      <p class="text-sm text-gray-500 order-1 sm:order-none">
+        *Nota: tu imagen y usuario provienen de GitHub.
+      </p>
+    
+      <button
+        type="submit"
+        [disabled]="profileForm.invalid"
+        class="w-full sm:w-auto bg-primary hover:bg-pink-700 text-white py-2 px-6 rounded-full cursor-pointer transition-colors duration-300 ease-in-out disabled:opacity-50">
+        Guardar
+      </button>
     </div>
-  
-    <button type="submit" [disabled]="profileForm.invalid"
-      class="w-full p-3 mt-4 text-white bg-primary rounded-lg hover:bg-opacity-80 transition disabled:opacity-50">
-      💾 Guardar Cambios
-    </button>
+    
   </form>
   

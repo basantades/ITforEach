@@ -7,6 +7,7 @@ import { ProjectsByUserComponent } from "./projects-by-user/projects-by-user.com
 import { ModalComponent } from "../../components/ui/modal/modal.component";
 import { EditProfileComponent } from "./edit-profile/edit-profile.component";
 
+
 @Component({
   selector: 'app-user-page',
   templateUrl: './user-page.component.html',

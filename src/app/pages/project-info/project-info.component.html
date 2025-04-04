@@ -38,7 +38,21 @@
           <span>No disponible</span>
         }
       </p> -->
-  
+      <div class="p-2 flex items-center justify-between">
+        @if (project.status !== 'undefined') {
+          <p class="text-sm text-gray-500">
+            @if (project.status === 'in_progress') {
+              En progreso
+            } @else if (project.status === 'testing') {
+              En pruebas
+            } @else if (project.status === 'completed') {
+              Completado
+            } @else if (project.status === 'paused') {
+              Pausado
+            }
+          </p>
+        }
+      </div>   
       <p><strong>Última actualización en GitHub:</strong> {{ project.github_updated_at || 'No disponible' }}</p>
   
       @if (project.main_image_url) {

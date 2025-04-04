@@ -26,21 +26,10 @@
         <a [routerLink]="['/', project.githubusername]">
           <p class="text-gray-500">{{ project.githubusername }}</p>
         </a>
-        <div class="p-2 flex items-center justify-between">
-          @if (project.status !== 'undefined') {
-            <p class="text-sm text-gray-500">
-              @if (project.status === 'in_progress') {
-                En progreso
-              } @else if (project.status === 'testing') {
-                En pruebas
-              } @else if (project.status === 'completed') {
-                Completado
-              } @else if (project.status === 'paused') {
-                Pausado
-              }
-            </p>
-          }
-        </div>      </div>
+        <div class="">
+          <app-like-button [projectId]="project.id!" ></app-like-button>
+        </div>      
+      </div>
     </div>
   }
 </div>

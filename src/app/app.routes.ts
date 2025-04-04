@@ -4,7 +4,7 @@ import { AuthGuard } from './guards-resolvers/auth.guard';
 import { UserResolver } from './guards-resolvers/user.resolver';
 import { UserPageComponent } from './pages/user-page/user-page.component';
 import { HomeComponent } from './pages/home/home.component';
-import { ProjectInfoComponent } from './pages/projects/project-info/project-info.component';
+import { ProjectInfoComponent } from './pages/project-info/project-info.component';
 import { DiscoverComponent } from './pages/discover/discover.component';
 
 export const routes: Routes = [

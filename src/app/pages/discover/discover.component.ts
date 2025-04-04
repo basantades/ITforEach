@@ -3,9 +3,10 @@ import { ProjectsService } from '../../services/database/projects.service';
 import { Project } from '../../interfaces/project';
 import { RouterModule } from '@angular/router';
 import { NgOptimizedImage } from '@angular/common';
+import { LikeButtonComponent } from "../../components/ui/like-button/like-button.component";
 @Component({
   selector: 'app-discover',
-  imports: [ RouterModule, NgOptimizedImage ],
+  imports: [RouterModule, NgOptimizedImage, LikeButtonComponent],
   templateUrl: './discover.component.html',
   styleUrl: './discover.component.scss'
 })

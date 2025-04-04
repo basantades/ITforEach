@@ -1,39 +1,43 @@
-<nav  class="opacity-0 animate-fade-slide-down fixed top-0 left-0 w-full bg-white/80 backdrop-blur-md shadow-md z-40">
-  <div class=" min-h-16 mx-auto w-full max-w-7xl flex justify-between items-center gap-12 p-2 relative">
+<nav class="opacity-0 animate-fade-slide-down fixed top-0 left-0 w-full bg-white/80 backdrop-blur-md shadow-md z-40">
+  <div class="min-h-16 mx-auto w-full max-w-7xl flex justify-between items-center gap-12 py-4 px-8 relative text-gray-800 text-lg">
     <div class="flex items-center gap-12">
-  <a routerLink="/">
-    <img src="/assets/img/logo-ItforEach.svg" alt="ITforEach Logo" class="h-7 w-auto logo-slide-left" />
-  </a>
-  <a routerLink="/discover">Descubre</a>
-</div>
-  <div>
-    @if (user()) {
-      
-      <div (click)="toggleDropdown()" class="flex items-center gap-4 cursor-pointer">
-        {{ user()?.githubusername }}
-        @if (user()?.avatarurl) {
-          <img 
-          [src]="user()?.avatarurl" 
-          alt="Avatar de {{ user()?.fullname || user()?.githubusername }}" 
-          class="h-12 w-12 rounded-full object-cover border border-gray-300"
-        />
-        }
-      </div>
-      @if (isDropdownOpen) {
-        <div div class=" min-w-[300px] flex flex-col items-center gap-8 shadow-md absolute top-20 right-0 bg-white/95 backdrop-blur-md rounded-lg p-12 z-50">
-          <a [routerLink]="['/', 'projects', user()?.githubusername]" class="btn">Mis Proyectos</a>
-        <a [routerLink]="['/', user()?.githubusername]" class="btn">Mi Perfil</a>
-  
-        <div class="pt-6 border-t border-slate-200">
-          <app-logout-button ></app-logout-button>
-        </div>
+      <a routerLink="/">
+        <img src="/assets/img/logo-ItforEach.svg" alt="ITforEach Logo" class="h-7 w-auto logo-slide-left" />
+      </a>
+      <a routerLink="/discover" class="hover:text-primary transition-colors duration-300">Descubre</a>
+    </div>
+    <div>
+      @if (user()) {
+        <div class="relative group">
+          <!-- user y avatar -->
+          <a [routerLink]="['/', user()?.githubusername]" class="btn">
+          <div class="cursor-pointer flex items-center gap-4">
+            <p class="hover:text-primary transition-colors duration-300">{{ user()?.githubusername }}
+            </p>
+            @if (user()?.avatarurl) {
+              <img 
+                [src]="user()?.avatarurl || '/assets/img/default-avatar.png'" 
+                alt="Avatar de {{ user()?.fullname || user()?.githubusername }}" 
+                class="h-12 w-12 rounded-full object-cover border border-gray-300"
+              />
+            }
+          </div>
+        </a>
+          <!-- Menú desplegable -->
+          <div 
+            class="min-w-[240px] flex flex-col items-center gap-6 shadow-md absolute top-12 right-0 bg-white/95 backdrop-blur-md rounded-lg p-8 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-300"
+          >
+            <a [routerLink]="['/', 'projects', user()?.githubusername]" class="btn hover:text-primary transition-colors duration-300">Mis Proyectos</a>
+            <a [routerLink]="['/', user()?.githubusername]" class="btn hover:text-primary transition-colors duration-300">Mi Perfil</a>
+            <div class="pt-6 border-t border-gray-400 w-full text-center">
+              <app-logout-button></app-logout-button>
+            </div>
+          </div>
         </div>
       }
-
-    }
-    @else {
-      <app-login-button></app-login-button>
-    }
+      @else {
+        <app-login-button></app-login-button>
+      }
+    </div>
   </div>
-</div>
 </nav>

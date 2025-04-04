@@ -56,29 +56,29 @@ export class LikesService {
   async removeLike(projectId: number): Promise<boolean> {
     const session = await this.supabaseService.getSession();
     const userId = session?.user?.id;
-
+  
     if (!userId) {
       throw new Error('❌ No se pudo obtener el ID del usuario.');
     }
-
-    const { error, count } = await this.supabaseService.client
+  
+    const { error, data } = await this.supabaseService.client
       .from(this.table)
       .delete()
       .eq('user_id', userId)
-      .eq('project_id', projectId);
-
+      .eq('project_id', projectId)
+      .select(); // 👈 esto devuelve los registros eliminados
+  
     if (error) {
       console.error('❌ Error al quitar like:', error);
       throw error;
     }
-
-    return count !== null && count > 0; // Si count > 0, se eliminó correctamente
+  
+    return data.length > 0;
   }
+  
 
   /**
    * Obtiene la cantidad de likes de un proyecto desde la vista `project_likes_count`.
-   * @param projectId ID del proyecto.
-   * @returns Número de likes del proyecto.
    */
   async getLikesCount(projectId: number): Promise<number> {
     const { data, error } = await this.supabaseService.client
@@ -97,8 +97,6 @@ export class LikesService {
 
   /**
    * Verifica si el usuario actual ha dado like a un proyecto.
-   * @param projectId ID del proyecto.
-   * @returns `true` si el usuario ha dado like, `false` en caso contrario.
    */
   async hasUserLiked(projectId: number): Promise<boolean> {
     const session = await this.supabaseService.getSession();

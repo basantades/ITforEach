@@ -1,0 +1,25 @@
+.logo-container {
+    position: relative;
+  
+    .logo-hover {
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+    }
+  
+    .logo-default {
+      transition: opacity 0.3s ease-in-out;
+    }
+  
+    &:hover {
+      .logo-hover {
+        opacity: 1;
+      }
+  
+      .logo-default {
+        opacity: 0;
+      }
+    }
+  }

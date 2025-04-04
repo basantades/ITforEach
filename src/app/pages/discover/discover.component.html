@@ -2,7 +2,7 @@
 
   <h1 class="text-3xl font-bold text-primary text-center my-6">Descubre proyectos</h1>
 
-<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6">
   @for (project of projects; track project.id; let i = $index) {
     <div class="p-2 opacity-0 animate-fade-zoom" [style.animationDelay]="i * 100 + 'ms'">
       <a [routerLink]="['/', project.githubusername, project.name]">
@@ -24,7 +24,10 @@
       </a>
       <div class="p-2 flex items-center justify-between">
         <a [routerLink]="['/', project.githubusername]">
-          <p class="text-gray-500">{{ project.githubusername }}</p>
+          <div class="flex items-center gap-2">
+            <app-user-avatar [githubusername]="project.githubusername" class="h-8 w-8"></app-user-avatar>
+            <p class="text-gray-500">{{ project.githubusername }}</p>
+          </div>
         </a>
         <div class="">
           <app-like-button [projectId]="project.id!" ></app-like-button>

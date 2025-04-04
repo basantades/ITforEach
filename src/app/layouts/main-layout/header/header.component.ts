@@ -25,11 +25,4 @@ export class HeaderComponent {
     this.isDropdownOpen = false; // Cerrar el menú
   }
 
-  @HostListener('document:click', ['$event'])
-  onDocumentClick(event: Event) {
-    const target = event.target as HTMLElement;
-    if (!target.closest('.relative')) {
-      this.isDropdownOpen = false; // Cerrar el menú si se hace clic fuera
-    }
-  }
 }

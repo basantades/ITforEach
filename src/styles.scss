@@ -12,6 +12,7 @@
 @layer base {
     :root {
       --color-primary: #E6007E;
+      --color-secondary: #1F1F1F;
     }
   }
   
@@ -21,6 +22,12 @@
     }
     .bg-primary {
       background-color: var(--color-primary);
+    }
+    .bg-primary-10 {
+      background-color: rgba(230, 0, 126, 0.1);
+    }
+    .bg-secondary {
+      background-color: var(--color-secondary);
     }
     .border-primary {
       border-color: var(--color-primary);
@@ -61,12 +68,24 @@
         transform: scale(1);
       }
     }
+
+    @keyframes fade {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
   
     .animate-fade-slide-down {
       animation: fadeSlideDown 0.8s ease-out forwards;
     }
   
     .animate-fade-zoom {
+      animation: fadeZoom 0.8s ease-out forwards;
+    }
+    .animate-fade {
       animation: fadeZoom 0.8s ease-out forwards;
     }
   }

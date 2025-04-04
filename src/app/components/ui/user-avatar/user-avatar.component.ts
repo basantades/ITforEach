@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { UserService } from '../../../services/database/user.service';
+import { NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'app-user-avatar',
-  imports: [],
+  imports: [ NgOptimizedImage ],
   templateUrl: './user-avatar.component.html',
   styleUrl: './user-avatar.component.scss'
 })

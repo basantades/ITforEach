@@ -86,7 +86,10 @@
       animation: fadeZoom 0.8s ease-out forwards;
     }
     .animate-fade {
-      animation: fadeZoom 0.8s ease-out forwards;
+      animation: fade 0.8s ease-out forwards;
+    }
+    .animation-delay-2 {
+      animation-delay: 0.2s;
     }
   }
   

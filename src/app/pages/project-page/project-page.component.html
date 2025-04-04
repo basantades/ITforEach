@@ -1,72 +1,100 @@
-@if (errorMessage) {
-    <div>
-      <p class="error">{{ errorMessage }}</p>
-    </div>
-  }
-  
-  @if (project) {
-    <div>
-      <h1>{{ project.name }}</h1>
-      <p><strong>Estado:</strong> {{ project.status }}</p>
-      <p><strong>Descripción:</strong> {{ project.description || 'No disponible' }}</p>
-      <p><strong>Acerca del proyecto:</strong> {{ project.about_project || 'No disponible' }}</p>
-  
-      <p><strong>Repositorio:</strong> 
-        @if (project.repository_url) {
-          <a [href]="project.repository_url" target="_blank">{{ project.repository_url }}</a>
-        } @else {
-          <span>No disponible</span>
-        }
-      </p>
-  
-      <p><strong>Página principal:</strong> 
-        @if (project.homepage_url) {
-          <a [href]="project.homepage_url" target="_blank">{{ project.homepage_url }}</a>
-        } @else {
-          <span>No disponible</span>
-        }
-      </p>
-  
-      <p><strong>Temas:</strong> {{ project.topics?.join(', ') || 'No disponible' }}</p>
+@if (project) {
+<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-0">
+  <h1 class="text-3xl font-bold text-gray-800 text-center mb-6">{{ project.name }}</h1>
 
-      <!-- <p><strong>Lenguajes:</strong> 
-        @if (project.languages) {
-          @for (let lang of objectKeys(project.languages); track lang) {
-            <span>{{ lang }} ({{ project.languages[lang] }}%)</span>
-          }
-        } @else {
-          <span>No disponible</span>
-        }
-      </p> -->
-      <div class="p-2 flex items-center justify-between">
-        @if (project.status !== 'undefined') {
-          <p class="text-sm text-gray-500">
-            @if (project.status === 'in_progress') {
-              En progreso
-            } @else if (project.status === 'testing') {
-              En pruebas
-            } @else if (project.status === 'completed') {
-              Completado
-            } @else if (project.status === 'paused') {
-              Pausado
-            }
-          </p>
-        }
-      </div>   
-      <p><strong>Última actualización en GitHub:</strong> {{ project.github_updated_at || 'No disponible' }}</p>
-  
-      @if (project.main_image_url) {
-        <img [src]="project.main_image_url" alt="Imagen principal del proyecto">
+  <!-- Información del usuario y enlaces -->
+  <div class="grid grid-cols-1 md:grid-cols-2 items-end gap-6 mb-4">
+    <a [routerLink]="['/', project.githubusername]" class="flex items-center gap-4 mx-2">
+      <app-user-avatar [githubusername]="project.githubusername" class="h-20 w-20"></app-user-avatar>
+      <span class="text-xl font-medium hover:text-primary transition-colors duration-300 animate-fade">{{ project.githubusername }}</span>
+    </a>
+
+    <div class="flex justify-end items-center gap-4 mx-4">
+      @if (project.repository_url) {
+        <a [href]="project.repository_url" target="_blank" class="text-gray-500 hover:text-primary transition-colors duration-300">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.207 11.387.6.11.793-.26.793-.577v-2.17c-3.338.726-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.757-1.333-1.757-1.09-.744.083-.729.083-.729 1.205.084 1.84 1.237 1.84 1.237 1.07 1.835 2.807 1.305 3.492.997.11-.775.42-1.305.763-1.605-2.665-.305-5.467-1.332-5.467-5.93 0-1.31.468-2.382 1.236-3.222-.123-.305-.535-1.527.117-3.18 0 0 1.008-.322 3.3 1.23a11.52 11.52 0 013.006-.405c1.02.005 2.045.138 3.006.405 2.292-1.552 3.3-1.23 3.3-1.23.653 1.653.241 2.875.118 3.18.768.84 1.236 1.912 1.236 3.222 0 4.61-2.807 5.625-5.478 5.92.432.372.816 1.102.816 2.222v3.293c0 .32.192.694.8.577C20.565 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z" />
+          </svg>
+        </a>
       }
-<!--   
-      @if (project.extra_images_urls?.length) {
-        <div>
-            <h3>Imágenes adicionales:</h3>
-            @for (let img of project.extra_images_urls; track img) {
-              <img [src]="img" alt="Imagen adicional">
-            }
-          </div>
-      } -->
+      @if (project.homepage_url) {
+        <a [href]="project.homepage_url" target="_blank" class="text-gray-500 hover:text-primary transition-colors duration-300">
+          <svg class="w-10 h-10 fill-current" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="48" height="48" viewBox="0 0 64 64">
+            <path d="M 40 10 C 38.896 10 38 10.896 38 12 C 38 13.104 38.896 14 40 14 L 47.171875 14 L 30.585938 30.585938 C 29.804938 31.366938 29.804938 32.633063 30.585938 33.414062 C 30.976938 33.805063 31.488 34 32 34 C 32.512 34 33.023063 33.805062 33.414062 33.414062 L 50 16.828125 L 50 24 C 50 25.104 50.896 26 52 26 C 53.104 26 54 25.104 54 24 L 54 12 C 54 10.896 53.104 10 52 10 L 40 10 z M 18 12 C 14.691 12 12 14.691 12 18 L 12 46 C 12 49.309 14.691 52 18 52 L 46 52 C 49.309 52 52 49.309 52 46 L 52 34 C 52 32.896 51.104 32 50 32 C 48.896 32 48 32.896 48 34 L 48 46 C 48 47.103 47.103 48 46 48 L 18 48 C 16.897 48 16 47.103 16 46 L 16 18 C 16 16.897 16.897 16 18 16 L 30 16 C 31.104 16 32 15.104 32 14 C 32 12.896 31.104 12 30 12 L 18 12 z"></path>
+            </svg>
+        </a>
+      }
+    <div class="flex justify-center w-12">
+      <app-like-button [projectId]="project.id!" [class.disabled]="!user()" class="scale-150"></app-like-button>
+    </div>
+    </div>
+  </div>
+
+  @if (project.main_image_url) {
+    
+    <div class=" flex justify-center items-center mb-8">
+      <img [ngSrc]="project.main_image_url" alt="{{ project.name }}" priority width="1024" 
+      height="596" class="max-w-full ">
     </div>
   }
+  <!-- Descripción y estado -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+    @if (project.description) {
+      <p class="text-lg text-gray-700 text-justify">{{ project.description }}</p>
+    }
+    @if (project.status !== 'undefined') {
+      <div class="mt-2">
+        <span
+          class="inline-block rounded-full px-4 py-1 text-sm font-medium text-gray-700 dark:text-gray-200 bg-gray-100 dark:bg-gray-800">
+          @if (project.status === 'in_progress') {
+            En progreso
+          } @else if (project.status === 'testing') {
+            En pruebas
+          } @else if (project.status === 'completed') {
+            Completado
+          } @else if (project.status === 'paused') {
+            Pausado
+          }
+        </span>
+      </div>
+    }
+  </div>
+
+  <!-- Acerca del proyecto -->
+  @if (project.about_project) {
+    <div class="bg-gray-50 p-6 mb-8">
+      <h2 class="text-xl font-semibold text-gray-800 mb-4">Acerca del proyecto</h2>
+      <p class="text-gray-700">{{ project.about_project }}</p>
+    </div>
+  }
+
+  @if (project.topics?.length) {
+    <div class="flex flex-wrap gap-2 mb-8">
+      @for (topic of project.topics; track topic) {
+        <span class="px-3 py-1 bg-gray-200 text-gray-800 rounded-full text-sm">
+          {{ topic }}
+        </span>
+      }
+    </div>
+  }
+
+  <!-- Botones de acción -->
+  <div class="flex flex-wrap gap-4 justify-center">
+    @if (project.repository_url) {
+      <a [href]="project.repository_url" target="_blank" class="bg-primary hover:bg-pink-700 text-white py-2 px-6 rounded-full cursor-pointer transition-colors duration-300">
+        Ver repositorio
+      </a>
+    }
+    @if (project.homepage_url) {
+      <a [href]="project.homepage_url" target="_blank" class="bg-primary hover:bg-pink-700 text-white py-2 px-6 rounded-full cursor-pointer transition-colors duration-300">
+        Ir a la web del proyecto
+      </a>
+    }
+  </div>
+</div>
   
+  } @else {
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <p class="text-center text-gray-500">Cargando proyecto...</p>
+    </div>
+  }

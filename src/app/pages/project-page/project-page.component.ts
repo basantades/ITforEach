@@ -1,16 +1,24 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProjectsService } from '../../services/database/projects.service';
 import { Project } from '../../interfaces/project';
+import { RouterLink } from '@angular/router';
+import { NgOptimizedImage } from '@angular/common';
+import { UserAvatarComponent } from '../../components/ui/user-avatar/user-avatar.component';
+import { LikeButtonComponent } from '../../components/ui/like-button/like-button.component';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-project-page',
+  imports: [RouterLink, NgOptimizedImage, UserAvatarComponent, LikeButtonComponent],
   templateUrl: './project-page.component.html',
   styleUrls: ['./project-page.component.scss']
 })
 export class ProjectInfoComponent implements OnInit {
-  project: Project | null = null; // Proyecto a mostrar
-  errorMessage: string | null = null; // Mensaje de error si no se encuentra el proyecto
+  project: Project | null = null; 
+  errorMessage: string | null = null; 
+  private authService = inject(AuthService);
+  user = this.authService.userSignal;
 
   constructor(
     private route: ActivatedRoute,

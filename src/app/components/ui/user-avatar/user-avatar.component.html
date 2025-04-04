@@ -1,5 +1,8 @@
 <img 
-  [src]="avatarUrl" 
+  [ngSrc]="avatarUrl" 
+  priority 
+  width="240" 
+  height="240"
   [alt]="'Avatar de ' + githubusername" 
-  class="rounded-full object-cover border border-gray-300"
+  class="rounded-full object-cover border border-gray-300 bg-black opacity-0 animate-fade-zoom animation-delay-2"
 />

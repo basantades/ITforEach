@@ -9,7 +9,7 @@
   <div>
     @if (user()) {
       
-      <div  class="flex items-center gap-4">
+      <div (click)="toggleDropdown()" class="flex items-center gap-4 cursor-pointer">
         {{ user()?.githubusername }}
         @if (user()?.avatarurl) {
           <img 
@@ -19,14 +19,17 @@
         />
         }
       </div>
-      <div div class=" min-w-[300px] flex flex-col items-center gap-8 shadow-md absolute top-20 right-0 bg-white/95 backdrop-blur-md rounded-lg p-12 z-50">
-        <a [routerLink]="['/', 'projects', user()?.githubusername]" class="btn">Mis Proyectos</a>
-      <a [routerLink]="['/', user()?.githubusername]" class="btn">Mi Perfil</a>
+      @if (isDropdownOpen) {
+        <div div class=" min-w-[300px] flex flex-col items-center gap-8 shadow-md absolute top-20 right-0 bg-white/95 backdrop-blur-md rounded-lg p-12 z-50">
+          <a [routerLink]="['/', 'projects', user()?.githubusername]" class="btn">Mis Proyectos</a>
+        <a [routerLink]="['/', user()?.githubusername]" class="btn">Mi Perfil</a>
+  
+        <div class="pt-6 border-t border-slate-200">
+          <app-logout-button ></app-logout-button>
+        </div>
+        </div>
+      }
 
-      <div class="pt-6 border-t border-slate-200">
-        <app-logout-button ></app-logout-button>
-      </div>
-      </div>
     }
     @else {
       <app-login-button></app-login-button>

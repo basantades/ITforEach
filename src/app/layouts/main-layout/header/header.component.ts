@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, HostListener, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../../services/auth/auth.service';
 import { LoginButtonComponent } from "../../../components/ui/login-button/login-button.component";
@@ -23,5 +23,13 @@ export class HeaderComponent {
 
   closeDropdown() {
     this.isDropdownOpen = false; // Cerrar el menú
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: Event) {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.relative')) {
+      this.isDropdownOpen = false; // Cerrar el menú si se hace clic fuera
+    }
   }
 }

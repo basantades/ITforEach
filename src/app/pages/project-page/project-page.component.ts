@@ -4,9 +4,9 @@ import { ProjectsService } from '../../services/database/projects.service';
 import { Project } from '../../interfaces/project';
 
 @Component({
-  selector: 'app-project-info',
-  templateUrl: './project-info.component.html',
-  styleUrls: ['./project-info.component.scss']
+  selector: 'app-project-page',
+  templateUrl: './project-page.component.html',
+  styleUrls: ['./project-page.component.scss']
 })
 export class ProjectInfoComponent implements OnInit {
   project: Project | null = null; // Proyecto a mostrar

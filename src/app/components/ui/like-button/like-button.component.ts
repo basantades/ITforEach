@@ -1,9 +1,11 @@
-import { Component, Input, OnInit, signal } from '@angular/core';
-
+import { Component, inject, Input, OnInit, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { AuthService } from '../../../services/auth/auth.service';
 import { LikesService } from '../../../services/database/likes.service';
 
 @Component({
   selector: 'app-like-button',
+  imports: [CommonModule],
   templateUrl: './like-button.component.html',
 })
 export class LikeButtonComponent implements OnInit {
@@ -11,6 +13,10 @@ export class LikeButtonComponent implements OnInit {
 
   likesCount = signal(0);
   hasLiked = signal(false);
+
+
+  private authService = inject(AuthService);
+  user = this.authService.userSignal;
 
   constructor(private likesService: LikesService) {}
 

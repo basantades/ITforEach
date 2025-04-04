@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProjectInfoComponent } from './project-info.component';
+import { ProjectInfoComponent } from './project-page.component';
 
 describe('ProjectInfoComponent', () => {
   let component: ProjectInfoComponent;

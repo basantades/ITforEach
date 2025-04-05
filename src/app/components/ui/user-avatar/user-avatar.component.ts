@@ -11,7 +11,7 @@ import { NgOptimizedImage } from '@angular/common';
 
 export class UserAvatarComponent implements OnInit {
   @Input() githubusername!: string; // Recibe el username como parámetro
-  avatarUrl: string = 'assets/default-avatar.png'; // Imagen por defecto
+  avatarUrl: string = '/assets/img/default-bg-avatar.webp'; // Imagen por defecto
 
   constructor(private userService: UserService) {}
 

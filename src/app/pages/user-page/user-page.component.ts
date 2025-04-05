@@ -5,7 +5,7 @@ import { UserService } from '../../services/database/user.service';
 import { User } from '../../interfaces/user';
 import { ProjectsByUserComponent } from "./projects-by-user/projects-by-user.component";
 import { ModalComponent } from "../../components/ui/modal/modal.component";
-import { EditProfileComponent } from "./edit-profile/edit-profile.component";
+import { EditProfileComponent } from "../edit-profile/edit-profile.component";
 
 
 @Component({

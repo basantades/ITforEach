@@ -10,7 +10,7 @@ import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-project-page',
-  imports: [RouterLink, NgOptimizedImage, UserAvatarComponent, LikeButtonComponent],
+  imports: [RouterLink, NgOptimizedImage, UserAvatarComponent, LikeButtonComponent ],
   templateUrl: './project-page.component.html',
   styleUrls: ['./project-page.component.scss']
 })

@@ -1,0 +1,30 @@
+@if (!isHome()) {
+  <div class="container mx-auto mb-8">
+    <button
+      (click)="goBack()"
+      type="button"
+      class="flex items-center text-gray-500 rounded-lg hover:text-primary cursor-pointer transition-colors duration-300"
+    >
+      <span class="sr-only">Go back</span>
+      <svg
+        class="w-8 h-8"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 22 22"
+      >
+        <path
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M15 18l-6-6 6-6"
+        />
+      </svg>
+      <!-- Mostrar el texto solo si se proporciona -->
+      @if (text) {
+        <span class="ml-2 text-sm font-medium">{{ text }}</span>
+      }
+    </button>
+  </div>
+}

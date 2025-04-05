@@ -1,6 +1,6 @@
 
 
-  <h1 class="text-3xl font-bold text-primary text-center my-6">Descubre proyectos</h1>
+  <h1 class="text-3xl font-bold text-primary text-center mb-6">Descubre proyectos</h1>
 
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6">
   @for (project of projects; track project.id; let i = $index) {
@@ -36,10 +36,9 @@
         <div class="flex items-center gap-3">
           @if (project.homepage_url) {
             <a [href]="project.homepage_url" target="_blank" class="text-gray-500 hover:text-primary transition-colors duration-300">
-              <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+              <svg class="w-6 h-6 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 14v4.833A1.166 1.166 0 0 1 16.833 20H5.167A1.167 1.167 0 0 1 4 18.833V7.167A1.166 1.166 0 0 1 5.167 6h4.618m4.447-2H20v5.768m-7.889 2.121 7.778-7.778"/>
               </svg>
-              <!-- https://flowbite.com/icons/ -->
             </a>
           }
           <app-like-button [projectId]="project.id!" ></app-like-button>
@@ -49,8 +48,8 @@
   }
 </div>
 
+@if (totalProjects > pageSize) {
 <div class="flex justify-center items-center gap-4 my-8">
-  @if (totalProjects > pageSize) {
     <button 
       (click)="prevPage()" 
       [disabled]="page === 1"
@@ -66,7 +65,6 @@
     >
       Siguiente ➡️
     </button>
-  }
 </div>
-
+}
 

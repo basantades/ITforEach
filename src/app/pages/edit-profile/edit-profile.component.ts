@@ -1,8 +1,8 @@
 import { Component, Input, Signal, inject, effect, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { UserService } from '../../../services/database/user.service';
-import { User } from '../../../interfaces/user';
+import { UserService } from '../../services/database/user.service';
+import { User } from '../../interfaces/user';
 
 @Component({
   selector: 'app-edit-profile',

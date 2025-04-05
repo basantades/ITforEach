@@ -1,5 +1,5 @@
 <nav class="opacity-0 animate-fade-slide-down fixed top-0 left-0 w-full bg-white/80 backdrop-blur-md shadow-md z-40">
-  <div class="min-h-16 container mx-auto flex justify-between items-center gap-12 py-4 relative text-gray-700 text-lg font-medium">
+  <div class="px-4 min-h-16 container mx-auto flex justify-between items-center gap-12 py-4 relative text-gray-700 text-lg font-medium">
     <div class="flex items-center gap-12">
       <a routerLink="/">
         <img src="/assets/img/logo-ITforEach.svg" alt="ITforEach Logo" class="h-7 w-auto logo-slide-left" />
@@ -31,6 +31,8 @@
           >
             <a [routerLink]="['/', 'projects', user()?.githubusername]" class="btn hover:text-primary transition-colors duration-300">Mis Proyectos</a>
             <a [routerLink]="['/', user()?.githubusername]" class="btn hover:text-primary transition-colors duration-300">Mi Perfil</a>
+            <a [routerLink]="['/', 'edit-profile', user()?.githubusername]" class="btn hover:text-primary transition-colors duration-300">Editar Perfil</a>
+
             <div class="pt-6 border-t border-gray-400 w-full text-center">
               <app-logout-button></app-logout-button>
             </div>

@@ -4,11 +4,14 @@
 <div class="relative md:min-w-md mx-auto md:max-w-5xl mt-6 min-w-0 break-words bg-white w-full mb-[60px] shadow-lg rounded-xl mt-16">
 <!-- Mostrar elementos exclusivos para el propietario -->
 @if (authService.isOwnerSignal()) {
-  <div class="absolute top-0 right-0 -mt-[90px] z-10">
-  <button (click)="openModal()"
+  <div class="hidden sm:block absolute top-0 right-0 -mt-[90px] z-10">
+  <!-- <button (click)="openModal()"
     class="float-right bg-slate-200 hover:bg-slate-300 text-slate-600 py-2 px-6 rounded-full cursor-pointer transition-colors duration-300 ease-in-out">
-    Editar
-  </button>
+    Editar Perfil
+  </button> -->
+  <a [routerLink]="['/', 'edit-profile', user()?.githubusername]" class="float-right bg-slate-200 hover:bg-slate-300 text-slate-600 py-2 px-6 rounded-full cursor-pointer transition-colors duration-300 ease-in-out">
+    Editar Perfil
+  </a>
 </div>
 } 
   <div class="px-6">
@@ -18,7 +21,7 @@
                 <img 
                 [src]="user()?.avatarurl" 
                 alt="Avatar de {{ user()?.fullname || 'Usuario' }}" 
-                class="shadow-xl rounded-full align-middle border-none absolute -m-[90px]  max-w-[180px]"
+                class="shadow-xl rounded-full align-middle border-none absolute -m-[45px]  max-w-[90px] sm:-m-[60px]  sm:max-w-[120px] lg:-m-[90px]  lg:max-w-[180px]"
                 />
               </div>
           </div>

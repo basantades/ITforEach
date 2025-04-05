@@ -49,6 +49,8 @@ export class ProjectsService {
       const { data, error } = await this.supabaseService.client
         .from(this.table)
         .select('*')
+        .order('created_at', { ascending: false }) 
+
         .eq('githubusername', username);
   
       if (error) {
@@ -75,6 +77,7 @@ export class ProjectsService {
       const { data, error } = await this.supabaseService.client
         .from(this.table)
         .select('*')
+        .order('created_at', { ascending: false }) 
         .eq('user_id', userId);
   
       if (error) {

@@ -6,13 +6,15 @@ import { User } from '../../interfaces/user';
 import { ProjectsByUserComponent } from "./projects-by-user/projects-by-user.component";
 import { ModalComponent } from "../../components/ui/modal/modal.component";
 import { EditProfileComponent } from "../edit-profile/edit-profile.component";
+import { RouterLink } from '@angular/router';
+
 
 
 @Component({
   selector: 'app-user-page',
   templateUrl: './user-page.component.html',
   styleUrl: './user-page.component.scss',
-  imports: [ProjectsByUserComponent, ModalComponent, EditProfileComponent],
+  imports: [ProjectsByUserComponent, ModalComponent, EditProfileComponent, RouterLink],
 })
 export class UserPageComponent {
   user = signal<User | null>(null);

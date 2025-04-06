@@ -4,8 +4,9 @@ import { Repo } from '../../interfaces/repo';
 import { Project } from '../../interfaces/project';
 import { User } from '../../interfaces/user';
 import { SelectRepoComponent } from '../admin-projects/edit-project/select-repo/select-repo.component';
-import { CreateProjectComponent } from "./create-project/edit-project.component";
 import { UserProjectsComponent } from "../admin-projects/user-projects/user-projects.component";
+import { CreateProjectComponent } from '../admin-projects/create-project/create-project.component';
+
 
 
 @Component({

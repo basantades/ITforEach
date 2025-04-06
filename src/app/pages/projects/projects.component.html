@@ -12,7 +12,7 @@
 
 <!-- 🔥 Muestra el formulario de creación cuando se elige un repo -->
 @if (selectedRepo()) {
-  <app-edit-project [repoData]="projectData" (projectCreated)="onProjectCreated()"></app-edit-project>
+  <app-create-project [repoData]="projectData" (projectCreated)="onProjectCreated()"></app-create-project>
 }
 
 

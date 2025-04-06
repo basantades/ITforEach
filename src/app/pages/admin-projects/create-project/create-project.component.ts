@@ -4,14 +4,14 @@ import { Project } from '../../../interfaces/project';
 import { ProjectsService } from '../../../services/database/projects.service';
 import { JsonPipe } from '@angular/common';
 import { SupabaseService } from '../../../services/auth/supabase.service';
-import { ImageUploadComponent } from '../../admin-projects/edit-project/image-upload/image-upload.component';
+import { ImageUploadComponent } from '../edit-project/image-upload/image-upload.component';
 
 @Component({
-  selector: 'app-edit-project',
+  selector: 'app-create-project',
   standalone: true,
   imports: [ReactiveFormsModule, JsonPipe, ImageUploadComponent], 
-  templateUrl: './edit-project.component.html',
-  styleUrl: './edit-project.component.scss'
+  templateUrl: './create-project.component.html',
+  styleUrl: './create-project.component.scss'
 })
 export class CreateProjectComponent implements OnInit {
   @Output() projectCreated = new EventEmitter<void>();

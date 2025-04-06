@@ -40,9 +40,8 @@ export class UserService {
       avatarurl: metadata["avatar_url"] || '',
       email: null,
       bio: null,
-      sociallinks: null,
       website: null,
-      links: null
+      linkedin: null,
     };
   
     const { data: newUserData, error: insertError } = await this.supabaseService.client

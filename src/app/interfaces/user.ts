@@ -1,14 +1,12 @@
 
-
   export interface User {
-    user_id: string;  // ✅ Ahora usa "user_id"
+    user_id: string;
     githubusername: string;
-    fullname: string;
+    fullname?: string | null;
     avatarurl: string;
     email?: string | null;
     bio?: string | null;
-    sociallinks?: string[] | null;
     website?: string | null;
-    links?: string[] | null;
+    linkedin?: string | null;
   }
   

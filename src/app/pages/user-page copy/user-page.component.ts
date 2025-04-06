@@ -18,6 +18,7 @@ import { RouterLink } from '@angular/router';
 })
 export class UserPageComponent {
   user = signal<User | null>(null);
+  showModal = signal(false);
 
   constructor(
     private route: ActivatedRoute,
@@ -32,5 +33,26 @@ export class UserPageComponent {
         this.authService.setOwnerStatus(githubusernameFromUrl);
       }
     });
+  }
+
+  openModal() {
+    if (!this.user()) {
+      console.error('⚠️ No hay usuario disponible para editar.');
+      return;
+    }
+    this.showModal.set(true); // 🔥 Solo abrimos el modal
+  }
+
+  closeModal() {
+    this.showModal.set(false);
+  }
+
+  async onProfileUpdated() {
+    const githubusername = this.user()?.githubusername;
+    if (githubusername) {
+      const updatedUserData = await this.userService.getUserByUsername(githubusername);
+      this.user.set(updatedUserData); // 🔥 Forzar actualización del signal con nuevos datos
+    }
+    this.closeModal(); // Cierra el modal después de actualizar
   }
 }

@@ -1,0 +1,52 @@
+@if (projects.length > 0) {
+  
+
+<h1 class="text-3xl font-bold text-primary text-center my-6">Proyectos</h1>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    @for (project of projects; track project.id; let i = $index) {
+      <div class="p-2 opacity-0 animate-fade-zoom" [style.animationDelay]="i * 100 + 'ms'">
+        <a [routerLink]="['/', project.githubusername, project.name]">
+          <div class="relative group overflow-hidden rounded-lg shadow-md bg-white">
+            <img 
+              [ngSrc]="projectsService.transformImageUrl(project.main_image_url ?? '', 500) || '/assets/img/default-placeholder.webp'" 
+              alt="{{ project.name }}" 
+              priority
+              width="500" 
+              height="281"
+              class="w-full h-auto transition-transform duration-300 ease-in-out group-hover:scale-110"
+            >
+            <div class="md:opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <h2 
+              class="absolute text-center break-words inset-x-0 bottom-4 flex items-center justify-center text-white text-xl font-bold  text-shadow-lg z-10"
+            >
+              {{ project.name }}
+            </h2>
+            <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-gray-900/20"></div>
+            </div>
+  
+          </div>
+        </a>
+        <div class="py-2 w-full flex items-center justify-end">
+    
+            @if (project.homepage_url) {
+              <a [href]="project.homepage_url" target="_blank" class="flex items-center text-gray-500 hover:text-primary transition-colors duration-300">
+                <p class="hidden lg:inline-block me-2">Ir a la web del proyecto</p>
+                <p class="me-2 lg:hidden">Web del proyecto</p>
+                <svg class="w-6 h-6 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 14v4.833A1.166 1.166 0 0 1 16.833 20H5.167A1.167 1.167 0 0 1 4 18.833V7.167A1.166 1.166 0 0 1 5.167 6h4.618m4.447-2H20v5.768m-7.889 2.121 7.778-7.778"/>
+                </svg>
+              </a>
+            }
+
+              <div class="flex items-center justify-end grow">
+                <app-like-button [projectId]="project.id!" ></app-like-button>
+              </div>   
+          
+   
+        </div>
+      </div>
+    }
+  </div>
+  
+}

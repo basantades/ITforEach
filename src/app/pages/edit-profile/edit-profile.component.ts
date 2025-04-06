@@ -1,25 +1,38 @@
-import { Component, Input, Signal, inject, effect, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  Component,
+  effect
+} from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  FormArray,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../services/database/user.service';
+import { AuthService } from '../../services/auth/auth.service';
 import { User } from '../../interfaces/user';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit-profile',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule ],
   templateUrl: './edit-profile.component.html',
   styleUrls: ['./edit-profile.component.scss']
 })
 export class EditProfileComponent {
-  @Input() userSignal!: Signal<User | null>; // Recibe el signal del padre
-  @Output() profileUpdated = new EventEmitter<void>(); // 🔥 Emite evento al actualizar
   profileForm: FormGroup;
 
-  private fb = inject(FormBuilder);
-  private userService = inject(UserService);
-
-  constructor() {
+  constructor(
+    private fb: FormBuilder,
+    private userService: UserService,
+    private authService: AuthService,
+    private toastr: ToastrService,
+    private router: Router
+  ) {
     this.profileForm = this.fb.group({
       fullname: ['', Validators.required],
       email: ['', [Validators.email]],
@@ -28,17 +41,21 @@ export class EditProfileComponent {
       website: ['']
     });
 
-    // 🚀 Efecto Reactivo para actualizar el formulario al cambiar el usuario
+    
+
     effect(() => {
-      const user = this.userSignal();
-      if (user) {
-        this.loadUserData(user);
+      const authUser = this.authService.userSignal();
+      if (authUser?.githubusername) {
+        this.loadUserData(authUser.githubusername);
       }
     });
   }
 
-  /** Cargar datos del usuario en el formulario */
-  private loadUserData(user: User) {
+  /** Cargar datos del usuario desde UserService */
+  private async loadUserData(githubusername: string) {
+    const user = await this.userService.getUserByUsername(githubusername);
+    if (!user) return;
+
     this.profileForm.patchValue({
       fullname: user.fullname,
       email: user.email || '',
@@ -46,14 +63,13 @@ export class EditProfileComponent {
       website: user.website || ''
     });
 
-    // Llenar el FormArray de redes sociales
     this.profileForm.setControl(
       'sociallinks',
       this.fb.array((Array.isArray(user.sociallinks) ? user.sociallinks : []).map(link => this.fb.control(link || '')))
     );
   }
 
-  /** Obtiene el FormArray de social links */
+  /** Acceso al FormArray de redes sociales */
   get socialLinks(): FormArray {
     return this.profileForm.get('sociallinks') as FormArray;
   }
@@ -68,25 +84,33 @@ export class EditProfileComponent {
     this.socialLinks.removeAt(index);
   }
 
+  /** Guardar cambios del perfil */
   async saveProfile() {
     if (this.profileForm.invalid) return;
 
-    const user = this.userSignal();
-    if (!user) {
-      console.error('❌ No hay usuario para actualizar.');
+    const authUser = this.authService.userSignal();
+    if (!authUser) {
+      console.error('❌ No hay usuario autenticado.');
       return;
     }
 
     const updatedUser: Partial<User> = {
       ...this.profileForm.value,
-      sociallinks: this.socialLinks.value.filter((link: string) => link.trim() !== '') // Limpia links vacíos
+      sociallinks: this.socialLinks.value.filter((link: string) => link.trim() !== '')
     };
 
     try {
-      await this.userService.updateUser(user.user_id, updatedUser);
-      this.profileUpdated.emit(); // 🔥 Notificamos al padre que se ha actualizado el perfil
+
+      await this.userService.updateUser(authUser.user_id, updatedUser);
+      this.toastr.success('Perfil actualizado correctamente', 'Guardado');
+      setTimeout(() => {
+        this.router.navigate([`/${authUser.githubusername}`]);
+      }, 1000);
+
+
     } catch (error) {
       console.error('❌ Error al actualizar el perfil:', error);
+      this.toastr.error('Hubo un error al guardar los cambios', 'Error');
     }
   }
 }

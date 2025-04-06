@@ -39,7 +39,6 @@ export class ProjectsService {
     }
 
     this.toastr.success('Proyecto creado correctamente.', 'Éxito');
-    console.log('✅ Proyecto creado correctamente en la base de datos.');
     return data[0] as Project;
   }
 

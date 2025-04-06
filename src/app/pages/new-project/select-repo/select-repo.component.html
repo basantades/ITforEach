@@ -12,7 +12,7 @@
       } @else {
         <div class="flex flex-col md:flex-row md:items-center md:gap-4 gap-4">
           <select
-          class="w-full p-3 mt-1 rounded-lg bg-white text-gray-700 ring-1 ring-gray-300 hover:ring-primary focus:ring-primary focus:outline-none transition"
+          class="w-full p-3 mt-1 rounded-lg bg-white text-gray-700 ring-1 ring-gray-300 hover:ring-primary focus:ring-primary focus:outline-none transition cursor-pointer"
 
             (change)="onRepoSelect(repos()[$any($event.target).selectedIndex - 1])"
           >
@@ -26,7 +26,7 @@
             <button
               (click)="confirmSelection()"
               [disabled]="!selectedRepo()"
-              class="bg-primary hover:bg-pink-700 text-white py-2 px-6 rounded-full cursor-pointer transition-colors duration-300 ease-in-out disabled:bg-gray-400 disabled:cursor-not-allowed"
+              class="bg-primary hover:bg-pink-700 text-white py-2 px-6 rounded-full cursor-pointer transition-colors duration-300 ease-in-out disabled:bg-gray-400 disabled:cursor-default"
             >
               Confirmar
             </button>

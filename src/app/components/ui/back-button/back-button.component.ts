@@ -13,7 +13,7 @@ export class BackButtonComponent {
   constructor(private location: Location) {}
 
   isHome(): boolean {
-    return this.location.path() === '/';
+    return this.location.path() === '';
   }
 
   goBack(): void {

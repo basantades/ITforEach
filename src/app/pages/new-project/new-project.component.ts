@@ -62,14 +62,10 @@ export class NewProjectComponent {
 
   onRepoSelected(repo: Repo) {
     this.selectedRepo.set(repo);
-    this.showRepoSelector.set(false);
   }
 
   onProjectCreated() {
-    console.log('✅ Proyecto creado.');
   
-    // Resetear signals
-    this.showRepoSelector.set(false);
     this.selectedRepo.set(null);
   
   }

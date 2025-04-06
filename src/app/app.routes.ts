@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { ProjectsPageComponent } from './pages/projects/projects.component';
 import { AuthGuard } from './guards-resolvers/auth.guard';
 import { OwnerGuard } from './guards-resolvers/owner.guard';
 import { UserResolver } from './guards-resolvers/user.resolver';
@@ -9,13 +8,14 @@ import { ProjectInfoComponent } from './pages/project-page/project-page.componen
 import { DiscoverComponent } from './pages/discover/discover.component';
 import { EditProfileComponent } from './pages/edit-profile/edit-profile.component';
 import { NewProjectComponent } from './pages/new-project/new-project.component';
+import { MyProjectsComponent } from './pages/my-projects/my-projects.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'discover', component: DiscoverComponent },
   {
-    path: 'projects/:githubusername',
-    component: ProjectsPageComponent,
+    path: 'my-projects/:githubusername',
+    component: MyProjectsComponent,
     canActivate: [AuthGuard, OwnerGuard], // solo usuarios autenticados
     resolve: { user: UserResolver } // 🔥 Obtiene el usuario antes de cargar la página
   },

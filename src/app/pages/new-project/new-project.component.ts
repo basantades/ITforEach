@@ -60,10 +60,6 @@ export class NewProjectComponent {
     };
   });
 
-  toggleRepoSelector() {
-    this.showRepoSelector.set(!this.showRepoSelector());
-  }
-
   onRepoSelected(repo: Repo) {
     this.selectedRepo.set(repo);
     this.showRepoSelector.set(false);

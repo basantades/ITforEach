@@ -1,38 +1,39 @@
-<section class="mx-auto max-w-7xl px-4 relative">
-  <h1 class="text-3xl font-bold text-primary text-center mb-6">Crear Proyecto</h1>
-
+<section class="mx-auto max-w-7xl px-4 relative pt-6º">
+  <div class="mx-auto my-6 w-full md:max-w-3xl lg:max-w-4xl space-y-4">
+  <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-100 text-center mt-4"> Paso 2: Revisa los datos de GitHub y completa la información del proyecto</h2>
+</div>
   <!-- Bloque gris con datos de GitHub -->
   @if (repoData()) {
-    <div class="bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 p-6 rounded-2xl shadow mb-8 w-full md:w-3xl lg:w-4xl mx-auto">
+    <div class="bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-300 p-6 rounded-2xl shadow mb-8 w-full md:max-w-3xl lg:max-w-4xl mx-auto">
       <h2 class="text-xl font-semibold mb-4 text-gray-800 dark:text-white">Información del Repositorio (solo lectura)</h2>
 
       <p><strong>Nombre:</strong> {{ repoData().name }}</p>
-      <p><strong>Descripción:</strong> {{ repoData().description || 'Sin descripción' }}</p>
-      <p><strong>URL del Repositorio:</strong> 
-        <a [href]="repoData().repository_url" target="_blank" class="text-blue-600 dark:text-blue-400 underline">
-          {{ repoData().repository_url }}
+      <p  class="mb-4"><strong>URL del Repositorio: </strong> 
+        <a [href]="repoData().repository_url" target="_blank" class="hover:text-primary transition-colors duration-300 underline">
+        {{ repoData().repository_url }}
         </a>
       </p>
-      <p><strong>Homepage:</strong> 
+      <p><strong>Descripción:</strong> {{ repoData().description || 'Sin descripción' }}</p>
         @if (repoData().homepage_url) {
-          <a [href]="repoData().homepage_url" target="_blank" class="text-blue-600 dark:text-blue-400 underline">
-            {{ repoData().homepage_url }}
-          </a>
-        }
-      </p>
-      <p><strong>Temas:</strong> {{ repoData().topics?.join(', ') || 'No definidos' }}</p>
-      <p><strong>Lenguajes:</strong> {{ languages() ? (languages() | json) : 'No definidos' }}</p>
-      <p><strong>Última actualización en GitHub:</strong> {{ repoData().github_updated_at }}</p>
-      <p><strong>GitHub Username:</strong> {{ githubusername() || 'No definido' }}</p>
+          <p><strong>Website del Proyecto: </strong> 
+          <a [href]="repoData().homepage_url" target="_blank" class="hover:text-primary transition-colors duration-300 underline">
+          {{ repoData().homepage_url }}
+          </a></p>
+        } @else {
+            <p><strong>Website del Proyecto: </strong> 
+              <span class="text-red-500">No definido. Si tu proyecto ya está online, añade el enlace en  <strong>About > 'Website'</strong> del repositorio para poder verlo y probarlo.</span></p> 
+       }
+      
+      <p><strong>Etiquetas:</strong> {{ repoData().topics?.join(', ') || 'No definidas' }}</p>
 
       <p class="text-sm mt-6 text-gray-500 italic">
-        *Estos datos se obtienen directamente desde GitHub. Si deseas modificarlos, deberás hacerlo en el repositorio original y luego volver a importar.
+        *Estos datos se obtienen directamente desde GitHub. Si deseas modificar la descripción, el website o las etiquetas que se muestran, deberás hacerlo en el <span class="font-semibold">About de tu repositorio de GitHub</span> y luego volver a importar.
       </p>
     </div>
   }
 
   <!-- Formulario editable -->
-  <form [formGroup]="projectForm" (ngSubmit)="saveProject()" class="mx-auto my-6 bg-white dark:bg-gray-900 w-full md:w-3xl lg:w-4xl p-6 rounded-2xl shadow">
+  <form [formGroup]="projectForm" (ngSubmit)="saveProject()" class=" mx-auto my-6 w-full md:max-w-3xl lg:max-w-4xl">
 
     <!-- Estado -->
     <div class="mb-4">

@@ -2,14 +2,14 @@ import { Component, Input, Signal, signal, inject, OnInit, Output, EventEmitter 
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Project } from '../../../interfaces/project';
 import { ProjectsService } from '../../../services/database/projects.service';
-import { JsonPipe } from '@angular/common';
+// import { JsonPipe } from '@angular/common';
 import { SupabaseService } from '../../../services/auth/supabase.service';
 import { ImageUploadComponent } from '../../../components/ui/image-upload/image-upload.component';
 
 @Component({
   selector: 'app-create-project',
   standalone: true,
-  imports: [ReactiveFormsModule, JsonPipe, ImageUploadComponent], 
+  imports: [ReactiveFormsModule, ImageUploadComponent], 
   templateUrl: './create-project.component.html',
   styleUrl: './create-project.component.scss'
 })

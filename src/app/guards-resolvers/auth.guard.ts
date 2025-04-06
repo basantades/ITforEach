@@ -12,14 +12,12 @@ export class AuthGuard implements CanActivate {
 
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
     const session = await this.supabase.getSession();
-
-    // Verificar si la sesión es nula
+  
     if (!session) {
-      alert('Debes iniciar sesión para acceder a esta página.');
-      this.router.navigate(['/']); // Redirigir a la página de inicio
+      this.router.navigate(['/']);
       return false;
     }
-
-    return true; // Usuario autenticado, permitir acceso
+  
+    return true;
   }
 }

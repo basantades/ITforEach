@@ -10,12 +10,11 @@ export class UserResolver implements Resolve<User | null> {
   private supabase = inject(SupabaseService);
   private router = inject(Router);
 
-  async resolve(route: ActivatedRouteSnapshot): Promise<User | null> {
-    const session = await this.supabase.getSession();
+ async resolve(route: ActivatedRouteSnapshot): Promise<User | null> {
+      const session = await this.supabase.getSession();
 
     // Verificar si la sesión es nula
     if (!session) {
-      alert('Debes iniciar sesión para acceder a esta página.');
       this.router.navigate(['/']);
       return null;
     }

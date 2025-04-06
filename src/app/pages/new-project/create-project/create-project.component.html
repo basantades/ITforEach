@@ -1,4 +1,4 @@
-<section class="mx-auto max-w-7xl px-4 relative pt-6º">
+<section class="mx-auto max-w-7xl px-4 relative pt-6">
   <div class="mx-auto my-6 w-full md:max-w-3xl lg:max-w-4xl space-y-4">
   <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-100 text-center mt-4"> Paso 2: Revisa los datos de GitHub y completa la información del proyecto</h2>
 </div>
@@ -13,7 +13,7 @@
         {{ repoData().repository_url }}
         </a>
       </p>
-      <p><strong>Descripción:</strong> {{ repoData().description || 'Sin descripción' }}</p>
+      <p><strong>Descripción:</strong> {{ repoData().description || 'Sin descripción' }}<span class="text-primary font-semibold">*</span></p>
         @if (repoData().homepage_url) {
           <p><strong>Website del Proyecto: </strong> 
           <a [href]="repoData().homepage_url" target="_blank" class="hover:text-primary transition-colors duration-300 underline">
@@ -21,13 +21,13 @@
           </a></p>
         } @else {
             <p><strong>Website del Proyecto: </strong> 
-              <span class="text-red-500">No definido. Si tu proyecto ya está online, añade el enlace en  <strong>About > 'Website'</strong> del repositorio para poder verlo y probarlo.</span></p> 
+              No definido.<span class="text-primary font-semibold">*</span></p> 
        }
       
-      <p><strong>Etiquetas:</strong> {{ repoData().topics?.join(', ') || 'No definidas' }}</p>
+      <p><strong>Etiquetas:</strong> {{ repoData().topics?.join(', ') || 'No definidas' }}<span class="text-primary font-semibold">*</span></p>
 
       <p class="text-sm mt-6 text-gray-500 italic">
-        *Estos datos se obtienen directamente desde GitHub. Si deseas modificar la descripción, el website o las etiquetas que se muestran, deberás hacerlo en el <span class="font-semibold">About de tu repositorio de GitHub</span> y luego volver a importar.
+        <span class="text-primary font-semibold text-base" >*</span>Estos datos se obtienen directamente desde GitHub. Si deseas modificar la descripción, el website o las etiquetas que se muestran, deberás hacerlo en el <a [href]="repoData().repository_url" target="_blank" class="hover:text-primary transition-colors duration-300 underline font-semibold">About de tu repositorio de GitHub</a> y luego volver a importar.
       </p>
     </div>
   }
@@ -37,9 +37,10 @@
 
     <!-- Estado -->
     <div class="mb-4">
-      <label for="status" class="block text-gray-700 dark:text-gray-300 font-semibold">Estado</label>
+      <label for="status" class="block text-gray-700 dark:text-gray-300 font-semibold">Estado del Proyecto</label>
       <select id="status" formControlName="status"
-        class="w-full p-3 mt-1 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-primary focus:outline-none transition">
+      class="w-full p-3 mt-1 rounded-lg bg-white text-gray-700 ring-1 ring-gray-300 hover:ring-primary focus:ring-primary focus:outline-none transition"
+      >
         <option value="undefined">Indefinido</option>
         <option value="in_progress">En progreso</option>
         <option value="testing">En pruebas</option>
@@ -48,27 +49,26 @@
       </select>
     </div>
 
-    <!-- Sobre el proyecto -->
-    <div class="mb-4">
-      <label for="about_project" class="block text-gray-700 dark:text-gray-300 font-semibold">Sobre el Proyecto</label>
-      <textarea id="about_project" formControlName="about_project" rows="4"
-        class="w-full p-3 mt-1 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-primary focus:outline-none transition resize-none"></textarea>
-    </div>
+ 
 
     <!-- Imagen -->
     <div class="mb-4">
-      <label for="main_image_url" class="block text-gray-700 dark:text-gray-300 font-semibold">Imagen Principal</label>
-      <app-image-upload (imageUploaded)="onImageUploaded($event)"></app-image-upload>
+      <label for="main_image_url" class="block text-gray-700 dark:text-gray-300 font-semibold">Imagen Principal <span class="text-sm" >(Recomendado: proporciones 16/9 y ancho mínimo de 1024px)</span></label>
+      <div class="flex flex-col md:flex-row md:items-end gap-1">
+        <app-image-upload (imageUploaded)="onImageUploaded($event)"></app-image-upload>
+        <p class="text-sm py-2 md:ms-3 text-gray-500 italic"><span class="font-semibold" >Atención:</span> Puede ser un logo, captura de pantalla, mockup, etc... Pero es muy importante tener portada de tu proyecto. 
+        </p>
+      </div>
+
     </div>
 
-    <!-- Vista previa imagen -->
-    @if (imageUrl()) {
-      <div class="mb-6">
-        <img 
-          [src]="projectsService.transformImageUrl(imageUrl() ?? '', 500) || 'assets/default-placeholder.png'" 
-          class="w-full rounded-lg shadow border border-gray-200 dark:border-gray-700 max-h-[400px] object-contain mx-auto" />
+       <!-- Sobre el proyecto -->
+       <div class="mb-4">
+        <label for="about_project" class="block text-gray-700 dark:text-gray-300 font-semibold">Sobre el Proyecto</label>
+        <textarea id="about_project" formControlName="about_project" rows="4"
+          class="w-full p-3 mt-1 rounded-lg bg-white ring-1 ring-gray-300 hover:ring-primary focus:ring-primary focus:outline-none transition resize-none"></textarea>
+  
       </div>
-    }
 
     <!-- Botón guardar -->
     <div class="mt-6 flex justify-end">

@@ -1,1 +1,22 @@
-<input type="file" (change)="onFileSelected($event)" />
+<!-- <input type="file" (change)="onFileSelected($event)" /> -->
+
+<label
+  class="my-2 block flex flex-col items-center sm:w-[500px] sm:min-h-[281px] justify-center border border-dashed border-gray-300 dark:border-gray-600 rounded-lg text-gray-600 dark:text-gray-300 text-sm bg-white dark:bg-gray-800 cursor-pointer hover:border-primary hover:text-primary transition overflow-hidden"
+>
+  @if (imagePreviewUrl) {
+    <img
+      [src]="imagePreviewUrl"
+      alt="Vista previa"
+      class="w-full h-auto object-contain max-h-[281px] rounded-t-lg"
+    />
+  }
+
+  <span class="block text-center m-3 py-8">Haz clic para seleccionar una imagen</span>
+
+  <input
+    type="file"
+    accept="image/*"
+    (change)="onFileSelected($event)"
+    class="hidden"
+  />
+</label>

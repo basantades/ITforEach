@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProjectsService } from '../../../services/database/projects.service';
-import { DeleteProjectButtonComponent } from "./delete-project-button/delete-project-button.component";
+import { DeleteProjectButtonComponent } from "../delete-project-button/delete-project-button.component";
 import { RouterModule } from '@angular/router';
 
 @Component({

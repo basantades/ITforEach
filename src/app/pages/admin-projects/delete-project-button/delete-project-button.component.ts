@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { ProjectsService } from '../../../../services/database/projects.service';
+import { ProjectsService } from '../../../services/database/projects.service';
 import { ToastrService } from 'ngx-toastr';
 
 

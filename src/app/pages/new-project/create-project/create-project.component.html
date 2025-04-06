@@ -1,0 +1,82 @@
+<section class="mx-auto max-w-7xl px-4 relative">
+  <h1 class="text-3xl font-bold text-primary text-center mb-6">Crear Proyecto</h1>
+
+  <!-- Bloque gris con datos de GitHub -->
+  @if (repoData()) {
+    <div class="bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 p-6 rounded-2xl shadow mb-8 w-full md:w-3xl lg:w-4xl mx-auto">
+      <h2 class="text-xl font-semibold mb-4 text-gray-800 dark:text-white">Información del Repositorio (solo lectura)</h2>
+
+      <p><strong>Nombre:</strong> {{ repoData().name }}</p>
+      <p><strong>Descripción:</strong> {{ repoData().description || 'Sin descripción' }}</p>
+      <p><strong>URL del Repositorio:</strong> 
+        <a [href]="repoData().repository_url" target="_blank" class="text-blue-600 dark:text-blue-400 underline">
+          {{ repoData().repository_url }}
+        </a>
+      </p>
+      <p><strong>Homepage:</strong> 
+        @if (repoData().homepage_url) {
+          <a [href]="repoData().homepage_url" target="_blank" class="text-blue-600 dark:text-blue-400 underline">
+            {{ repoData().homepage_url }}
+          </a>
+        }
+      </p>
+      <p><strong>Temas:</strong> {{ repoData().topics?.join(', ') || 'No definidos' }}</p>
+      <p><strong>Lenguajes:</strong> {{ languages() ? (languages() | json) : 'No definidos' }}</p>
+      <p><strong>Última actualización en GitHub:</strong> {{ repoData().github_updated_at }}</p>
+      <p><strong>GitHub Username:</strong> {{ githubusername() || 'No definido' }}</p>
+
+      <p class="text-sm mt-6 text-gray-500 italic">
+        *Estos datos se obtienen directamente desde GitHub. Si deseas modificarlos, deberás hacerlo en el repositorio original y luego volver a importar.
+      </p>
+    </div>
+  }
+
+  <!-- Formulario editable -->
+  <form [formGroup]="projectForm" (ngSubmit)="saveProject()" class="mx-auto my-6 bg-white dark:bg-gray-900 w-full md:w-3xl lg:w-4xl p-6 rounded-2xl shadow">
+
+    <!-- Estado -->
+    <div class="mb-4">
+      <label for="status" class="block text-gray-700 dark:text-gray-300 font-semibold">Estado</label>
+      <select id="status" formControlName="status"
+        class="w-full p-3 mt-1 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-primary focus:outline-none transition">
+        <option value="undefined">Indefinido</option>
+        <option value="in_progress">En progreso</option>
+        <option value="testing">En pruebas</option>
+        <option value="completed">En producción</option>
+        <option value="paused">Pausado</option>
+      </select>
+    </div>
+
+    <!-- Sobre el proyecto -->
+    <div class="mb-4">
+      <label for="about_project" class="block text-gray-700 dark:text-gray-300 font-semibold">Sobre el Proyecto</label>
+      <textarea id="about_project" formControlName="about_project" rows="4"
+        class="w-full p-3 mt-1 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-primary focus:outline-none transition resize-none"></textarea>
+    </div>
+
+    <!-- Imagen -->
+    <div class="mb-4">
+      <label for="main_image_url" class="block text-gray-700 dark:text-gray-300 font-semibold">Imagen Principal</label>
+      <app-image-upload (imageUploaded)="onImageUploaded($event)"></app-image-upload>
+    </div>
+
+    <!-- Vista previa imagen -->
+    @if (imageUrl()) {
+      <div class="mb-6">
+        <img 
+          [src]="projectsService.transformImageUrl(imageUrl() ?? '', 500) || 'assets/default-placeholder.png'" 
+          class="w-full rounded-lg shadow border border-gray-200 dark:border-gray-700 max-h-[400px] object-contain mx-auto" />
+      </div>
+    }
+
+    <!-- Botón guardar -->
+    <div class="mt-6 flex justify-end">
+      <button type="submit"
+        [disabled]="projectForm.invalid"
+        class="w-full sm:w-auto bg-primary hover:bg-pink-700 text-white py-2 px-6 rounded-full cursor-pointer transition-colors duration-300 ease-in-out disabled:opacity-50">
+        Guardar Proyecto
+      </button>
+    </div>
+
+  </form>
+</section>

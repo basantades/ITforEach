@@ -1,0 +1,11 @@
+@if (!showRepoSelector() && !selectedRepo()) {
+    <button (click)="toggleRepoSelector()">Publicar nuevo proyecto</button>
+  }
+  
+  @if (showRepoSelector() && !selectedRepo()) {
+    <app-select-repo (repoSelected)="onRepoSelected($event)"></app-select-repo>
+  }
+  
+  @if (selectedRepo()) {
+    <app-create-project [repoData]="projectData" (projectCreated)="onProjectCreated()"></app-create-project>
+  }

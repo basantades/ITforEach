@@ -1,59 +1,65 @@
+
 # ITforEach
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.8.
+## 📄 Descripción
 
-## Development server
+**ITforEach** es una plataforma donde desarrolladores comparten sus proyectos, descubren el trabajo de otros y se conectan con la comunidad. Permite publicar proyectos personales sincronizados con GitHub, ver el perfil de otros usuarios y explorar nuevos desarrollos.
 
-To start a local development server, run:
+## ✨ Características
 
+- **Autenticación con GitHub**: Accede de forma rápida y segura usando tu cuenta de GitHub.
+- **Explora proyectos de la comunidad**: Visualiza los proyectos publicados por otros desarrolladores.
+- **Publicación automática desde GitHub**: Al publicar un proyecto puedes indicar un repositorio y se importan automáticamente el nombre, descripción, enlace al repositorio y website si existe.
+- **Gestión de perfil**: Cada usuario tiene su propia página con sus proyectos, enlaces y biografía.
+- **Base de datos gestionada por Supabase**: Usuarios y proyectos almacenados en una base de datos relacional conectada en tiempo real.
+- **Almacenamiento de imágenes en Cloudinary**: Para una carga rápida y eficiente de imágenes de los proyectos.
+- **Diseño moderno y responsive con Tailwind CSS**.
+- **Despliegue en Vercel**: Disponible online en [https://itforeach.vercel.app](https://itforeach.vercel.app)
+
+## 💻 Tecnologías Utilizadas
+
+- **Angular CLI** versión 19.
+- **Tailwind CSS** para el diseño y maquetación.
+- **Supabase** para autenticación, almacenamiento y base de datos.
+- **Cloudinary** para la gestión de imágenes.
+- **Vercel** como plataforma de despliegue.
+
+## 📋 Requisitos
+
+- **Node.js** y **npm** instalados en tu sistema. Descárgalos desde [nodejs.org](https://nodejs.org/).
+
+## 🛠️ Instalación
+
+### **✔️ Instalación paso a paso**
+
+**1️⃣ Clona este repositorio:**
+```bash
+git clone https://github.com/basantades/ITforEach.git
+```
+
+**2️⃣ Ingresa al directorio del proyecto:**
+```bash
+cd ITforEach
+```
+
+**3️⃣ Instala las dependencias:**
+```bash
+npm install
+```
+
+## ▶️ Ejecución
+
+Para iniciar la aplicación en desarrollo:
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Abre tu navegador y accede a `http://localhost:4200/`.
 
-## Code scaffolding
+## 🤝 Contribuciones
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Este proyecto no está abierto a contribuciones externas por el momento.
 
-```bash
-ng generate component component-name
-```
+---
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Este README proporciona una guía básica para configurar y utilizar el proyecto **ITforEach**.

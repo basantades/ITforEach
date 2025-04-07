@@ -1,14 +1,11 @@
-<section class="mx-auto max-w-7xl px-4 relative">
 
-  <h1 class="text-3xl font-bold text-primary text-center mb-10">Publicar nuevo Proyecto</h1>
-
-    <div class="mx-auto my-6 w-full md:max-w-3xl lg:max-w-4xl space-y-4">
-      <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-100 text-center"> Paso 1: Selecciona un repositorio publico de tu GitHub</h2>
-      <p class="text-sm text-gray-500 dark:text-gray-400 mb-4 text-center">Asegurate de que el repositorio tenga el 'About' completado</p>
+    <div class="mx-auto mb-10 w-full md:max-w-3xl lg:max-w-4xl space-y-4">
+      <h2 class="text-xl font-semibold text-gray-800 text-center"> Paso 1: Selecciona un repositorio publico de tu GitHub</h2>
+      <p class="text-sm text-gray-500 mb-4 text-center">Asegurate de que el repositorio tenga el 'About' completado</p>
       @if (loading()) {
-        <p class="text-sm text-gray-500 dark:text-gray-400 animate-pulse">Cargando repositorios...</p>
+        <p class="text-sm text-gray-500 animate-pulse">Cargando repositorios...</p>
       } @else if (error()) {
-        <p class="text-sm text-red-500 dark:text-red-400">{{ error() }}</p>
+        <p class="text-sm text-red-500">{{ error() }}</p>
       } @else {
         <div class="flex flex-col md:flex-row md:items-center md:gap-4 gap-4">
           <select
@@ -36,4 +33,3 @@
       
       
   </div>
-</section>

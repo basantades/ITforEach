@@ -1,6 +1,16 @@
 
+
+  <section class="mx-auto max-w-7xl px-4 relative">
+
+    <h1 class="text-3xl font-bold text-primary text-center mb-10">Publicar nuevo Proyecto</h1>
+
+
+    
     <app-select-repo (repoSelected)="onRepoSelected($event)"></app-select-repo>
   
   @if (selectedRepo()) {
     <app-create-project [repoData]="projectData" (projectCreated)="onProjectCreated()"></app-create-project>
   }
+
+
+  </section>

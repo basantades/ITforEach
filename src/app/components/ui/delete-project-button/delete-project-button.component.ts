@@ -1,12 +1,14 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ProjectsService } from '../../../services/database/projects.service';
 import { ToastrService } from 'ngx-toastr';
+import { ModalComponent } from "../modal/modal.component";
 
 
 @Component({
   selector: 'app-delete-project-button',
   templateUrl: './delete-project-button.component.html',
-  styleUrls: ['./delete-project-button.component.scss']
+  styleUrls: ['./delete-project-button.component.scss'],
+  imports: [ModalComponent]
 })
 export class DeleteProjectButtonComponent {
   @Input() projectId!: number; // Recibe el ID del proyecto a eliminar

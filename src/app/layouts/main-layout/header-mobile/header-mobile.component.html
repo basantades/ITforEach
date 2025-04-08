@@ -1,0 +1,63 @@
+<nav class="fixed top-0 left-0 w-full z-40 ">
+    <div class="px-4 h-[60px]  backdrop-blur-md bg-white/90 shadow-md fixed z-50 flex justify-between items-center container mx-auto">
+      <div  class="w-1/5 flex items-center justify-center">
+
+        @if (isMenuOpen()) {
+          <app-back-button (click)="closeMenu()"></app-back-button>
+        } @else {     
+             <app-back-button></app-back-button>
+        }
+      </div>
+      <a routerLink="/" class="w-3/5 flex items-center justify-center">
+        <img src="/assets/img/ITforEach-logo.svg" alt="ITforEach Logo" class="h-5 w-auto" />
+      </a>
+  
+      <button (click)="toggleMenu()" class="text-gray-500 focus:outline-none z-50 w-1/5 flex items-center justify-center">
+        @if (!isMenuOpen()) {
+          <!-- Icono hamburguesa -->
+          <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        } @else {
+          <!-- Icono X -->
+          <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        }
+      </button>
+    </div>
+  
+    @if (isMenuOpen()) {
+      <!-- Overlay de menú -->
+      <div class="fixed top-[60px] left-0 w-full h-[calc(100vh-60px)]  backdrop-blur-md bg-white/90 z-40 p-6 overflow-y-auto">
+        <div class="w-full flex flex-col items-center gap-6 text-lg font-medium text-gray-700 pt-6">
+          <a routerLink="/discover" (click)="closeMenu()" class="hover:text-primary transition-colors">Descubre</a>
+  
+          @if (user()) {
+  
+            <div class="flex flex-col items-center gap-4 mt-4 pt-6 border-t border-gray-200">
+              @if (user()?.avatarurl) {
+                <a [routerLink]="['/', user()?.githubusername]" (click)="closeMenu()" class="hover:text-primary transition-colors">
+                <img 
+                  [src]="user()?.avatarurl || '/assets/img/default-avatar.png'" 
+                  alt="Avatar de {{ user()?.fullname || user()?.githubusername }}" 
+                  class="h-16 w-16 rounded-full object-cover border border-gray-300"
+                />
+              </a>
+              }
+              <a [routerLink]="['/', user()?.githubusername]" (click)="closeMenu()" class="hover:text-primary transition-colors">Mi Página</a>
+              <a [routerLink]="['/', 'edit-profile', user()?.githubusername]" (click)="closeMenu()" class="hover:text-primary transition-colors">Editar Perfil</a>
+              <a [routerLink]="['/', 'my-projects', user()?.githubusername]" (click)="closeMenu()" class="hover:text-primary transition-colors">Mis Proyectos</a>
+              <a [routerLink]="['/', 'new-project', user()?.githubusername]" (click)="closeMenu()" class="btn hover:text-primary transition-colors duration-300">Nuevo Proyecto</a>
+              <div class="w-full flex flex-col items-center mt-4 pt-6 border-t border-gray-200">
+                <app-logout-button (click)="closeMenu()"></app-logout-button>
+              </div>
+            </div>
+          } @else {
+            <app-login-button class="pt-6 mt-6 border-t border-gray-200"></app-login-button>
+          }
+        </div>
+      </div>
+    }
+  </nav>
+  

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ProjectsService } from '../../../services/database/projects.service';
-import { DeleteProjectButtonComponent } from '../../../components/ui/delete-project-button/delete-project-button.component';
+import { DeleteProjectButtonComponent } from '../../ui/delete-project-button/delete-project-button.component';
 import { RouterModule } from '@angular/router';
-import { LikeButtonComponent } from "../../../components/ui/like-button/like-button.component";
+import { LikeButtonComponent } from "../../ui/like-button/like-button.component";
 import { NgOptimizedImage } from '@angular/common';
 
 @Component({

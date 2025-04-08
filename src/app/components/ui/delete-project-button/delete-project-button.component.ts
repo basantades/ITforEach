@@ -18,11 +18,12 @@ export class DeleteProjectButtonComponent {
 
   constructor(private projectsService: ProjectsService, private toastr: ToastrService) {}
 
-  showConfirmation(): void {
+  showConfirmation() {
     this.confirmDelete = true;
   }
 
-  cancelDelete(): void {
+
+  cancelDelete() {
     this.confirmDelete = false;
   }
 
@@ -31,7 +32,7 @@ export class DeleteProjectButtonComponent {
     this.projectsService.delete(this.projectId).then(() => {
       this.projectDeleted.emit(this.projectId); // Emite el evento al componente padre
       this.confirmDelete = false;
-      this.toastr.success('Proyecto eliminado correctamente', 'Eliminación exitosa');
+      this.toastr.success('Proyecto eliminado correctamente', 'Eliminado con exito');
 
     }).catch((error) => {
       console.error(`❌ Error al eliminar el proyecto con ID ${this.projectId}:`, error);
@@ -39,4 +40,9 @@ export class DeleteProjectButtonComponent {
 
     });
   }
+
+
+
+
+
 }

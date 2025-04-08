@@ -3,7 +3,7 @@ import { ProjectsService } from '../../../services/database/projects.service';
 import { Project } from '../../../interfaces/project';
 import { RouterModule } from '@angular/router';
 import { NgOptimizedImage } from '@angular/common';
-import { LikeButtonComponent } from "../../../components/ui/like-button/like-button.component";
+import { LikeButtonComponent } from "../../ui/like-button/like-button.component";
 
 @Component({
   selector: 'app-projects-by-user',

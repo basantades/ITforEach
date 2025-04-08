@@ -1,7 +1,7 @@
 <app-back-button text="Volver"></app-back-button>
 
-<footer class="bg-secondary  text-white/70 py-6">
-    <div class="px-4 container mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 text-center md:text-left pt-4">
+<footer class="bg-secondary text-white/70 py-4 md:py-6 mt-6">
+    <div class="px-4 container mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 text-center md:text-left pt-2 md:pt-4">
 
      <div class="flex justify-center items-center md:order-2 opacity-70 hover:opacity-100 transition-opacity duration-300">
         <a routerLink="/" class="btn cursor-pointer logo-container">
@@ -10,12 +10,12 @@
           </a>
      </div>
 
-      <div class="flex flex-col md:flex-row md:justify-start md:items-center gap-4 font-medium text-lg md:order-1">
+      <div class="flex flex-col md:flex-row md:justify-start md:items-center gap-2 md:gap-4 font-medium text-lg md:order-1">
         <a routerLink="/discover" class="hover:text-primary transition-colors duration-300">Descubre</a>
         <a href="mailto:itforeach2025@gmail.com" class="hover:text-primary transition-colors duration-300">Contacto</a>
       </div>
 
-      <div class="flex mt-4 md:mt-0 items-center justify-center md:justify-end gap-4 text-sm order-3">
+      <div class="flex items-center justify-center md:justify-end gap-4 text-sm order-3">
         <a href="mailto:itforeach2025@gmail.com" target="_blank" class="inline-block">
           <button class=" border-1 border-gray-700 p-1 rounded-full transition duration-300 ease-in-out transform hover:text-white hover:bg-primary hover:border-primary hover:scale-110 cursor-pointer">
             <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
@@ -35,15 +35,16 @@
       </div>
     </div>
   
-    <div class=" container mx-auto mt-6 border-t border-white/20 pt-6 text-center flex flex-col md:flex-row  gap-3 items-center justify-center">
+    <div class=" container mx-auto mt-6 border-t border-white/20 pt-4 md:pt-6 text-center flex flex-col md:flex-row  gap-3 items-center justify-center">
       <p class="text-sm">
         &copy; 2025 ITforEach. Todos los derechos reservados.
       </p>
+      <div class="flex items-center gap-2">
       <img src="/assets/img/ITforEach-isotipo-white.svg" alt="ITforEach isotipo" class="h-5 w-auto opacity-70" >
       <p class="text-sm">
         <span>Creado por</span><a href="https://github.com/basantades/ITforEach" target="_blank" class="font-medium hover:text-primary transition-colors duration-300">
           basantades
         </a>      </p>
-
+      </div>
     </div>
   </footer>

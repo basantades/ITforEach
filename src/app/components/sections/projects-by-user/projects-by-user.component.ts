@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { ProjectsService } from '../../../services/database/projects.service';
 import { Project } from '../../../interfaces/project';
 import { RouterModule } from '@angular/router';
@@ -11,9 +11,9 @@ import { LikeButtonComponent } from "../../ui/like-button/like-button.component"
   templateUrl: './projects-by-user.component.html',
   styleUrl: './projects-by-user.component.scss'
 })
-export class ProjectsByUserComponent implements OnInit {
-  @Input() githubusername!: string; // Recibir el username del usuario desde el componente padre
-  projects: Project[] = []; // Almacenar los proyectos del usuario
+export class ProjectsByUserComponent implements OnInit, OnChanges {
+  @Input() githubusername!: string;
+  projects: Project[] = [];
 
   constructor(public projectsService: ProjectsService) {}
 
@@ -21,9 +21,15 @@ export class ProjectsByUserComponent implements OnInit {
     await this.loadProjectsByUser();
   }
 
+  async ngOnChanges(changes: SimpleChanges) {
+    if (changes['githubusername'] && !changes['githubusername'].firstChange) {
+      await this.loadProjectsByUser(); // 🔁 Vuelve a cargar si cambia el username
+    }
+  }
+
   async loadProjectsByUser() {
     try {
-      const projects = await this.projectsService.getUserProjects(this.githubusername); // Asegúrate de que se use githubusername
+      const projects = await this.projectsService.getUserProjects(this.githubusername);
       this.projects = projects;
     } catch (error) {
       console.error('❌ Error cargando proyectos del usuario:', error);

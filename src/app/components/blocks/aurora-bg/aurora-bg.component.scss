@@ -1,0 +1,110 @@
+
+  #slider {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(300deg, #7744B3 0%, #E6007E 70%, #FFC2E2 100%);
+    // min-height: 100vh;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+  }
+  
+  /* Bola 1 */
+  .bolaMov1 {
+    background-color: #FFC2E2;
+    opacity: 70%;
+    filter: blur(100px);
+    width: 480px;
+    height: 350px;
+    border-radius: 50%;
+    position: absolute;
+    left: -10px;
+    bottom: 40px;
+    z-index: 4;
+    animation: rotar 8s infinite ease-in-out;
+    transform-origin: 50% -100%;
+  }
+  
+  /* Bola 2 */
+  .bolaMov2 {
+    background-color: #E6007E;
+    opacity: 60%;
+    filter: blur(60px);
+    width: 300px;
+    height: 320px;
+    border-radius: 50%;
+    position: absolute;
+    top: 130px;
+    right: 20%;
+    z-index: 5;
+    animation: gradient 6s infinite;
+  }
+  
+  /* Bola 3 */
+  .bolaMov3 {
+    background-color: #e63c99;
+    filter: blur(40px);
+    width: 400px;
+    height: 320px;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    z-index: 8;
+    animation: rotar 12s infinite ease-in-out;
+    transform-origin: -50% 100%;
+  }
+  
+  /* Bola 4 */
+  .bolaMov4 {
+    background-color: #E6007E;
+    opacity: 90%;
+    filter: blur(100px);
+    width: 360px;
+    height: 600px;
+    border-radius: 50%;
+    position: absolute;
+    bottom: -30%;
+    right: -30%;
+    z-index: 1;
+    animation: gradient 7s infinite;
+  }
+  
+  /* Bola 5 */
+  .bolaMov5 {
+    background-color: #FFC2E2;
+    opacity: 70%;
+    filter: blur(50px);
+    width: 200px;
+    height: 90px;
+    border-radius: 50%;
+    position: absolute;
+    top: 55%;
+    left: 55%;
+    z-index: 6;
+    animation: rotar 5s infinite;
+    transform-origin: -100% -120%;
+  }
+  
+  @keyframes rotar {
+    0% {
+      transform: rotate(0deg);
+      opacity: 0.5;
+    }
+    50% {
+      transform: rotate(50deg) scale(0.5);
+      opacity: 0.9;
+    }
+    100% {
+      transform: rotate(0deg);
+      opacity: 0.5;
+    }
+  }
+  
+  @keyframes gradient {
+    60% {
+      transform: scale(1.5) translate(-70%, -20%);
+    }
+  }
+  

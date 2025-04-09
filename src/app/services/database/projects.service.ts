@@ -48,7 +48,7 @@ export class ProjectsService {
       const { data, error } = await this.supabaseService.client
         .from(this.table)
         .select('*')
-        .order('created_at', { ascending: false }) 
+        .order('updated_at', { ascending: false }) 
 
         .eq('githubusername', username);
   
@@ -76,7 +76,7 @@ export class ProjectsService {
       const { data, error } = await this.supabaseService.client
         .from(this.table)
         .select('*')
-        .order('created_at', { ascending: false }) 
+        .order('updated_at', { ascending: false }) 
         .eq('user_id', userId);
   
       if (error) {
@@ -130,7 +130,7 @@ export class ProjectsService {
     const { data, error, count } = await this.supabaseService.client
       .from(this.table)
       .select('*', { count: 'exact' }) // Obtener total de registros
-      .order('created_at', { ascending: false }) // Ordenar por fecha de creación
+      .order('updated_at', { ascending: false }) // Ordenar por fecha de creación
       .range(from, to); // Paginación
 
     if (error) {
@@ -143,5 +143,38 @@ export class ProjectsService {
 
   transformImageUrl(imageUrl: string, width: number = 500, height: number = 281): string {
     return imageUrl.replace('/upload/', `/upload/c_fill,w_${width},h_${height},q_auto/`);
+  }
+
+
+
+
+  async update(projectId: string, updatedData: Partial<Project>): Promise<void> {
+    const { error } = await this.supabaseService.client
+      .from(this.table)
+      .update(updatedData)
+      .eq('id', projectId); // ✅ FIX: usar 'id' en lugar de 'project_id'
+  
+    if (error) {
+      console.error('❌ Error al actualizar proyecto en Supabase:', error);
+      this.toastr.error('Error al actualizar el proyecto.', 'Error');
+      throw error;
+    }
+  
+    this.toastr.success('Proyecto actualizado correctamente.', 'Éxito');
+  }
+
+  async getLatestProjects(limit: number = 4): Promise<Project[]> {
+    const { data, error } = await this.supabaseService.client
+      .from(this.table)
+      .select('*')
+      .order('updated_at', { ascending: false }) // Cambiar a 'created_at' si prefieres
+      .limit(limit);
+  
+    if (error) {
+      console.error('❌ Error al obtener los últimos proyectos:', error);
+      throw error;
+    }
+  
+    return data as Project[];
   }
 }

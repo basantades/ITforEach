@@ -1,5 +1,5 @@
-<nav class="opacity-0 animate-fade-slide-down fixed top-0 left-0 w-full bg-white/80 backdrop-blur-md shadow-md z-40">
-  <div class="px-4 min-h-[80px] container mx-auto flex justify-between items-center gap-12 py-4 relative text-gray-700 text-lg font-medium">
+<nav class=" fixed top-0 left-0 w-full bg-white/80 backdrop-blur-md shadow-md z-40">
+  <div class="opacity-0 animate-fade-slide-down px-4 min-h-[80px] container mx-auto flex justify-between items-center gap-12 py-4 relative text-gray-700 text-lg font-medium">
     <div class="flex items-center gap-8">
       <a routerLink="/">
         <img src="/assets/img/ITforEach-logo.svg" alt="ITforEach Logo" class="h-7 w-auto logo-slide-left" />
@@ -10,7 +10,7 @@
       @if (user()) {
         <div class="flex items-center gap-4 lg:gap-8">
           <a [routerLink]="['/', 'new-project', user()?.githubusername]" 
-          class="hidden lg:block hover:bg-primary border-primary border text-primary hover:text-white py-2 px-6 rounded-full cursor-pointer transition-colors duration-300 font-medium text-base flex items-center gap-2" 
+          class="hidden lg:block hover:bg-primary border-primary border hover:border-white/0 text-primary hover:text-white py-2 px-6 rounded-full cursor-pointer transition-colors duration-300 font-medium text-base flex items-center gap-2" 
           >
           Nuevo Proyecto
         </a>
@@ -47,7 +47,9 @@
         </div>
       }
       @else {
+        <div class="bg-gray-700 text-white rounded-full hover:bg-primary">
         <app-login-button></app-login-button>
+      </div>
       }
     </div>
   </div>

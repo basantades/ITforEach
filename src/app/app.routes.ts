@@ -7,9 +7,9 @@ import { HomeComponent } from './pages/home/home.component';
 import { ProjectInfoComponent } from './pages/project-page/project-page.component';
 import { DiscoverComponent } from './pages/discover/discover.component';
 import { EditProfileComponent } from './pages/edit-profile/edit-profile.component';
-import { NewProjectComponent } from './pages/new-project/new-project.component';
 import { MyProjectsComponent } from './pages/my-projects/my-projects.component';
 import { EditProjectComponent } from './pages/edit-project/edit-project.component';
+import { NewProjectV2Component } from './pages/new-project-v2/new-project-v2.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -28,7 +28,7 @@ export const routes: Routes = [
   },
   {
     path: 'new-project/:githubusername',
-    component: NewProjectComponent,
+    component: NewProjectV2Component,
     canActivate: [AuthGuard, OwnerGuard], 
     resolve: { user: UserResolver } 
   },

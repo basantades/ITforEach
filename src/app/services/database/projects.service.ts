@@ -48,7 +48,7 @@ export class ProjectsService {
       const { data, error } = await this.supabaseService.client
         .from(this.table)
         .select('*')
-        .order('created_at', { ascending: false }) 
+        .order('updated_at', { ascending: false }) 
 
         .eq('githubusername', username);
   
@@ -76,7 +76,7 @@ export class ProjectsService {
       const { data, error } = await this.supabaseService.client
         .from(this.table)
         .select('*')
-        .order('created_at', { ascending: false }) 
+        .order('updated_at', { ascending: false }) 
         .eq('user_id', userId);
   
       if (error) {
@@ -130,7 +130,7 @@ export class ProjectsService {
     const { data, error, count } = await this.supabaseService.client
       .from(this.table)
       .select('*', { count: 'exact' }) // Obtener total de registros
-      .order('created_at', { ascending: false }) // Ordenar por fecha de creación
+      .order('updated_at', { ascending: false }) // Ordenar por fecha de creación
       .range(from, to); // Paginación
 
     if (error) {

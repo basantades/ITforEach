@@ -13,14 +13,20 @@
     :root {
       --color-primary: #E6007E;
       --color-secondary: #1F1F1F;
+      --gradient-primary: linear-gradient(15deg, #7744B3 0%, #E6007E 75%);
+      --gradient-primary-hover: linear-gradient(195deg, #7744B3 0%, #E6007E 75%);
+
     }
   }
   
   @layer utilities {
+
     .text-primary {
       color: var(--color-primary);
     }
     .bg-primary {
+      background: var(--gradient-primary);
+
       background-color: var(--color-primary);
     }
     .bg-primary-10 {
@@ -36,9 +42,12 @@
       border-color: var(--color-primary);
     }
     .hover\:text-primary:hover {
+      
       color: var(--color-primary);
     }
     .hover\:bg-primary:hover {
+      background: var(--gradient-primary-hover);
+
       background-color: var(--color-primary);
     }
     .hover\:border-primary:hover {

@@ -2,15 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { ProjectsService } from '../../../services/database/projects.service';
 import { DeleteProjectButtonComponent } from '../../ui/delete-project-button/delete-project-button.component';
 import { RouterModule } from '@angular/router';
-import { LikeButtonComponent } from "../../ui/like-button/like-button.component";
-import { NgOptimizedImage } from '@angular/common';
-import { EditProjectComponent } from "../../../pages/edit-project/edit-project.component";
+import { LikeCounterComponent } from "../../ui/like-counter/like-counter.component";
 
 @Component({
   selector: 'app-user-projects-list',
   templateUrl: './user-projects-list.component.html',
   styleUrls: ['./user-projects-list.component.scss'],
-  imports: [DeleteProjectButtonComponent, RouterModule, LikeButtonComponent, NgOptimizedImage, EditProjectComponent]
+  imports: [DeleteProjectButtonComponent, RouterModule, LikeCounterComponent]
 })
 export class UserProjectsListComponent implements OnInit {
   userProjects: any[] = [];

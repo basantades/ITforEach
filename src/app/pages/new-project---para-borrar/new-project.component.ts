@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Repo } from '../../interfaces/repo';
 import { Project } from '../../interfaces/project';
 import { User } from '../../interfaces/user';
-import { SelectRepoComponent } from './select-repo/select-repo.component';
+import { SelectRepoComponent } from '../../components/blocks/select-repo/select-repo.component';
 import { CreateProjectComponent } from './create-project/create-project.component';
 
 

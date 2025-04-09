@@ -1,0 +1,92 @@
+
+
+<!-- <form class="space-y-6" [formGroup]="projectForm" (ngSubmit)="save()">
+    <div>
+      <label for="status" class="block text-sm font-medium text-gray-700">Estado del proyecto</label>
+      <select id="status" formControlName="status" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm">
+        <option value="undefined">Indefinido</option>
+        <option value="in_progress">En progreso</option>
+        <option value="testing">En pruebas</option>
+        <option value="completed">Publicado</option>
+        <option value="paused">Pausado</option>
+      </select>
+    </div>
+  
+    <div>
+      <label for="about_project" class="block text-sm font-medium text-gray-700">Descripción del proyecto</label>
+      <textarea id="about_project" rows="5" formControlName="about_project" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm resize-none"></textarea>
+    </div>
+  
+    <div>
+      <label for="main_image_url" class="block text-sm font-medium text-gray-700">Imagen principal</label>
+      <input id="main_image_url" type="text" formControlName="main_image_url" (input)="onUrlChanged($event)" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm" placeholder="https://..." />
+      <div class="mt-4">
+        <app-image-upload (imageUploaded)="onImageUploaded($event)"></app-image-upload>
+      </div>
+  
+      @if (imageUrl()) {
+        <div class="mt-4">
+          <img [src]="imageUrl()" alt="Imagen subida" class="max-w-xs rounded-md shadow" />
+        </div>
+      }
+    </div>
+  
+    <div class="flex justify-end">
+      <button type="submit"
+        class="bg-primary hover:bg-gray-800 text-white py-2 px-6 rounded-full font-medium transition-colors duration-300 flex items-center gap-2">
+        {{ mode === 'edit' ? 'Actualizar Proyecto' : 'Publicar Proyecto' }}
+      </button>
+    </div>
+  </form> -->
+  
+
+  <!-- Formulario editable -->
+  <form [formGroup]="projectForm" (ngSubmit)="save()" class=" mx-auto my-6 w-full md:max-w-3xl lg:max-w-4xl">
+
+    <!-- Estado -->
+    <div class="mb-4">
+      <label for="status" class="block text-gray-700 font-semibold">Estado del Proyecto</label>
+      <select id="status" formControlName="status"
+      class="w-full p-3 mt-1 rounded-lg bg-white text-gray-700 ring-1 ring-gray-300 hover:ring-primary focus:ring-primary focus:outline-none transition cursor-pointer"
+      >
+        <option value="undefined">Indefinido</option>
+        <option value="in_progress">En progreso</option>
+        <option value="testing">En pruebas</option>
+        <option value="completed">Publicado</option>
+        <option value="paused">Pausado</option>
+      </select>
+    </div>
+
+ 
+
+    <!-- Imagen -->
+    <div class="mb-4">
+      <label for="main_image_url" class="block text-gray-700 font-semibold">Imagen Principal <span class="text-sm" >(Recomendado: proporciones 16/9 y ancho mínimo de 1024px)</span></label>
+      <div class="flex flex-col md:flex-row md:items-end gap-1">
+
+        <app-upload-img [initialImageUrl]="imageUrl()" (imageUploaded)="onImageUploaded($event)"></app-upload-img>
+
+        <p class="text-sm py-2 md:ms-3 text-gray-500 italic"><span class="font-semibold" >Atención:</span> Puede ser un logo, captura de pantalla, mockup, etc... Pero es muy importante tener portada de tu proyecto. 
+        </p>
+      </div>
+
+    </div>
+
+       <!-- Sobre el proyecto -->
+       <div class="mb-4">
+        <label for="about_project" class="block text-gray-700 font-semibold">Sobre el Proyecto</label>
+        <textarea id="about_project" formControlName="about_project" rows="4"
+          class="w-full p-3 mt-1 rounded-lg bg-white ring-1 ring-gray-300 hover:ring-primary focus:ring-primary focus:outline-none transition resize-none"></textarea>
+  
+      </div>
+
+    <!-- Botón guardar -->
+    <div class="mt-6 flex justify-end">
+      <button type="submit"
+        [disabled]="projectForm.invalid"
+        class="w-full sm:w-auto bg-primary hover:bg-pink-700 text-white py-2 px-6 rounded-full cursor-pointer transition-colors duration-300 ease-in-out disabled:opacity-50">
+        Guardar Proyecto
+      </button>
+    </div>
+
+  </form>

@@ -162,4 +162,19 @@ export class ProjectsService {
   
     this.toastr.success('Proyecto actualizado correctamente.', 'Éxito');
   }
+
+  async getLatestProjects(limit: number = 4): Promise<Project[]> {
+    const { data, error } = await this.supabaseService.client
+      .from(this.table)
+      .select('*')
+      .order('updated_at', { ascending: false }) // Cambiar a 'created_at' si prefieres
+      .limit(limit);
+  
+    if (error) {
+      console.error('❌ Error al obtener los últimos proyectos:', error);
+      throw error;
+    }
+  
+    return data as Project[];
+  }
 }

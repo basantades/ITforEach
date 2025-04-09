@@ -2,13 +2,22 @@
 <div class="flex flex-col items-center justify-center grow">
 @if (user()) {
     
-      <h1 class="text-3xl text-primary">Bienvenido a ITforEach, {{ user()?.fullname }}</h1>
+      <div class="flex justify-center">
+        <h1 class="text-3xl font-bold text-gradient-primary my-6">Bienvenido a ITforEach, {{ user()?.fullname }}</h1>
+        </div>
       <a [routerLink]="['/', 'new-project', user()?.githubusername]" class="btn">
       <h2>Comparte tus proyectos de GitHub en solo 3 clicks</h2></a>
   }
   @else {
-    <h1  class="text-3xl text-primary">Unete a ITforEach y comparte tus proyectos</h1>
+    <div class="flex justify-center">
+      <h1 class="text-3xl font-bold text-gradient-primary my-6">Unete a ITforEach y comparte tus proyectos</h1>
+      </div>
     <h2>Login en 2 clicks con GitHub</h2>
     <app-login-button></app-login-button>
   }
 </div>
+
+<div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+ <p class="text-white">Holaaaaaaaaaaaaaaaaa</p>
+</div>
+<app-aurora-bg>hola </app-aurora-bg>

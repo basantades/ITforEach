@@ -1,9 +1,10 @@
 
     @if (project) {
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 class="text-xl md:text-2xl lg:text-3xl font-bold text-gray-800 text-left break-words mb-8">
-          {{ project.name }}
-        </h1>
+        <div class="flex justify-center">
+          <h1 class="text-3xl font-bold text-gradient-primary my-6">{{ project.name }}</h1>
+          </div>
+
     
         <div class="flex flex-col lg:flex-row items-stretch gap-8">
           
@@ -134,7 +135,7 @@
                 </a>
               }
               @if (project.homepage_url) {
-                <a [href]="project.homepage_url" target="_blank" class="bg-primary hover:bg-pink-700 text-white py-2 px-6 rounded-full text-center transition-colors duration-300">
+                <a [href]="project.homepage_url" target="_blank" class="bg-primary hover:bg-primary text-white py-2 px-6 rounded-full text-center transition-colors duration-300">
                   Ir a la web del proyecto
                 </a>
               }

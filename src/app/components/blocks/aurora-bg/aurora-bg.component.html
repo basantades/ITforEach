@@ -1,16 +1,16 @@
 <div id="slider" class="w-full h-[500px]">
     
-  <div class="flex flex-col items-center justify-center grow z-10 h-full">
+  <div class="flex flex-col items-center justify-center absolute inset-0 z-20 h-[500px] px-4">
     @if (user()) {
         
-          <div class="flex justify-center text-white ">
+          <div class="flex justify-center items-center text-center text-white ">
             <h1 class="text-3xl font-bold my-6">Bienvenido a ITforEach, {{ user()?.fullname }}</h1>
             </div>
           <a [routerLink]="['/', 'new-project', user()?.githubusername]" class="btn">
           <h2>Comparte tus proyectos de GitHub en solo 3 clicks</h2></a>
       }
       @else {
-        <div class="flex justify-center text-white ">
+        <div class="flex justify-center items-center text-center text-white ">
           <h1 class="text-3xl font-bold  my-6">Unete a ITforEach y comparte tus proyectos</h1>
           </div>
         <h2>Login en 2 clicks con GitHub</h2>

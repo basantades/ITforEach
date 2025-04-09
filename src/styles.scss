@@ -15,6 +15,7 @@
       --color-secondary: #1F1F1F;
       --gradient-primary: linear-gradient(15deg, #7744B3 0%, #E6007E 75%);
       --gradient-primary-hover: linear-gradient(195deg, #7744B3 0%, #E6007E 75%);
+      --gradient-disable: linear-gradient(15deg, #8a8a8a 0%, #b8b8b8 75%);
 
     }
   }
@@ -27,7 +28,7 @@
     .bg-primary {
       background: var(--gradient-primary);
 
-      background-color: var(--color-primary);
+      // background-color: var(--color-primary);
     }
     .bg-primary-10 {
       background-color: rgba(230, 0, 126, 0.1);
@@ -45,10 +46,20 @@
       
       color: var(--color-primary);
     }
+    .text-gradient-primary {
+      background: var(--gradient-primary-hover);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+    }
     .hover\:bg-primary:hover {
       background: var(--gradient-primary-hover);
 
-      background-color: var(--color-primary);
+      // background-color: var(--color-primary);
+    }
+    .disabled\:bg-primary:disabled {
+      background: var(--gradient-disable);
     }
     .hover\:border-primary:hover {
       border-color: var(--color-primary);

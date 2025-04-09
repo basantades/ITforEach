@@ -1,0 +1,35 @@
+@if (project()) {
+    <div class="bg-gray-100 text-gray-500 p-4 md:p-6 rounded-2xl shadow mb-8 w-full md:max-w-3xl lg:max-w-4xl mx-auto">
+      <h2 class="text-xl font-semibold mb-4 text-gray-800">Información del Repositorio (solo lectura)</h2>
+  
+      <p><strong>Nombre:</strong> {{ project()?.name }}</p>
+      <p  class="mb-4"><strong>URL del Repositorio: </strong> 
+        <a [href]="project()?.repository_url" target="_blank" class=" hidden sm:inline hover:text-primary transition-colors duration-300 underline break-words text-balance">
+        {{ project()?.repository_url }}
+        </a>
+        <a [href]="project()?.repository_url" target="_blank" class="sm:hidden hover:text-primary transition-colors duration-300 underline break-words text-balance">
+          Link al repositorio
+          </a>
+      </p>
+      <p><strong>Descripción:</strong> {{ project()?.description || 'Sin descripción' }}<span class="text-primary font-semibold">*</span></p>
+        @if (project()?.homepage_url) {
+          <p><strong>Website del Proyecto: </strong>
+          <a [href]="project()?.homepage_url" target="_blank" class="hidden sm:inline hover:text-primary transition-colors duration-300 underline break-words text-balance">
+          {{ project()?.homepage_url }}
+          </a>
+          <a [href]="project()?.homepage_url" target="_blank" class=" sm:hidden hover:text-primary transition-colors duration-300 underline break-words text-balance">
+            Link a la web
+            </a>
+        </p>
+        } @else {
+            <p><strong>Website del Proyecto: </strong> 
+              No definido.<span class="text-primary font-semibold">*</span></p> 
+       }
+      
+      <p><strong>Etiquetas:</strong> {{ project()?.topics?.join(', ') || 'No definidas' }}<span class="text-primary font-semibold">*</span></p>
+  
+      <p class="text-sm mt-6 text-gray-500 italic">
+        <span class="text-primary font-semibold text-base" >*</span>Estos datos se obtienen directamente desde GitHub. Si deseas modificar la descripción, el website o las etiquetas que se muestran, deberás hacerlo en el <a [href]="project()?.repository_url" target="_blank" class="hover:text-primary transition-colors duration-300 underline font-semibold">About de tu repositorio de GitHub</a> y luego volver a importar.
+      </p>
+    </div>
+  }

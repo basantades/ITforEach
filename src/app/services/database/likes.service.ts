@@ -83,16 +83,16 @@ export class LikesService {
   async getLikesCount(projectId: number): Promise<number> {
     const { data, error } = await this.supabaseService.client
       .from('project_likes_count') // Vista creada en Supabase
-      .select('like_count')
+      .select('likes')
       .eq('project_id', projectId)
       .maybeSingle();
-
+  
     if (error) {
       console.error('❌ Error al obtener la cantidad de likes:', error);
       throw error;
     }
-
-    return data?.like_count ?? 0; // Si no hay datos, retorna 0
+  
+    return data?.likes ?? 0;
   }
 
   /**

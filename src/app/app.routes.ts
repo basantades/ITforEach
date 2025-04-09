@@ -9,10 +9,17 @@ import { DiscoverComponent } from './pages/discover/discover.component';
 import { EditProfileComponent } from './pages/edit-profile/edit-profile.component';
 import { NewProjectComponent } from './pages/new-project/new-project.component';
 import { MyProjectsComponent } from './pages/my-projects/my-projects.component';
+import { EditProjectComponent } from './pages/edit-project/edit-project.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'discover', component: DiscoverComponent },
+    {
+      path: ':githubusername/:projectName/edit',
+      component: EditProjectComponent,
+      canActivate: [AuthGuard, OwnerGuard], // solo propietario
+      resolve: { user: UserResolver } // Obtiene el usuario antes de cargar la página
+    },
   {
     path: 'my-projects/:githubusername',
     component: MyProjectsComponent,
@@ -31,6 +38,7 @@ export const routes: Routes = [
   canActivate: [AuthGuard, OwnerGuard], // solo propietario
   resolve: { user: UserResolver } // Obtiene el usuario antes de cargar la página
 },
+
 { path: ':githubusername/:projectName', component: ProjectInfoComponent},
 
   { path: ':githubusername', component: UserPageComponent },

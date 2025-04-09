@@ -7,16 +7,14 @@
 @if (userProjects.length > 0) {
   <ul class="space-y-8">
     @for (project of userProjects; track project.id) {
-      <li class="bg-white shadow rounded-2xl overflow-hidden flex flex-col md:flex-row gap-2 md:gap-6 md:p-2">
+      <li class="bg-white shadow rounded md:rounded-2xl overflow-hidden flex flex-col md:flex-row gap-2 md:gap-6 md:p-2">
         
         <!-- Imagen -->
-        <div class="md:w-1/4 w-full aspect-video bg-gray-200 overflow-hidden rounded-xl md:m-2">
+        <div class="md:w-1/4 md:m-2">
           <img
-            [ngSrc]="project.main_image_url || '/assets/img/default-placeholder.webp'"
+            [src]="project.main_image_url || '/assets/img/default-placeholder.webp'"
             alt="{{ project.name }}"
-            class="object-cover w-full h-full"
-            width="320"
-            height="180"
+            class=" w-full overflow-hidden rounded "
           />
         </div>
 
@@ -66,9 +64,15 @@
 
             <app-like-button [projectId]="project.id!"></app-like-button>
           </div>
+          
+          <a [routerLink]="['/', project.githubusername, project.name, 'edit']" 
+          class="w-full hover:bg-primary border-primary border text-primary text-center hover:text-white py-2 px-6 rounded-full cursor-pointer transition-colors duration-300 font-medium text-base" 
+          >
+          Actualizar
+        </a>
 
           <!-- Botón eliminar -->
-          <app-delete-project-button
+          <app-delete-project-button class="w-full"
             [projectId]="project.id"
             (projectDeleted)="onProjectDeleted($event)">
           </app-delete-project-button>

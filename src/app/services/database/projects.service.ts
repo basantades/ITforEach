@@ -144,4 +144,22 @@ export class ProjectsService {
   transformImageUrl(imageUrl: string, width: number = 500, height: number = 281): string {
     return imageUrl.replace('/upload/', `/upload/c_fill,w_${width},h_${height},q_auto/`);
   }
+
+
+
+
+  async update(projectId: string, updatedData: Partial<Project>): Promise<void> {
+    const { error } = await this.supabaseService.client
+      .from(this.table)
+      .update(updatedData)
+      .eq('id', projectId); // ✅ FIX: usar 'id' en lugar de 'project_id'
+  
+    if (error) {
+      console.error('❌ Error al actualizar proyecto en Supabase:', error);
+      this.toastr.error('Error al actualizar el proyecto.', 'Error');
+      throw error;
+    }
+  
+    this.toastr.success('Proyecto actualizado correctamente.', 'Éxito');
+  }
 }

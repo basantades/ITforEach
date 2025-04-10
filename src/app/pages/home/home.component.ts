@@ -2,11 +2,12 @@ import { Component, inject } from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service';
 import { AuroraBgComponent } from "../../components/blocks/aurora-bg/aurora-bg.component";
 import { LatestProjectsComponent } from "../../components/blocks/latest-projects/latest-projects.component";
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [AuroraBgComponent, LatestProjectsComponent],
+  imports: [AuroraBgComponent, LatestProjectsComponent, RouterLink],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })

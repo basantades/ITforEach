@@ -1,10 +1,10 @@
 @if (projects.length > 0) {
   
-<div class="flex justify-center">
+<div class="flex justify-center min-w-1/2">
 <h1 class="text-3xl font-bold text-gradient-primary my-6">Proyectos</h1>
 </div>
 
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
     @for (project of projects; track project.id; let i = $index) {
       <div class="p-2 opacity-0 animate-fade-zoom" [style.animationDelay]="i * 100 + 'ms'">
         <a [routerLink]="['/', project.githubusername, project.name]">

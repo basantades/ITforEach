@@ -14,12 +14,21 @@
           >
           Nuevo Proyecto
         </a>
-            <a [routerLink]="['/', user()?.githubusername]" class="hidden md:block btn hover:text-primary transition-colors duration-300">Mi Página</a>
+            <!-- <a [routerLink]="['/', user()?.githubusername]" class="hidden md:block btn hover:text-primary transition-colors duration-300">Mi Página</a> -->
         <div class="relative group">
           <!-- user y avatar -->
           <a [routerLink]="['/', user()?.githubusername]" class="btn">
           <div class="cursor-pointer flex items-center gap-4">
-          
+            <div class="flex items-center gap-1">
+              
+              <div class="hidden md:block">
+                Menú de Usuario
+              </div>
+              <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7"/>
+              </svg>
+            </div>
+         
             @if (user()?.avatarurl) {
               <img 
                 [src]="user()?.avatarurl || '/assets/img/default-avatar.png'" 
@@ -33,11 +42,12 @@
           <div 
             class="min-w-[240px] font-normal flex flex-col gap-6 shadow-md absolute top-12 right-0 bg-white/95 backdrop-blur-md rounded-lg p-8 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-300"
           >
-          <a [routerLink]="['/', 'new-project', user()?.githubusername]" class="btn hover:text-primary transition-colors duration-300">Nuevo Proyecto</a>
-          <a [routerLink]="['/', 'my-projects', user()?.githubusername]" class="btn hover:text-primary transition-colors duration-300">Mis Proyectos</a>
+          <a [routerLink]="['/', user()?.githubusername]" class=" btn hover:text-primary transition-colors duration-300">Mi Página</a>
+          <a [routerLink]="['/', 'edit-profile', user()?.githubusername]" class="btn hover:text-primary transition-colors duration-300">Editar Perfil</a>
           <div class="pt-6 border-t border-gray-200 w-full ">
-            <a [routerLink]="['/', 'edit-profile', user()?.githubusername]" class="btn hover:text-primary transition-colors duration-300">Editar Perfil</a>
+            <a [routerLink]="['/', 'my-projects', user()?.githubusername]" class="btn hover:text-primary transition-colors duration-300">Mis Proyectos</a>
           </div>
+          <a [routerLink]="['/', 'new-project', user()?.githubusername]" class="btn hover:text-primary transition-colors duration-300">Nuevo Proyecto</a>
 
             <div class="pt-6 border-t border-gray-200 w-full ">
               <app-logout-button></app-logout-button>

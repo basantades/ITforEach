@@ -2,12 +2,6 @@
 
 @if (userProjects.length === 0) {
   <p class="text-gray-500 mb-6">No tienes proyectos creados.</p>
-
-  <a [routerLink]="['/', 'new-project', authService.userSignal()?.githubusername]" 
-  class="bg-primary hover:bg-primary text-white py-2 px-6 rounded-full cursor-pointer transition-colors duration-300 font-medium my-6" 
-  >
-  Nevo Proyecto
-</a>
 }
 
 @if (userProjects.length > 0) {
@@ -126,4 +120,12 @@
   </ul>
 }
 
+<div class="my-12">
 
+
+<a [routerLink]="['/', 'new-project', authService.userSignal()?.githubusername]" 
+class="bg-primary hover:bg-primary text-white py-2 px-6 rounded-full cursor-pointer transition-colors duration-300 font-medium " 
+>
+Nevo Proyecto
+</a>
+</div>

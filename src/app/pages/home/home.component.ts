@@ -1,13 +1,14 @@
 import { Component, inject } from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service';
 import { AuroraBgComponent } from "../../components/blocks/aurora-bg/aurora-bg.component";
-import { LatestProjectsComponent } from "../../components/blocks/latest-projects/latest-projects.component";
+import { LatestProjectsComponent } from "../../components/sections/latest-projects/latest-projects.component";
 import { RouterLink } from '@angular/router';
+import { DiscordBannerComponent } from "../../components/blocks/discord-banner/discord-banner.component";
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [AuroraBgComponent, LatestProjectsComponent, RouterLink],
+  imports: [AuroraBgComponent, LatestProjectsComponent, RouterLink, DiscordBannerComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })

@@ -1,44 +1,11 @@
 
 
 <div class="relative h-[320px] md:h-[420px] overflow-y-hidden overflox-x-visible lg:-mx-8 -mt-[26px] md:-mt-[26px] -mx-4 sm:-mx-6">
-
-
-<app-aurora-bg>
-
-  </app-aurora-bg>
+<app-aurora-bg></app-aurora-bg>
 </div>
 
 <div class="container mx-auto mt-10">
   <app-latest-projects></app-latest-projects>
 </div>
 
-<div class="flex justify-center items-center">
-  <a routerLink="/discover"> 
-  <button 
-  class="w-full sm:w-auto bg-primary text-lg hover:bg-primary text-white py-2 px-6 rounded-full cursor-pointer transition-colors duration-300 ease-in-out">
-  Ver más Proyectos
-</button>
-  </a>
-</div>
-
-<div class="max-w-5xl h-[150px] md:h-[200px] relative mx-auto relative overflow-hidden mt-16 flex flex-col items-center justify-center gap-4 p-4 rounded-4xl">
-  <h4 class="hidden sm:block text-white text-center text-lg  md:text-2xl z-10 text-balance">
-    No estás solo programando. Descubre, comparte y conecta con la comunidad
-  </h4>
-  <h4 class=" sm:hidden text-white text-center text-lg  md:text-2xl z-10 text-balance">
-    No estás solo programando. Conecta con la comunidad
-  </h4>
-  <a href="https://discord.gg/R6A3PPRNRa" target="_blank" class="text-white text-center text-lg  md:text-2xl z-10 text-balance">
-  <p class="text-white text-center text-lg  md:text-2xl z-10 font-medium">Entra en el  <span class="font-black text-primary">Discord</span> de <span class="font-black text-primary">IT</span>forEach</p>
-  </a>
-  <div class="absolute w-screen h-[200%] bg-gray-900/75 backdrop-blur-sm z-1"></div>
- <video class="absolute scale-200 top-1/2 transform -translate-y-1/2 -translate-x-12"
-aria-label="code Video"
-autoplay 
-loop 
-muted  
-oncanplay="this.play()" onloadedmetadata="this.muted = true"
-poster="">
-<source src="/assets/video/code-2.mp4" type="video/mp4">
-</video>
-</div>
+<app-discord-banner></app-discord-banner>

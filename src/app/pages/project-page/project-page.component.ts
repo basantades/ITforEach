@@ -7,10 +7,12 @@ import { NgOptimizedImage } from '@angular/common';
 import { UserAvatarComponent } from '../../components/ui/user-avatar/user-avatar.component';
 import { LikeButtonComponent } from '../../components/ui/like-button/like-button.component';
 import { AuthService } from '../../services/auth/auth.service';
+import { GithubLinkButtonComponent } from "../../components/ui/github-link-button/github-link-button.component";
+import { WebsiteLinkButtonComponent } from "../../components/ui/website-link-button/website-link-button.component";
 
 @Component({
   selector: 'app-project-page',
-  imports: [RouterLink, NgOptimizedImage, UserAvatarComponent, LikeButtonComponent ],
+  imports: [RouterLink, NgOptimizedImage, UserAvatarComponent, LikeButtonComponent, GithubLinkButtonComponent, WebsiteLinkButtonComponent],
   templateUrl: './project-page.component.html',
   styleUrls: ['./project-page.component.scss']
 })

@@ -14,7 +14,7 @@
       >
         <div>
           <h2 
-            class="absolute text-center break-words text-balance inset-x-0 bottom-4 flex items-center justify-center text-xl font-bold text-white text-shadow-lg z-10"
+            class="text-[clamp(0.7rem,1rem,1.2rem)] absolute text-center break-words text-balance inset-x-0 bottom-4 flex items-center justify-center text-xl font-bold text-white text-shadow-lg z-10"
           >
             {{ project.name }}
           </h2>
@@ -23,16 +23,12 @@
       </div>
     </a>
     <div class="p-2 flex items-center justify-between">
-      <a [routerLink]="['/', project.githubusername]"
-      aria-label="Ir a la página del autor" title="Ir a la página del autor"
-      >
-        <div class="flex items-center gap-2">
-          <app-user-avatar [githubusername]="project.githubusername" class="h-8 w-8"></app-user-avatar>
-          <p class="text-gray-500">{{ project.githubusername }}</p>
-        </div>
-      </a>
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2 transition-colors duration-300">
+        <app-github-link-icon [url]="project.repository_url"></app-github-link-icon>
         <app-website-link-icon [url]="project.homepage_url"></app-website-link-icon>
+      </div>
+
+      <div>
         <app-like-button [projectId]="project.id!" ></app-like-button>
       </div>
     </div>

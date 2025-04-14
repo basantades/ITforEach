@@ -11,7 +11,6 @@ import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-user-page',
   templateUrl: './user-page.component.html',
-  styleUrl: './user-page.component.scss',
   imports: [ProjectsByUserComponent, RouterLink],
 })
 export class UserPageComponent {

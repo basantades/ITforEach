@@ -4,10 +4,10 @@
     @if (user()) {
         
       <div class="w-4/5 flex flex-col justify-center items-center gap-2 text-center text-white ">
-        <h2 class="text-xl md:text-2xl font-medium mb-4  text-balance">Bienvenido a <span class="font-black">IT</span>forEach, {{ user()?.fullname }}</h2>
+        <h2 class="text-xl md:text-2xl font-medium mb-4  text-balance animate-fade animation-delay-2">Bienvenido a <span class="font-black">IT</span>forEach, {{ user()?.fullname }}</h2>
             
           <a [routerLink]="['/', user()?.githubusername]" class="btn ">
-          <div class=" py-2 md:py-3 px-3 md:px-5 hover:bg-white text-white hover:text-primary rounded-full transition-colors duration-300">
+          <div class=" py-2 md:py-3 px-3 md:px-5 hover:bg-white text-white hover:text-primary rounded-full transition-colors duration-300 animate-fade animation-delay-4">
             <h1 class="text-xl md:text-3xl font-bold texto-xl  text-balance">Completa tu perfil y comparte tus proyectos</h1>
           </div>
         </a>
@@ -16,9 +16,9 @@
       }
       @else {
         <div class="w-4/5 flex flex-col justify-center items-center gap-6 md:gap-10 text-center text-white">
-          <h1 class="text-2xl md:text-4xl font-medium  text-balance">Únete a <span class="font-black">IT</span>forEach y comparte tus proyectos</h1>
+          <h1 class="text-2xl md:text-4xl font-medium  text-balance animate-fade animation-delay-2">Únete a <span class="font-black">IT</span>forEach y comparte tus proyectos</h1>
           
-        <app-login-button class="md:scale-150 border border-white hover:bg-white text-white hover:text-primary rounded-full transition-colors duration-300 font-medium text-base"></app-login-button>
+        <app-login-button class="animate-fade animation-delay-4 md:scale-150 border border-white hover:bg-white text-white hover:text-primary rounded-full transition-colors duration-300 font-medium text-base"></app-login-button>
       </div>
       }
     </div>

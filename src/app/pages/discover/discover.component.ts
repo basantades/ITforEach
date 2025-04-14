@@ -2,14 +2,11 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ProjectsService } from '../../services/database/projects.service';
 import { Project } from '../../interfaces/project';
 import { RouterModule } from '@angular/router';
-import { NgOptimizedImage } from '@angular/common';
-import { LikeButtonComponent } from "../../components/ui/like-button/like-button.component";
-import { UserAvatarComponent } from "../../components/ui/user-avatar/user-avatar.component";
+import { ProjectCardComponent } from "../../components/blocks/project-card/project-card.component";
 @Component({
   selector: 'app-discover',
-  imports: [RouterModule, NgOptimizedImage, LikeButtonComponent, UserAvatarComponent],
-  templateUrl: './discover.component.html',
-  styleUrl: './discover.component.scss'
+  imports: [RouterModule, ProjectCardComponent],
+  templateUrl: './discover.component.html'
 })
 
 export class DiscoverComponent implements OnInit {

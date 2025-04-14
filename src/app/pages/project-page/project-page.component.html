@@ -6,21 +6,22 @@
           </div>
 
     
-        <div class="flex flex-col lg:flex-row items-stretch gap-8">
+        <div class="flex flex-col lg:flex-row items-stretch gap-2 md:gap-12">
           
           <!-- Columna Izquierda -->
-          <div class="lg:w-1/2 flex flex-col items-center lg:items-start gap-4">
+          <div class="lg:w-1/2 flex flex-col items-center lg:items-start gap-4 ">
             <img 
               [ngSrc]="project.main_image_url || '/assets/img/default-placeholder-full.webp'"  
               alt="{{ project.name }}"
               priority 
               width="1024" 
               height="596" 
-              class="w-full rounded"
+              class="w-full rounded border border-gray-300"
             />
     
             <!-- Iconos -->
-            <div class="flex w-full justify-end lg:justify-start items-center gap-4">
+            <div class="flex w-full justify-end lg:justify-start items-center flex-wrap gap-4">
+
               @if (project.repository_url) {
                 <a [href]="project.repository_url" target="_blank" class="text-gray-500 hover:text-primary transition-colors duration-300">
                   <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
@@ -85,7 +86,6 @@
                 }
                     @if (project.about_project) {
                   <div>
-                    <h2 class="text-lg font-medium text-gray-800 mb-4">Acerca del proyecto</h2>
                     <p class="text-gray-700 whitespace-pre-line">{{ project.about_project }}</p>
                   </div>
                 }
@@ -128,17 +128,10 @@
             </div>
     
             <!-- Botones al fondo -->
-            <div class="flex flex-col md:flex-row gap-4 justify-center md:justify-end mt-8">
-              @if (project.repository_url) {
-                <a [href]="project.repository_url" target="_blank" class="bg-secondary hover:bg-gray-700 text-white py-2 px-6 rounded-full text-center transition-colors duration-300">
-                  Ver repositorio de GitHub
-                </a>
-              }
-              @if (project.homepage_url) {
-                <a [href]="project.homepage_url" target="_blank" class="bg-primary hover:bg-primary text-white py-2 px-6 rounded-full text-center transition-colors duration-300">
-                  Ir a la web del proyecto
-                </a>
-              }
+            <div class="flex flex-col sm:flex-row gap-4 justify-center sm:justify-end mt-8">
+              <app-github-link-button [url]="project.repository_url ?? null"></app-github-link-button>
+              
+              <app-website-link-button [url]="project.homepage_url"></app-website-link-button>
             </div>
           </div>
         </div>

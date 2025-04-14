@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { BackButtonComponent } from "../../../components/ui/back-button/back-button.component";
+import { BackButtonComponent } from "../../ui/back-button/back-button.component";
 
 @Component({
   selector: 'app-footer',

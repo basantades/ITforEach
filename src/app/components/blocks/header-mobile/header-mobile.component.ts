@@ -1,9 +1,9 @@
 import { Component, signal, computed, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../../services/auth/auth.service';
-import { LoginButtonComponent } from '../../../components/ui/login-button/login-button.component';
-import { LogoutButtonComponent } from '../../../components/ui/logout-button/logout-button.component';
-import { BackButtonComponent } from "../../../components/ui/back-button/back-button.component";
+import { LoginButtonComponent } from '../../ui/login-button/login-button.component';
+import { LogoutButtonComponent } from '../../ui/logout-button/logout-button.component';
+import { BackButtonComponent } from "../../ui/back-button/back-button.component";
 
 @Component({
   selector: 'app-header-mobile',

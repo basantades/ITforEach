@@ -9,8 +9,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-projects-by-user',
   imports: [RouterModule, ProjectCardOwnerComponent, CommonModule ],
-  templateUrl: './projects-by-user.component.html',
-  styleUrl: './projects-by-user.component.scss'
+  templateUrl: './projects-by-user.component.html'
 })
 export class ProjectsByUserComponent implements OnInit, OnChanges {
   @Input() githubusername!: string;

@@ -4,14 +4,14 @@ import { AuthService } from '../../services/auth/auth.service';
 import { UserService } from '../../services/database/user.service';
 import { User } from '../../interfaces/user';
 import { ProjectsByUserComponent } from "../../components/sections/projects-by-user/projects-by-user.component";
-import { RouterLink } from '@angular/router';
+import { UserProfileCardComponent } from "../../components/blocks/user-profile-card/user-profile-card.component";
 
 
 
 @Component({
   selector: 'app-user-page',
   templateUrl: './user-page.component.html',
-  imports: [ProjectsByUserComponent, RouterLink],
+  imports: [ProjectsByUserComponent, UserProfileCardComponent],
 })
 export class UserPageComponent {
   user = signal<User | null>(null);

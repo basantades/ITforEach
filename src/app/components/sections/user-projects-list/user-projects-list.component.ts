@@ -3,6 +3,7 @@ import { ProjectsService } from '../../../services/database/projects.service';
 import { DeleteProjectButtonComponent } from '../../ui/delete-project-button/delete-project-button.component';
 import { RouterModule } from '@angular/router';
 import { LikeCounterComponent } from "../../ui/like-counter/like-counter.component";
+import { AuthService } from '../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-user-projects-list',
@@ -11,9 +12,11 @@ import { LikeCounterComponent } from "../../ui/like-counter/like-counter.compone
   imports: [DeleteProjectButtonComponent, RouterModule, LikeCounterComponent]
 })
 export class UserProjectsListComponent implements OnInit {
+
   userProjects: any[] = [];
 
-  constructor(private projectsService: ProjectsService) {}
+  constructor(private projectsService: ProjectsService,
+    public authService: AuthService) {}
 
 
   ngOnInit(): void {

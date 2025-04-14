@@ -1,16 +1,15 @@
 import { Component, signal } from '@angular/core';
-import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { ProjectsService } from '../../../services/database/projects.service';
 import { Project } from '../../../interfaces/project';
-import { Input, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
-import { UserAvatarComponent } from "../../ui/user-avatar/user-avatar.component";
-import { LikeButtonComponent } from "../../ui/like-button/like-button.component";
+import {  OnInit } from '@angular/core';
+import { MoreProjectsButtonComponent } from "../../ui/more-projects-button/more-projects-button.component";
+import { ProjectCardComponent } from "../../blocks/project-card/project-card.component";
 
 @Component({
   selector: 'app-latest-projects',
   standalone: true,
-  imports: [CommonModule, RouterLink, NgOptimizedImage, UserAvatarComponent, LikeButtonComponent],
+  imports: [CommonModule, MoreProjectsButtonComponent, ProjectCardComponent],
   templateUrl: './latest-projects.component.html'
 })
 export class LatestProjectsComponent implements OnInit {

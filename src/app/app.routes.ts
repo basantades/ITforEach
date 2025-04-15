@@ -12,12 +12,17 @@ import { EditProjectComponent } from './pages/edit-project/edit-project.componen
 import { NewProjectV2Component } from './pages/new-project-v2/new-project-v2.component';
 import { AboutComponent } from './pages/about/about.component';
 import { OwnersPageComponent } from './pages/owners/owners.component';
+import { Error404Component } from './pages/error-404/error-404.component';
+import { PublicUserResolver } from './guards-resolvers/public-user.resolver';
+import { PublicProjectResolver } from './guards-resolvers/public-project.resolver';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'discover', component: DiscoverComponent },
     { path: 'owners', component: OwnersPageComponent },
     { path: 'about', component: AboutComponent },
+    { path: '404', component: Error404Component },
+
     {
       path: ':githubusername/:projectName/edit',
       component: EditProjectComponent,
@@ -41,11 +46,21 @@ export const routes: Routes = [
   component: EditProfileComponent,
   canActivate: [AuthGuard, OwnerGuard], // solo propietario
   resolve: { user: UserResolver } // Obtiene el usuario antes de cargar la página
-},
+  },
+  { 
+    path: ':githubusername', 
+    component: UserPageComponent,
+    resolve: { user: PublicUserResolver } 
+  },
+  { 
+    path: ':githubusername/:projectName', 
+    component: ProjectInfoComponent,
+    resolve: { 
+      user: PublicUserResolver,
+      project: PublicProjectResolver,
+     } 
+  },
 
-{ path: ':githubusername/:projectName', component: ProjectInfoComponent},
+  { path: '**', component: Error404Component }
 
-  { path: ':githubusername', component: UserPageComponent },
-
-  { path: '**', redirectTo: '' } // Redirige cualquier otra ruta a la raíz
 ];

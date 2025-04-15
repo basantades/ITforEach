@@ -17,7 +17,6 @@ export const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'discover', component: DiscoverComponent },
     { path: 'owners', component: OwnersPageComponent },
-
     { path: 'about', component: AboutComponent },
     {
       path: ':githubusername/:projectName/edit',

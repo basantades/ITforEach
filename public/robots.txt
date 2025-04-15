@@ -1,0 +1,8 @@
+User-agent: *
+Disallow: /edit-profile/
+Disallow: /new-project/
+Disallow: /my-projects/
+
+Allow: /discover
+Allow: /owners
+Allow: /about

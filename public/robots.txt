@@ -1,0 +1,10 @@
+User-agent: *
+Disallow: /edit-profile/
+Disallow: /new-project/
+Disallow: /my-projects/
+
+Allow: /discover
+Allow: /owners
+Allow: /about
+
+Sitemap: https://itforeach.vercel.app/sitemap.xml

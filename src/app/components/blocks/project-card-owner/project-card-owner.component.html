@@ -6,7 +6,7 @@
 
         <img 
         [ngSrc]="projectsService.transformImageUrl(project.main_image_url ?? '', 500) || '/assets/img/default-placeholder.webp'" 
-        alt="{{ project.name }}" 
+        alt="Imagen principal del proyecto: {{ project.name }}" 
         priority
         width="500" 
         height="281"

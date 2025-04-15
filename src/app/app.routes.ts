@@ -11,10 +11,13 @@ import { MyProjectsComponent } from './pages/my-projects/my-projects.component';
 import { EditProjectComponent } from './pages/edit-project/edit-project.component';
 import { NewProjectV2Component } from './pages/new-project-v2/new-project-v2.component';
 import { AboutComponent } from './pages/about/about.component';
+import { OwnersPageComponent } from './pages/owners/owners.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'discover', component: DiscoverComponent },
+    { path: 'owners', component: OwnersPageComponent },
+
     { path: 'about', component: AboutComponent },
     {
       path: ':githubusername/:projectName/edit',

@@ -5,7 +5,7 @@
         <img src="/assets/img/ITforEach-logo.svg" alt="ITforEach Logo" class="h-6 w-auto logo-slide-left" />
       </a>
       <a routerLink="/discover" class="hover:text-primary transition-colors duration-300">Descubre Proyectos</a>
-      <a routerLink="/discover" class="hover:text-primary transition-colors duration-300">Creadores</a>
+      <a routerLink="/owners" class="hover:text-primary transition-colors duration-300">Creadores</a>
 
     </div>
     <div>
@@ -16,7 +16,6 @@
           >
           Nuevo Proyecto
         </a>
-            <!-- <a [routerLink]="['/', user()?.githubusername]" class="hidden md:block btn hover:text-primary transition-colors duration-300">Mi Página</a> -->
         <div class="relative group">
           <!-- user y avatar -->
           <a [routerLink]="['/', user()?.githubusername]" class="btn">
@@ -32,11 +31,7 @@
             </div>
          
             @if (user()?.avatarurl) {
-              <img 
-                [src]="user()?.avatarurl || '/assets/img/default-avatar.png'" 
-                alt="Avatar de {{ user()?.fullname || user()?.githubusername }}" 
-                class="h-12 w-12 rounded-full object-cover border border-gray-300"
-              />
+              <app-user-avatar [githubusername]="user()!.githubusername" class="h-12 w-12"></app-user-avatar>
             }
           </div>
         </a>

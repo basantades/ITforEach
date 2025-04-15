@@ -77,13 +77,10 @@ export class LikesService {
   }
   
 
-  /**
-   * Obtiene la cantidad de likes de un proyecto desde la vista `project_likes_count`.
-   */
   async getLikesCount(projectId: number): Promise<number> {
     const { data, error } = await this.supabaseService.client
-      .from('project_likes_count') // Vista creada en Supabase
-      .select('likes')
+      .from('project_likes_count')
+      .select('likes_count') // 👈 CAMBIAR ESTO
       .eq('project_id', projectId)
       .maybeSingle();
   
@@ -92,12 +89,9 @@ export class LikesService {
       throw error;
     }
   
-    return data?.likes ?? 0;
+    return data?.likes_count ?? 0; // 👈 CAMBIAR ESTO TAMBIÉN
   }
 
-  /**
-   * Verifica si el usuario actual ha dado like a un proyecto.
-   */
   async hasUserLiked(projectId: number): Promise<boolean> {
     const session = await this.supabaseService.getSession();
     const userId = session?.user?.id;

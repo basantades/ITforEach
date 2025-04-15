@@ -4,10 +4,11 @@ import { AuthService } from '../../../services/auth/auth.service';
 import { LoginButtonComponent } from '../../ui/login-button/login-button.component';
 import { LogoutButtonComponent } from '../../ui/logout-button/logout-button.component';
 import { BackButtonComponent } from "../../ui/back-button/back-button.component";
+import { UserAvatarComponent } from "../../ui/user-avatar/user-avatar.component";
 
 @Component({
   selector: 'app-header-mobile',
-  imports: [RouterLink, LoginButtonComponent, LogoutButtonComponent, BackButtonComponent],
+  imports: [RouterLink, LoginButtonComponent, LogoutButtonComponent, BackButtonComponent, UserAvatarComponent],
   templateUrl: './header-mobile.component.html',
   styleUrl: './header-mobile.component.scss'
 })

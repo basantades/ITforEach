@@ -141,11 +141,20 @@ export class ProjectsService {
     return { data: data as Project[], total: count ?? 0 };
   }
 
-  transformImageUrl(imageUrl: string, width: number = 500, height: number = 281): string {
-    return imageUrl.replace('/upload/', `/upload/c_fill,w_${width},h_${height},q_auto/`);
+  // transformImageUrl(imageUrl: string, width: number = 500, height: number = 281): string {
+  //   return imageUrl.replace('/upload/', `/upload/c_fill,w_${width},h_${height},q_auto/`);
+  // }
+
+  transformImageUrl(imageUrl: string, size: 500 | 160 = 500): string {
+    if (!imageUrl) return '/assets/img/default-placeholder.webp';
+  
+    const transformation =
+      size === 160
+        ? 'c_scale,w_160,q_auto'
+        : 'c_fill,w_500,h_281,q_auto';
+  
+    return imageUrl.replace('/upload/', `/upload/${transformation}/`);
   }
-
-
 
 
   async update(projectId: string, updatedData: Partial<Project>): Promise<void> {

@@ -1,0 +1,33 @@
+<section class="container mx-auto px-4 py-6">
+    <h1 class="text-3xl font-bold text-gradient-primary mb-6 text-center animate-fade animation-delay-4">Creadores</h1>
+  
+    @if (!isLoading()) {
+        @if (!hasProjects()) {
+            <div class="m-8 p-4 bg-pink-100 border-l-4 border-pink-500 text-primary rounded">
+              Para aparecer en el listado de creadores, publica tu <a [routerLink]="['/', 'new-project', user()?.githubusername]"  class="font-semibold hover:underline">primer proyecto</a>.
+            </div>
+          }
+      @if (owners().length === 0) {
+        <p class="text-center text-gray-500">No hay creadores aún.</p>
+      } @else {
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6">
+          @for (owner of owners(); track owner.user.user_id; let i = $index) {
+            <a [routerLink]="['/', owner.user.githubusername]">
+            <app-owner-preview-card 
+              [user]="owner.user" 
+              [lastProject]="owner.lastProject" 
+              [projectCount]="owner.projectCount"
+              [animationDelay]="i * 100">
+            
+            </app-owner-preview-card>
+            </a>
+          }
+        </div>
+      }
+  
+
+    } @else {
+      <p class="text-center text-gray-400">Cargando...</p>
+    }
+  </section>
+  

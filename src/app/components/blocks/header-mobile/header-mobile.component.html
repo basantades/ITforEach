@@ -33,8 +33,10 @@
       <!-- Overlay de menú -->
       <div class="fixed top-[60px] left-0 w-full h-[calc(100vh-60px)]  backdrop-blur-md bg-white/90 z-40 p-6 overflow-y-auto">
         <div class="w-full flex flex-col items-center gap-6 text-lg font-medium text-gray-700 pt-6">
-          <a routerLink="/discover" (click)="closeMenu()" class="hover:text-primary transition-colors">Descubre Proyectos</a>
-          <a routerLink="/owners" (click)="closeMenu()" class="hover:text-primary transition-colors">Creadores</a>
+          <a routerLink="/discover" (click)="closeMenu()"  routerLinkActive="text-primary" [routerLinkActiveOptions]="{ exact: true }"
+           class="hover:text-primary transition-colors">Descubre Proyectos</a>
+          <a routerLink="/owners" (click)="closeMenu()"  routerLinkActive="text-primary" [routerLinkActiveOptions]="{ exact: true }"
+          class="hover:text-primary transition-colors">Creadores</a>
 
           @if (user()) {
   
@@ -45,10 +47,14 @@
 
               </a>
               }
-              <a [routerLink]="['/', user()?.githubusername]" (click)="closeMenu()" class="hover:text-primary transition-colors">Mi Página</a>
-              <a [routerLink]="['/', 'edit-profile', user()?.githubusername]" (click)="closeMenu()" class="hover:text-primary transition-colors">Editar Perfil</a>
-              <a [routerLink]="['/', 'my-projects', user()?.githubusername]" (click)="closeMenu()" class="hover:text-primary transition-colors">Mis Proyectos</a>
-              <a [routerLink]="['/', 'new-project', user()?.githubusername]" (click)="closeMenu()" class="btn hover:text-primary transition-colors duration-300">Nuevo Proyecto</a>
+              <a [routerLink]="['/', user()?.githubusername]" (click)="closeMenu()"  routerLinkActive="text-primary" [routerLinkActiveOptions]="{ exact: true }"
+              class="hover:text-primary transition-colors">Mi Página</a>
+              <a [routerLink]="['/', 'edit-profile', user()?.githubusername]" (click)="closeMenu()"  routerLinkActive="text-primary" [routerLinkActiveOptions]="{ exact: true }"
+              class="hover:text-primary transition-colors">Editar Perfil</a>
+              <a [routerLink]="['/', 'my-projects', user()?.githubusername]" (click)="closeMenu()"  routerLinkActive="text-primary" [routerLinkActiveOptions]="{ exact: true }"
+              class="hover:text-primary transition-colors">Mis Proyectos</a>
+              <a [routerLink]="['/', 'new-project', user()?.githubusername]" (click)="closeMenu()" routerLinkActive="text-primary" [routerLinkActiveOptions]="{ exact: true }"
+               class="btn hover:text-primary transition-colors duration-300">Nuevo Proyecto</a>
               <div class="w-full flex flex-col items-center mt-4 pt-6 border-t border-gray-200">
                 <app-logout-button (click)="closeMenu()"></app-logout-button>
               </div>

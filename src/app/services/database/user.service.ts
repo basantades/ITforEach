@@ -91,4 +91,19 @@ async updateUser(userId: string, updates: Partial<User>): Promise<User | null> {
 
   return data; // ✅ Retorna el usuario actualizado
 }
+
+
+
+async getAllUsers(): Promise<User[]> {
+  const { data, error } = await this.supabaseService.client
+    .from('users')
+    .select('*');
+
+  if (error) {
+    console.error('❌ Error al obtener todos los usuarios:', error);
+    throw error;
+  }
+
+  return data as User[];
+}
 }

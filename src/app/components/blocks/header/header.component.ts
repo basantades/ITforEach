@@ -2,12 +2,13 @@ import { Component, HostListener, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../../services/auth/auth.service';
 import { LoginButtonComponent } from "../../../components/ui/login-button/login-button.component";
-import { LogoutButtonComponent } from "../../../components/ui/logout-button/logout-button.component"; // Importar LogoutButtonComponent
+import { LogoutButtonComponent } from "../../../components/ui/logout-button/logout-button.component";
+import { UserAvatarComponent } from "../../ui/user-avatar/user-avatar.component"; // Importar LogoutButtonComponent
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterLink, LoginButtonComponent, LogoutButtonComponent], // Agregar LogoutButtonComponent a imports
+  imports: [RouterLink, LoginButtonComponent, LogoutButtonComponent, UserAvatarComponent], // Agregar LogoutButtonComponent a imports
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })

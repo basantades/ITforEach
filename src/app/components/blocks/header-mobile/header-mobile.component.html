@@ -12,7 +12,9 @@
         <img src="/assets/img/ITforEach-logo.svg" alt="ITforEach Logo" class="h-5 w-auto" />
       </a>
   
-      <button (click)="toggleMenu()" class="text-gray-500 focus:outline-none z-50 w-1/5 flex items-center justify-center">
+      <button (click)="toggleMenu()" 
+      aria-label="Menú" title="Menú"
+      class="text-gray-500 focus:outline-none z-50 w-1/5 flex items-center justify-center">
         @if (!isMenuOpen()) {
           <!-- Icono hamburguesa -->
           <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -31,18 +33,16 @@
       <!-- Overlay de menú -->
       <div class="fixed top-[60px] left-0 w-full h-[calc(100vh-60px)]  backdrop-blur-md bg-white/90 z-40 p-6 overflow-y-auto">
         <div class="w-full flex flex-col items-center gap-6 text-lg font-medium text-gray-700 pt-6">
-          <a routerLink="/discover" (click)="closeMenu()" class="hover:text-primary transition-colors">Descubre</a>
-  
+          <a routerLink="/discover" (click)="closeMenu()" class="hover:text-primary transition-colors">Descubre Proyectos</a>
+          <a routerLink="/owners" (click)="closeMenu()" class="hover:text-primary transition-colors">Creadores</a>
+
           @if (user()) {
   
             <div class="flex flex-col items-center gap-4 mt-4 pt-6 border-t border-gray-200">
               @if (user()?.avatarurl) {
-                <a [routerLink]="['/', user()?.githubusername]" (click)="closeMenu()" class="hover:text-primary transition-colors">
-                <img 
-                  [src]="user()?.avatarurl || '/assets/img/default-avatar.png'" 
-                  alt="Avatar de {{ user()?.fullname || user()?.githubusername }}" 
-                  class="h-16 w-16 rounded-full object-cover border border-gray-300"
-                />
+                <a [routerLink]="['/', user()?.githubusername]" (click)="closeMenu()" class="h-16 w-16">
+                  <app-user-avatar [githubusername]="user()!.githubusername" class="h-12 w-12"></app-user-avatar>
+
               </a>
               }
               <a [routerLink]="['/', user()?.githubusername]" (click)="closeMenu()" class="hover:text-primary transition-colors">Mi Página</a>

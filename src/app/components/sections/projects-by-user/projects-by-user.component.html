@@ -3,7 +3,7 @@
 <h1 class="text-3xl font-bold text-gradient-primary my-6 animate-fade animation-delay-2 text-center">Proyectos</h1>
 
 <div [ngClass]="{
-    'flex justify-center max-w-[500px]': projects.length === 1,
+    'flex justify-center items-center': projects.length === 1,
     'grid grid-cols-1 sm:grid-cols-2': projects.length > 1 && projects.length < 5,
     'grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3': projects.length >= 5
   }"

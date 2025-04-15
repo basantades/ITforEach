@@ -83,7 +83,18 @@
         transform: translateY(0);
       }
     }
-  
+
+    @keyframes fadeSlideRight {
+      0% {
+        opacity: 0;
+        transform: translateX(-40px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
     @keyframes fadeZoom {
       0% {
         opacity: 0;
@@ -106,6 +117,10 @@
   
     .animate-fade-slide-down {
       animation: fadeSlideDown 0.8s ease-out forwards;
+    }
+  
+    .animate-fade-slide-right {
+      animation: fadeSlideRight 0.8s ease-out forwards;
     }
   
     .animate-fade-zoom {

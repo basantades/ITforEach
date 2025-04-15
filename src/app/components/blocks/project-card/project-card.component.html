@@ -1,4 +1,4 @@
-<div class="p-2 opacity-0 animate-fade-zoom" [style.animationDelay]="animationDelay + 'ms'">
+<div class="p-2 opacity-0 animate-fade-zoom  w-full max-w-[500px]" [style.animationDelay]="animationDelay + 'ms'">
     <a [routerLink]="['/', project.githubusername, project.name]"
     aria-label="Ficha del proyecto" title="Ficha del proyecto"
     >
@@ -18,7 +18,7 @@
           >
             {{ project.name }}
           </h2>
-          <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-gray-900/20"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-gray-900/50 via-gray-900/20"></div>
         </div>
       </div>
     </a>

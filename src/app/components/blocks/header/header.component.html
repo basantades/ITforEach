@@ -4,8 +4,10 @@
       <a routerLink="/">
         <img src="/assets/img/ITforEach-logo.svg" alt="ITforEach Logo" class="h-6 w-auto logo-slide-left" />
       </a>
-      <a routerLink="/discover" class="hover:text-primary transition-colors duration-300">Descubre Proyectos</a>
-      <a routerLink="/owners" class="hover:text-primary transition-colors duration-300">Creadores</a>
+      <a routerLink="/discover" routerLinkActive="text-primary" [routerLinkActiveOptions]="{ exact: true }" 
+      class="hover:text-primary transition-colors duration-300">Descubre Proyectos</a>
+      <a routerLink="/owners"  routerLinkActive="text-primary" [routerLinkActiveOptions]="{ exact: true }"
+       class="hover:text-primary transition-colors duration-300">Creadores</a>
 
     </div>
     <div>
@@ -39,12 +41,16 @@
           <div 
             class="min-w-[240px] font-normal flex flex-col gap-6 shadow-md absolute top-12 right-0 bg-white/95 backdrop-blur-md rounded-lg p-8 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-300"
           >
-          <a [routerLink]="['/', user()?.githubusername]" class=" btn hover:text-primary transition-colors duration-300">Mi Página</a>
-          <a [routerLink]="['/', 'edit-profile', user()?.githubusername]" class="btn hover:text-primary transition-colors duration-300">Editar Perfil</a>
+          <a [routerLink]="['/', user()?.githubusername]"  routerLinkActive="text-primary" [routerLinkActiveOptions]="{ exact: true }" 
+          class=" btn hover:text-primary transition-colors duration-300">Mi Página</a>
+          <a [routerLink]="['/', 'edit-profile', user()?.githubusername]"  routerLinkActive="text-primary" [routerLinkActiveOptions]="{ exact: true }"
+          class="btn hover:text-primary transition-colors duration-300">Editar Perfil</a>
           <div class="pt-6 border-t border-gray-200 w-full ">
-            <a [routerLink]="['/', 'my-projects', user()?.githubusername]" class="btn hover:text-primary transition-colors duration-300">Mis Proyectos</a>
+            <a [routerLink]="['/', 'my-projects', user()?.githubusername]"  routerLinkActive="text-primary" [routerLinkActiveOptions]="{ exact: true }"
+            class="btn hover:text-primary transition-colors duration-300">Mis Proyectos</a>
           </div>
-          <a [routerLink]="['/', 'new-project', user()?.githubusername]" class="btn hover:text-primary transition-colors duration-300">Nuevo Proyecto</a>
+          <a [routerLink]="['/', 'new-project', user()?.githubusername]"  routerLinkActive="text-primary" [routerLinkActiveOptions]="{ exact: true }"
+          class="btn hover:text-primary transition-colors duration-300">Nuevo Proyecto</a>
 
             <div class="pt-6 border-t border-gray-200 w-full ">
               <app-logout-button></app-logout-button>

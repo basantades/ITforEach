@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { ProjectsService } from '../../../services/database/projects.service';
 import { AuthService } from '../../../services/auth/auth.service';
 import { Project } from '../../../interfaces/project';
@@ -14,6 +14,8 @@ import { CommonModule } from '@angular/common';
 export class ProjectsByUserComponent implements OnInit, OnChanges {
   @Input() githubusername!: string;
   projects: Project[] = [];
+  @Output() projectCount = new EventEmitter<number>();
+
 
   constructor(
         public authService: AuthService,
@@ -33,6 +35,7 @@ export class ProjectsByUserComponent implements OnInit, OnChanges {
     try {
       const projects = await this.projectsService.getUserProjects(this.githubusername);
       this.projects = projects;
+      this.projectCount.emit(this.projects.length);
     } catch (error) {
       console.error('❌ Error cargando proyectos del usuario:', error);
     }

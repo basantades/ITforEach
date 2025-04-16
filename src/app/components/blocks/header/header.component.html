@@ -14,7 +14,7 @@
       @if (user()) {
         <div class="flex items-center gap-4 lg:gap-8">
           <a [routerLink]="['/', 'new-project', user()?.githubusername]" 
-          class="hidden lg:block hover:bg-primary border-primary border hover:border-white/0 text-primary hover:text-white py-2 px-6 rounded-full cursor-pointer transition-colors duration-300 font-medium text-base flex items-center gap-2" 
+          class="hidden xl:block hover:bg-primary border-primary border hover:border-white/0 text-primary hover:text-white py-2 px-6 rounded-full cursor-pointer transition-colors duration-300 font-medium text-base flex items-center gap-2" 
           >
           Nuevo Proyecto
         </a>
@@ -24,7 +24,7 @@
           <div class="cursor-pointer flex items-center gap-4">
             <div class="flex items-center gap-1">
               
-              <div class="hidden md:block">
+              <div class="hidden lg:block">
                 Menú de Usuario
               </div>
               <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -33,7 +33,7 @@
             </div>
          
             @if (user()?.avatarurl) {
-              <app-user-avatar [githubusername]="user()!.githubusername" class="h-12 w-12"></app-user-avatar>
+              <app-user-avatar [githubusername]="user()!.githubusername" [size]="48" class="h-12 w-12"></app-user-avatar>
             }
           </div>
         </a>

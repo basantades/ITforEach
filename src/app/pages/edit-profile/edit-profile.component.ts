@@ -50,6 +50,8 @@ export class EditProfileComponent {
 
   /** Cargar datos del usuario desde UserService */
   private async loadUserData(githubusername: string) {
+    if (this.profileForm.dirty) return;
+
     const user = await this.userService.getUserByUsername(githubusername);
     if (!user) return;
 

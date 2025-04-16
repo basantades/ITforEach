@@ -5,17 +5,18 @@ import { UserService } from '../../services/database/user.service';
 import { User } from '../../interfaces/user';
 import { ProjectsByUserComponent } from "../../components/sections/projects-by-user/projects-by-user.component";
 import { UserProfileCardComponent } from "../../components/blocks/user-profile-card/user-profile-card.component";
+import { CommonModule } from '@angular/common';
 
 
 
 @Component({
   selector: 'app-user-page',
   templateUrl: './user-page.component.html',
-  imports: [ProjectsByUserComponent, UserProfileCardComponent],
+  imports: [ProjectsByUserComponent, UserProfileCardComponent, CommonModule ],
 })
 export class UserPageComponent {
   user = signal<User | null>(null);
-
+  projectCount = signal<number>(0);
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,

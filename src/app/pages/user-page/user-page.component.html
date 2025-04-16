@@ -6,9 +6,18 @@
 
 
 @if (user()?.githubusername) {
-  <div class=" w-full lg:max-w-2/3 lg:pt-8">
-<app-projects-by-user [githubusername]="user()?.githubusername || ''" ></app-projects-by-user>
-</div>
+  <div 
+  class="lg:pt-8 w-full lg:max-w-1/3" 
+  [ngClass]="{
+    'lg:max-w-2/3': projectCount() > 1,
+    'lg:max-w-1/3': projectCount() < 2,
+    }"
+  >
+    <app-projects-by-user 
+      [githubusername]="user()?.githubusername || ''"
+      (projectCount)="projectCount.set($event)">
+    </app-projects-by-user>
+  </div>
 }
 </section>
 

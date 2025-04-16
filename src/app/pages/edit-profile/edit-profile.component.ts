@@ -19,8 +19,7 @@ import { Router } from '@angular/router';
   selector: 'app-edit-profile',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './edit-profile.component.html',
-  styleUrls: ['./edit-profile.component.scss']
+  templateUrl: './edit-profile.component.html'
 })
 export class EditProfileComponent {
   profileForm: FormGroup;

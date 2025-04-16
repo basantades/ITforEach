@@ -14,14 +14,17 @@ import { LoadingComponent } from "../../components/ui/loading/loading.component"
 @Component({
   selector: 'app-project-page',
   imports: [RouterLink, NgOptimizedImage, UserAvatarComponent, LikeButtonComponent, GithubLinkButtonComponent, WebsiteLinkButtonComponent, LoadingComponent],
-  templateUrl: './project-page.component.html',
-  styleUrls: ['./project-page.component.scss']
+  templateUrl: './project-page.component.html'
 })
 export class ProjectInfoComponent implements OnInit {
   project: Project | null = null; 
   errorMessage: string | null = null; 
-  private authService = inject(AuthService);
+  public authService = inject(AuthService);
   user = this.authService.userSignal;
+  isOwner(): boolean {
+    const currentUser = this.user();
+    return !!currentUser && this.project?.githubusername === currentUser.githubusername;
+  }
 
   constructor(
     private route: ActivatedRoute,

@@ -1,15 +1,34 @@
 
     @if (project) {
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-start">
-          <h1 class="text-2xl md:text-3xl text-center font-bold text-gradient-primary my-6 animate-fade animation-delay-4 break-words text-balance">{{ project.name }}</h1>
+        <!-- Botón primero en móvil, junto al título en desktop -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-1">
+          
+          <!-- Botón: primero en móvil -->
+          @if (isOwner()) {
+            <div class=" flex justify-end md:order-2 ms-auto animate-fade animation-delay-4">
+              <a 
+                [routerLink]="['/my-projects', project.githubusername]" 
+                class="whitespace-nowrap hover:bg-primary border-primary border text-primary hover:text-white py-2 px-6 rounded-full cursor-pointer transition-colors duration-300 font-medium"
+              >
+                Editar Proyecto
+              </a>
+            </div>
+          }
+      
+          <!-- Título -->
+          <div class="flex justify-center md:justify-start w-full">
+            <h1 class="text-2xl md:text-3xl text-center md:text-left font-bold text-gradient-primary my-6 animate-fade animation-delay-2 break-words text-balance">
+              {{ project.name }}
+            </h1>
           </div>
+      
+        </div>
 
-    
         <div class="flex flex-col lg:flex-row items-stretch gap-2 md:gap-12">
           
           <!-- Columna Izquierda -->
-          <div class="lg:w-1/2 flex flex-col items-center lg:items-start gap-4 ">
+          <div class="lg:w-1/2 flex flex-col items-center lg:items-start gap-4 animate-fade-slide-right">
             <img 
               [ngSrc]="project.main_image_url || '/assets/img/default-placeholder-full.webp'"  
               alt="{{ project.name }}"
@@ -51,12 +70,12 @@
           </div>
     
           <!-- Columna Derecha -->
-          <div class="lg:w-1/2 flex flex-col justify-between">
+          <div class="lg:w-1/2 flex flex-col justify-between animate-fade-slide-down animation-delay-2">
                 <div class="flex flex-col gap-4 flex-grow">
                   <div class="flex justify-start items-center gap-4 border-b border-gray-300 pb-4">
                 <a [routerLink]="['/', project.githubusername]" class="flex items-center gap-4">
                   <app-user-avatar 
-                    [githubusername]="project.githubusername" 
+                    [githubusername]="project.githubusername" [size]="72"
                     class="h-10 w-10 sm:h-14 sm:w-14"
                   ></app-user-avatar>
                   <span class="text-xl font-medium hover:text-primary transition-colors duration-300 animate-fade">
@@ -78,11 +97,11 @@
                     }
                   </div>
                 }
-                <p class="text-lg text-primary text-justify font-semibold">
+                <p class="text-lg text-primary font-semibold">
                   {{ project.name }}
                 </p>
                 @if (project.description) {
-                  <p class="text-lg text-gray-700 text-justify font-medium">
+                  <p class="text-lg text-gray-700 font-medium">
                     {{ project.description }}
                   </p>
                 }

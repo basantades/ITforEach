@@ -182,4 +182,18 @@ export class ProjectsService {
   
     return data as Project[];
   }
+
+  async getAllProjects(): Promise<Project[]> {
+    const { data, error } = await this.supabaseService.client
+      .from(this.table)
+      .select('*')
+      .order('updated_at', { ascending: false });
+  
+    if (error) {
+      console.error('❌ Error al obtener todos los proyectos:', error);
+      throw error;
+    }
+  
+    return data as Project[];
+  }
 }

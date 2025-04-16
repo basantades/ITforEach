@@ -1,0 +1,42 @@
+<section class="mb-8">
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+      <!-- Input de búsqueda -->
+      <input
+        type="text"
+        class="w-full sm:w-1/2 p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary transition"
+        placeholder="Buscar por nombre del proyecto..."
+        [value]="searchText()"
+        (input)="searchText.set($any($event.target).value); applyFilters()"
+      />
+  
+      <!-- Botón limpiar filtros -->
+      @if (searchText() || selectedTag()) {
+        <button
+          (click)="clearFilters()"
+          class="text-sm text-red-600 underline hover:text-red-800 transition mt-2 sm:mt-0"
+        >
+          Limpiar filtros
+        </button>
+      }
+    </div>
+  
+    <!-- Etiquetas -->
+    @if (topTags().length > 0) {
+      <div class="mt-4 flex flex-wrap gap-2">
+        @for (tag of topTags(); track tag) {
+          <button
+            (click)="selectTag(tag)"
+            class="px-3 py-1 rounded-full border text-sm transition"
+            [class.bg-primary]="selectedTag() === tag"
+            [class.text-white]="selectedTag() === tag"
+            [class.border-primary]="selectedTag() === tag"
+            [class.bg-gray-100]="selectedTag() !== tag"
+            [class.text-gray-700]="selectedTag() !== tag"
+          >
+            {{ tag }} ({{ tagCounts()[tag] }})
+          </button>
+        }
+      </div>
+    }
+  </section>
+  

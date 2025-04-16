@@ -4,9 +4,10 @@ import { Project } from '../../interfaces/project';
 import { RouterModule } from '@angular/router';
 import { ProjectCardComponent } from "../../components/blocks/project-card/project-card.component";
 import { CommonModule } from '@angular/common';
+import { ProjectFilterComponent } from "../../components/blocks/project-filter/project-filter.component";
 @Component({
   selector: 'app-discover',
-  imports: [RouterModule, ProjectCardComponent, CommonModule ],
+  imports: [RouterModule, ProjectCardComponent, CommonModule, ProjectFilterComponent],
   templateUrl: './discover.component.html'
 })
 
@@ -48,4 +49,12 @@ export class DiscoverComponent implements OnInit {
     const totalPages = Math.ceil(this.totalProjects / this.pageSize);
     return Array.from({ length: totalPages }, (_, i) => i + 1);
   }
+
+  filteredProjects: Project[] | null = null;
+
+  onFiltered(filtered: Project[]) {
+    this.filteredProjects = filtered;
+  }
+  
+
 }

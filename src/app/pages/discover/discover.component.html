@@ -13,22 +13,48 @@
 </div>
 
 @if (totalProjects > pageSize) {
-<div class="flex justify-center items-center gap-4 my-8">
+  <div class="flex justify-end items-center gap-2 my-12 select-none">
+    <!-- Botón Anterior -->
     <button 
       (click)="prevPage()" 
       [disabled]="page === 1"
-      class="px-4 py-2 bg-primary text-white rounded-md disabled:opacity-50 disabled:cursor-not-allowed transition hover:bg-primary"
+      class=" cursor-pointer flex items-center justify-center text-gray-700  hover:text-primary transition disabled:hidden disabled:pointer-events-none"
+      aria-label="Página anterior" title="Página anterior"
     >
-      ⬅️ Anterior
+      <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+      </svg>
     </button>
-    <span class="font-semibold">Página {{ page }}</span>
+  
+    <!-- Paginación -->
+    <div class="flex items-center gap-2">
+      @for (i of pages; track i) {
+        <button 
+          (click)="page = i; loadProjects()" 
+          class=" flex items-center bg-gray-200 justify-center text-2xl transition font-semibold cursor-pointer h-8 w-8 rounded-lg"
+          [ngClass]="{
+            'bg-primary text-white': page === i,
+            'hover:bg-gray-700 hover:text-white text-gray-700': page !== i
+          }"
+        >
+          {{ i }}
+        </button>
+      }
+    </div>
     <button 
-      (click)="nextPage()" 
-      [disabled]="page * pageSize >= totalProjects"
-      class="px-4 py-2 bg-primary text-white rounded-md disabled:opacity-50 disabled:cursor-not-allowed transition hover:bg-primary"
-    >
-      Siguiente ➡️
-    </button>
-</div>
+    (click)="nextPage()" 
+    [disabled]="page * pageSize >= totalProjects"
+    class=" cursor-pointer flex items-center justify-center text-gray-700  hover:text-primary transition disabled:hidden disabled:pointer-events-none"
+    aria-label="Página siguiente" title="Página siguiente"
+  >
+    <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+    </svg>
+  </button>
+
+  </div>
+  
+  
+  
 }
 

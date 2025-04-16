@@ -3,9 +3,10 @@ import { ProjectsService } from '../../services/database/projects.service';
 import { Project } from '../../interfaces/project';
 import { RouterModule } from '@angular/router';
 import { ProjectCardComponent } from "../../components/blocks/project-card/project-card.component";
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-discover',
-  imports: [RouterModule, ProjectCardComponent],
+  imports: [RouterModule, ProjectCardComponent, CommonModule ],
   templateUrl: './discover.component.html'
 })
 
@@ -13,7 +14,7 @@ export class DiscoverComponent implements OnInit {
   projectsService = inject(ProjectsService);
   projects: Project[] = [];
   page = 1;
-  pageSize = 24;
+  pageSize = 12;
   totalProjects = 0;
 
   async ngOnInit() {
@@ -42,5 +43,9 @@ export class DiscoverComponent implements OnInit {
       this.page--;
       this.loadProjects();
     }
+  }
+  get pages(): number[] {
+    const totalPages = Math.ceil(this.totalProjects / this.pageSize);
+    return Array.from({ length: totalPages }, (_, i) => i + 1);
   }
 }

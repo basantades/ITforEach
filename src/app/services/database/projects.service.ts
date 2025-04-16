@@ -123,27 +123,23 @@ export class ProjectsService {
     return true;
   }
 
-  async getPaginated(page: number, pageSize: number = 24): Promise<{ data: Project[]; total: number }> {
+  async getPaginated(page: number, pageSize: number = 12): Promise<{ data: Project[]; total: number }> {
     const from = (page - 1) * pageSize;
     const to = from + pageSize - 1;
-
+  
     const { data, error, count } = await this.supabaseService.client
       .from(this.table)
       .select('*', { count: 'exact' }) // Obtener total de registros
-      .order('updated_at', { ascending: false }) // Ordenar por fecha de creación
+      .order('updated_at', { ascending: false }) // Ordenar por fecha de actualización
       .range(from, to); // Paginación
-
+  
     if (error) {
       console.error('❌ Error al obtener proyectos paginados:', error);
       throw error;
     }
-
+  
     return { data: data as Project[], total: count ?? 0 };
   }
-
-  // transformImageUrl(imageUrl: string, width: number = 500, height: number = 281): string {
-  //   return imageUrl.replace('/upload/', `/upload/c_fill,w_${width},h_${height},q_auto/`);
-  // }
 
   transformImageUrl(imageUrl: string, size: 500 | 160 = 500): string {
     if (!imageUrl) return '/assets/img/default-placeholder.webp';

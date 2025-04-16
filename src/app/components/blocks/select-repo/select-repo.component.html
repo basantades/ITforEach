@@ -3,7 +3,7 @@
       <h2 class="text-xl font-semibold text-gray-800 text-center"> Paso 1: Selecciona un repositorio publico de tu GitHub</h2>
       <p class="text-sm text-gray-500 mb-4 text-center">Asegurate de que el repositorio tenga el 'About' completado</p>
       @if (loading()) {
-        <p class="text-sm text-gray-500 animate-pulse">Cargando repositorios...</p>
+        <app-loading />
       } @else if (error()) {
         <p class="text-sm text-red-500">{{ error() }}</p>
       } @else {

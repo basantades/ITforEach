@@ -9,10 +9,11 @@ import { LikeButtonComponent } from '../../components/ui/like-button/like-button
 import { AuthService } from '../../services/auth/auth.service';
 import { GithubLinkButtonComponent } from "../../components/ui/github-link-button/github-link-button.component";
 import { WebsiteLinkButtonComponent } from "../../components/ui/website-link-button/website-link-button.component";
+import { LoadingComponent } from "../../components/ui/loading/loading.component";
 
 @Component({
   selector: 'app-project-page',
-  imports: [RouterLink, NgOptimizedImage, UserAvatarComponent, LikeButtonComponent, GithubLinkButtonComponent, WebsiteLinkButtonComponent],
+  imports: [RouterLink, NgOptimizedImage, UserAvatarComponent, LikeButtonComponent, GithubLinkButtonComponent, WebsiteLinkButtonComponent, LoadingComponent],
   templateUrl: './project-page.component.html',
   styleUrls: ['./project-page.component.scss']
 })

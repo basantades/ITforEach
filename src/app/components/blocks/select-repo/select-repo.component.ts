@@ -1,11 +1,13 @@
 import { Component, Signal, signal, Output, EventEmitter, inject } from '@angular/core';
 import { GithubService } from '../../../services/api/github.service';
 import { Repo } from '../../../interfaces/repo';
+import { LoadingComponent } from "../../ui/loading/loading.component";
 
 @Component({
   selector: 'app-select-repo',
   templateUrl: './select-repo.component.html',
-  styleUrl: './select-repo.component.scss'
+  styleUrl: './select-repo.component.scss',
+  imports: [LoadingComponent]
 })
 export class SelectRepoComponent {
   private githubService = inject(GithubService);

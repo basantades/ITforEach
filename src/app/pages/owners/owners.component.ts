@@ -7,11 +7,12 @@ import { Project } from '../../interfaces/project';
 import { CommonModule } from '@angular/common';
 import { OwnerPreviewCardComponent } from '../../components/blocks/owner-preview-card/owner-preview-card.component';
 import { RouterLink } from '@angular/router';
+import { LoadingComponent } from "../../components/ui/loading/loading.component";
 
 @Component({
   selector: 'app-owners-page',
   standalone: true,
-  imports: [CommonModule, OwnerPreviewCardComponent, RouterLink ],
+  imports: [CommonModule, OwnerPreviewCardComponent, RouterLink, LoadingComponent],
   templateUrl: './owners.component.html',
 })
 export class OwnersPageComponent implements OnInit {

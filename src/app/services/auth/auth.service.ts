@@ -83,4 +83,31 @@ export class AuthService {
       this.isOwnerSignal.set(false);
     }
   }
+
+
+  async deleteUserAccount(): Promise<boolean> {
+    if (!this.session?.user) {
+      console.error('❌ No hay usuario autenticado.');
+      return false;
+    }
+  
+    const userId = this.session.user.id;
+  
+    // 🔥 1. Eliminar usuario de la tabla `users`
+    const { error } = await this.supabaseService.client
+      .from('users')
+      .delete()
+      .eq('user_id', userId);
+  
+    if (error) {
+      console.error('❌ Error eliminando el usuario de la base de datos:', error);
+      return false;
+    }
+  
+    // 🔒 2. Cerrar sesión y redirigir
+    await this.logout();
+  
+    return true;
+  }
+
 }

@@ -5,11 +5,12 @@ import { ProjectsService } from '../../services/database/projects.service';
 import { GithubService } from '../../services/api/github.service';
 import { ProjectFormComponent } from "../../components/sections/project-form/project-form.component";
 import { GithubProjectInfoComponent } from "../../components/sections/github-project-info/github-project-info.component";
+import { LoadingComponent } from "../../components/ui/loading/loading.component";
 
 @Component({
   selector: 'app-edit-project',
   standalone: true,
-  imports: [ProjectFormComponent, GithubProjectInfoComponent],
+  imports: [ProjectFormComponent, GithubProjectInfoComponent, LoadingComponent],
   templateUrl: './edit-project.component.html',
   styleUrl: './edit-project.component.scss'
 })

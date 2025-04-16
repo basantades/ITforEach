@@ -23,7 +23,7 @@
 }
   
   @if (authService.isOwnerSignal()) {
-    <div class="flex justify-center md:justify-end flex-wrap items-center gap-4 mt-6 animate-fade animation-delay-4">
+    <div class="flex justify-center flex-wrap items-center gap-4 mt-6 animate-fade animation-delay-4">
       @if (projects.length >= 1) {
 
       <a [routerLink]="['/', 'my-projects', authService.userSignal()?.githubusername]" 

@@ -1,6 +1,10 @@
 
 # ITforEach
 
+<p align="center">
+  <img src="public/assets/img/screenshot-itforeach.webp" alt="Capturas de pantalla del proyecto ITforEach" />
+</p>
+
 ## 📄 Descripción
 
 **ITforEach** es una plataforma donde desarrolladores comparten sus proyectos, descubren el trabajo de otros y se conectan con la comunidad. Permite publicar proyectos personales sincronizados con GitHub, ver el perfil de otros usuarios y explorar nuevos desarrollos.
@@ -45,6 +49,28 @@ cd ITforEach
 **3️⃣ Instala las dependencias:**
 ```bash
 npm install
+```
+
+## ⚙️ Configuración del entorno
+
+Antes de ejecutar la aplicación, es necesario configurar el archivo de entorno con tus propias claves.
+
+**1️⃣ Renombra el archivo de ejemplo:**
+
+```bash
+mv src/environments/environment.example.ts src/environments/environment.ts
+```
+
+**2️⃣ Edita el archivo environment.ts y completa los valores con tus datos:**
+```ts
+// src/environments/environment.ts
+export const environment = {
+  production: false,
+  supabaseUrl: 'TU_URL_SUPABASE',
+  supabaseAnonKey: 'TU_CLAVE_ANON_SUPABASE',
+  redirectUrl: 'URL_DE_REDIRECCIÓN_TRAS LOGIN',
+  cloudinaryUploadUrl: 'TU_URL_CLOUDINARY_UPLOAD'
+};
 ```
 
 ## ▶️ Ejecución

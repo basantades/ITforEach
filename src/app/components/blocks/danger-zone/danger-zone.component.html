@@ -1,0 +1,61 @@
+<div class="mx-auto w-full md:w-3xl lg:w-4xl border-t border-red-200 mt-10 pt-6">
+    <div class="flex flex-col md:flex-row items-center gap-4 justify-between">
+        <div>
+            <h2 class="text-lg font-semibold text-red-600 mb-2">Zona peligrosa</h2>
+            <p class="text-sm text-gray-500 md:mb-4">Al eliminar tu cuenta se eliminarán todos tus proyectos y sus votos.</p>
+        </div>
+        <button
+          aria-label="Eliminar Usuario"
+          title="Eliminar Usuario"
+          class=" hover:bg-red-600 hover:border-red-600 border-gray-500 border text-gray-500 hover:text-white py-2 px-6 rounded-full cursor-pointer transition-colors duration-300 font-medium text-base flex items-center justify-center gap-2" 
+          (click)="openConfirmStep1()"
+        >
+        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
+          </svg>
+          Eliminar cuenta
+        </button>
+    </div>
+ 
+  </div>
+  
+  <!-- Confirmación paso 1 -->
+  <app-modal [isOpen]="confirmStep1()" (onClose)="cancelStep1()">
+    <div class="m-4">
+      <h3 class="text-lg font-semibold text-red-600">¿Estás seguro?</h3>
+      <p class="text-sm text-gray-700 mt-2">Esta acción eliminará tu cuenta, todos tus proyectos y sus votos. Esta acción no se puede deshacer.</p>
+      <div class="flex gap-4 justify-end mt-6">
+        <button (click)="proceedToStep2()" 
+        class=" hover:bg-red-600 hover:border-red-600 border-gray-500 border text-gray-500 hover:text-white py-2 px-6 rounded-full cursor-pointer transition-colors duration-300 font-medium text-base flex items-center justify-center gap-2" 
+        >
+          Estoy seguro
+        </button>
+        <button (click)="cancelStep1()" class="bg-gray-700 hover:bg-primary text-white py-2 px-6 rounded-full cursor-pointer ">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </app-modal>
+  
+  <!-- Confirmación paso 2 -->
+  <app-modal [isOpen]="confirmStep2()" (onClose)="cancelStep2()">
+    <div class="m-4 md:w-sm">
+      <h3 class="text-lg font-semibold text-red-600">Confirmación final</h3>
+      <p class="text-sm text-gray-700 mt-2 mb-4">Escribe <strong>"Delete"</strong> para confirmar.</p>
+      <input type="text"
+       [value]="confirmText()"
+       (input)="confirmText.set($any($event.target).value)"
+       class="w-full p-2 border border-gray-300 rounded mb-4" />
+      <div class="flex gap-4 justify-end flex-wrap">
+        <button (click)="confirmDeletion()" 
+                [disabled]="confirmText() !== 'Delete'"
+                class="bg-red-600 hover:bg-red-500 text-white py-2 px-6 rounded-full disabled:bg-gray-300 disabled:cursor-not-allowed cursor-pointer">
+          Eliminar cuenta
+        </button>
+        <button (click)="cancelStep2()" class="bg-gray-700 hover:bg-primary text-white py-2 px-6 rounded-full cursor-pointer ">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </app-modal>
+  

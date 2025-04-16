@@ -14,11 +14,12 @@ import { AuthService } from '../../services/auth/auth.service';
 import { User } from '../../interfaces/user';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { DangerZoneComponent } from "../../components/blocks/danger-zone/danger-zone.component";
 
 @Component({
   selector: 'app-edit-profile',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, DangerZoneComponent],
   templateUrl: './edit-profile.component.html'
 })
 export class EditProfileComponent {

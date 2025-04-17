@@ -95,6 +95,15 @@
       }
     }
 
+    @keyframes slideRight {
+      0% {
+        transform: translateX(-100%);
+      }
+      100% {
+        transform: translateX(0);
+      }
+    }
+
     @keyframes fadeZoom {
       0% {
         opacity: 0;
@@ -122,7 +131,9 @@
     .animate-fade-slide-right {
       animation: fadeSlideRight 0.8s ease-out forwards;
     }
-  
+    .animate-slide-right {
+      animation: slideRight 0.5s ease-out forwards;
+    }
     .animate-fade-zoom {
       animation: fadeZoom 0.8s ease-out forwards;
     }

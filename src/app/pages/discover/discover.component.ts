@@ -22,6 +22,8 @@ export class DiscoverComponent implements OnInit {
 
   async ngOnInit() {
     await this.loadAllProjects();
+    window.addEventListener('resize', this.handleResize);
+
   }
 
   async loadAllProjects() {
@@ -68,4 +70,24 @@ export class DiscoverComponent implements OnInit {
   scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+
+
+  showMobileFilter = false;
+
+toggleMobileFilter() {
+  this.showMobileFilter = !this.showMobileFilter;
+  document.body.style.overflow = this.showMobileFilter ? 'hidden' : 'auto';
+}
+
+
+ngOnDestroy() {
+  window.removeEventListener('resize', this.handleResize);
+}
+
+handleResize = () => {
+  if (window.innerWidth >= 768 && this.showMobileFilter) {
+    this.showMobileFilter = false;
+    document.body.style.overflow = 'auto';
+  }
+}
 }

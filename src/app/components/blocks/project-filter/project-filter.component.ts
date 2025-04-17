@@ -58,6 +58,14 @@ export class ProjectFilterComponent {
     this.applyFilters();
   }
 
+  onlyPublished = signal(false);
+
+// Método para activar/desactivar
+toggleOnlyPublished() {
+  this.onlyPublished.update(v => !v);
+  this.applyFilters(); // vuelve a aplicar filtros cuando cambia
+}
+
   clearFilters() {
     this.searchText.set('');
     this.selectedTags.set([]);

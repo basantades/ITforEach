@@ -75,9 +75,9 @@ toggleOnlyPublished() {
   applyFilters() {
     const search = this.searchText().toLowerCase();
     const selected = this.selectedTags();
+    const showOnlyPublished = this.onlyPublished();
   
     const filtered = this.allProjects.filter(project => {
-      // Buscar en name, description, about_project y topics
       const nameMatch = project.name?.toLowerCase().includes(search);
       const descriptionMatch = project.description?.toLowerCase().includes(search);
       const aboutMatch = project.about_project?.toLowerCase().includes(search);
@@ -87,17 +87,19 @@ toggleOnlyPublished() {
   
       const matchesSearch = !search || nameMatch || descriptionMatch || aboutMatch || topicsMatch;
   
-      // Filtrado acumulativo por etiquetas
       const matchesTags = selected.length === 0 || (
         project.topics && selected.every(tag => project.topics?.includes(tag))
       );
   
-      return matchesSearch && matchesTags;
+      const matchesPublished = !showOnlyPublished || !!project.homepage_url;
+  
+      return matchesSearch && matchesTags && matchesPublished;
     });
   
     this.filtered.emit(filtered);
-    this.updateTagCounts(filtered); // actualiza el recuento visible de etiquetas según los resultados actuales
+    this.updateTagCounts(filtered);
   }
+  
   updateTagCounts(projects: Project[]) {
     const counts: { [tag: string]: number } = {};
   

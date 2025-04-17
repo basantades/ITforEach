@@ -26,6 +26,46 @@ export class ProjectFilterComponent {
 
   showTags = signal(false);
 
+
+  statusFilterEnabled = signal(true); // "Cualquier estado" por defecto
+  allStatuses = ['completed', 'in_progress', 'testing', 'paused', 'undefined'];
+  activeStatuses = signal<string[]>(['in_progress', 'testing', 'completed', 'paused']);
+  statusLabels: { [key: string]: string } = {
+    undefined: 'Indefinido',
+    in_progress: 'En progreso',
+    testing: 'En pruebas',
+    completed: 'Terminado',
+    paused: 'Pausado',
+  };
+  
+  toggleStatusFilterEnabled() {
+    this.statusFilterEnabled.update(v => !v);
+  
+    // Reset states si se desactiva
+    if (this.statusFilterEnabled()) {
+      // vuelve a modo "cualquier estado"
+      this.activeStatuses.set(['in_progress', 'testing', 'completed', 'paused']);
+    }
+  
+    this.applyFilters();
+  }
+  
+  toggleStatusFilter(status: string) {
+    const current = this.activeStatuses();
+    const isActive = current.includes(status);
+  
+    if (isActive && current.length === 1) return; // no permitir quitar el último
+  
+    if (isActive) {
+      this.activeStatuses.set(current.filter(s => s !== status));
+    } else {
+      this.activeStatuses.set([...current, status]);
+    }
+  
+    this.applyFilters();
+  }
+  
+
   toggleTags() {
     this.showTags.update((v) => !v);
   }
@@ -76,7 +116,9 @@ toggleOnlyPublished() {
     const search = this.searchText().toLowerCase();
     const selected = this.selectedTags();
     const showOnlyPublished = this.onlyPublished();
-  
+    const useStatusFilter = !this.statusFilterEnabled(); // solo si el switch está desactivado
+    const activeStatuses = this.activeStatuses();
+
     const filtered = this.allProjects.filter(project => {
       const nameMatch = project.name?.toLowerCase().includes(search);
       const descriptionMatch = project.description?.toLowerCase().includes(search);
@@ -93,7 +135,11 @@ toggleOnlyPublished() {
   
       const matchesPublished = !showOnlyPublished || !!project.homepage_url;
   
-      return matchesSearch && matchesTags && matchesPublished;
+      const matchesStatus = !useStatusFilter || (
+        project.status && activeStatuses.includes(project.status)
+      );
+
+      return matchesSearch && matchesTags && matchesPublished && matchesStatus;
     });
   
     this.filtered.emit(filtered);

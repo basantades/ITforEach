@@ -1,7 +1,7 @@
 
 <section class="container mx-auto px-4 sm:px-6 lg:px-8">
-  <div class="flex justify-center">
-    <h1 class="text-2xl md:text-3xl text-center font-bold text-gradient-primary my-6 animate-fade animation-delay-2">Descubre nuevos Proyectos</h1>
+  <div class="flex justify-center ">
+    <h1 class="text-xl sm:text-2xl md:text-3xl text-center font-bold text-gradient-primary my-6 animate-fade animation-delay-2">Descubre nuevos Proyectos</h1>
   </div>
   <div class="w-full mx-auto flex flex-col lg:flex-row gap-4">
 
@@ -12,12 +12,24 @@
       </app-project-filter>
     </div>
     <!-- Botón flotante solo en móvil -->
-     <div>
+     <div class="-mt-2">
       <button
-      class="lg:hidden whitespace-nowrap hover:bg-primary border-primary border text-primary hover:text-white py-2 px-6 rounded-full cursor-pointer transition-colors duration-300 font-medium"
+      class="lg:hidden flex gap-2 bg-gray-200 text-gray-500 py-2 px-4 rounded-full cursor-pointer transition-colors duration-300 font-medium"
       (click)="toggleMobileFilter()"
       >
-      Filtros
+      <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M20 6H10m0 0a2 2 0 1 0-4 0m4 0a2 2 0 1 1-4 0m0 0H4m16 6h-2m0 0a2 2 0 1 0-4 0m4 0a2 2 0 1 1-4 0m0 0H4m16 6H10m0 0a2 2 0 1 0-4 0m4 0a2 2 0 1 1-4 0m0 0H4"/>
+      </svg>
+      <svg
+      class="w-6 h-6"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <path stroke-linecap="round" d="M21 21l-3.5-3.5M17 10a7 7 0 11-14 0 7 7 0 0114 0z" />
+    </svg>
       </button>
      </div>
 
@@ -28,14 +40,16 @@
     <div class="flex flex-col justify-between min-h-[calc(100vh-64px)]">
 
       <div>
-        <div class="flex justify-between items-center mb-4">
-          <h2 class="text-xl font-bold text-gray-500">Filtros</h2>
+        <div class="flex justify-between items-center mb-4 text-gray-500">
+          <h2 class="text-xl font-bold ">Filtros</h2>
           <button 
             (click)="toggleMobileFilter()" 
-            class="text-gray-500 hover:text-black text-2xl leading-none"
+            class="text-gray-500"
             aria-label="Cerrar filtros" title="Cerrar filtros"
           >
-            &times;
+          <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
           </button>
         </div>
     
@@ -68,7 +82,7 @@
     </app-project-card>
   }
   @if (filteredProjects.length === 0) {
-    <div class="col-span-full text-center text-gray-500 text-lg mt-8 animate-fade">
+    <div class="col-span-full text-gray-500 text-lg m-8 animate-fade">
       No se ha encontrado ninguna coincidencia.
     </div>
   }

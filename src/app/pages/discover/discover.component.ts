@@ -8,53 +8,64 @@ import { ProjectFilterComponent } from "../../components/blocks/project-filter/p
 @Component({
   selector: 'app-discover',
   imports: [RouterModule, ProjectCardComponent, CommonModule, ProjectFilterComponent],
-  templateUrl: './discover.component.html'
+  templateUrl: './discover.component.html',
+  styleUrl: './discover.component.scss'
 })
-
 export class DiscoverComponent implements OnInit {
   projectsService = inject(ProjectsService);
-  projects: Project[] = [];
+  allProjects: Project[] = [];
+  filteredProjects: Project[] = [];
+
+  // Paginación
   page = 1;
   pageSize = 12;
-  totalProjects = 0;
 
   async ngOnInit() {
-    await this.loadProjects();
+    await this.loadAllProjects();
   }
 
-  async loadProjects() {
+  async loadAllProjects() {
     try {
-      const { data, total } = await this.projectsService.getPaginated(this.page, this.pageSize);
-      this.projects = data;
-      this.totalProjects = total;
+      this.allProjects = await this.projectsService.getAllProjects();
+      this.filteredProjects = [...this.allProjects]; // Inicialmente, todos visibles
     } catch (error) {
       console.error('❌ Error cargando proyectos:', error);
     }
   }
 
+  get paginatedProjects(): Project[] {
+    const start = (this.page - 1) * this.pageSize;
+    const end = start + this.pageSize;
+    return this.filteredProjects.slice(start, end);
+  }
+
+  get totalProjects(): number {
+    return this.filteredProjects.length;
+  }
+
   nextPage() {
     if (this.page * this.pageSize < this.totalProjects) {
       this.page++;
-      this.loadProjects();
     }
   }
 
   prevPage() {
     if (this.page > 1) {
       this.page--;
-      this.loadProjects();
     }
   }
+
   get pages(): number[] {
     const totalPages = Math.ceil(this.totalProjects / this.pageSize);
     return Array.from({ length: totalPages }, (_, i) => i + 1);
   }
 
-  filteredProjects: Project[] | null = null;
-
   onFiltered(filtered: Project[]) {
     this.filteredProjects = filtered;
+    this.page = 1; // Reinicia la paginación al filtrar
   }
-  
 
+  scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 }

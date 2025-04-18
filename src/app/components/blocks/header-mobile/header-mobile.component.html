@@ -31,7 +31,7 @@
   
     @if (isMenuOpen()) {
       <!-- Overlay menú -->
-      <div class="fixed top-[60px] left-0 w-full h-[calc(dvh-60px)] backdrop-blur-md bg-white/90 z-40 p-6 overflow-y-auto">
+      <div class="fixed top-[60px] left-0 w-full h-[calc(dvh-60px)] min-h-[calc(dvh-60px)]  backdrop-blur-md bg-white/90 z-40 p-6 overflow-y-auto">
         <div class="w-full flex flex-col items-center gap-6 text-lg font-medium text-gray-700 pt-6">
           <a routerLink="/discover" (click)="closeMenu()"  routerLinkActive="text-primary" [routerLinkActiveOptions]="{ exact: true }"
            class="hover:text-primary transition-colors">Descubre Proyectos</a>

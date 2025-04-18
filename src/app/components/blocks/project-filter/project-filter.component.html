@@ -67,6 +67,10 @@
       </div>
     </label>
 </div>
+<div class="overflow-hidden transition-all duration-500"
+[ngStyle]="{
+  'max-height': !statusFilterEnabled() ? '500px' : '0',
+}">
 
       <!-- Switches por estado -->
   @if (!statusFilterEnabled()) {
@@ -95,6 +99,7 @@
     <div class="w-full h-[1px] bg-gray-300 mb-2"></div>
 
   }
+</div>
 
   </div>
   

@@ -94,39 +94,36 @@
 
 <!-- Modal de filtros para móvil -->
 @if (showMobileFilter) {
-  <div class="lg:hidden fixed inset-0 bg-white z-50 p-8 overflow-y-auto animate-slide-right ">
-
-    <div class="flex flex-col justify-between h-[calc(dvh-80px)] min-h-[calc(dvh-80px)]">
-
-      <div>
-        <div class="flex justify-between items-center mb-4 text-gray-500">
-          <h2 class="text-xl font-bold ">Filtros</h2>
-          <button 
-            (click)="toggleMobileFilter()" 
-            class="text-gray-500"
-            aria-label="Cerrar filtros" title="Cerrar filtros"
-          >
+  <div class="lg:hidden fixed inset-0 bg-gray-50 z-50 p-6 animate-slide-right flex flex-col">
+    
+    <!-- Contenedor scrollable -->
+    <div class="flex-1 overflow-y-auto">
+      <div class="flex justify-between items-center mb-4 text-gray-500">
+        <h2 class="text-xl font-bold">Filtros</h2>
+        <button 
+          (click)="toggleMobileFilter()" 
+          class="text-gray-500"
+          aria-label="Cerrar filtros" title="Cerrar filtros">
           <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
           </svg>
-          </button>
-        </div>
-        <app-project-filter
+        </button>
+      </div>
+      
+      <app-project-filter
         [projects]="allProjects"
         [searchTextInput]="searchText"
         (filtered)="onFiltered($event)">
-        </app-project-filter>
-      </div>
+      </app-project-filter>
+    </div>
 
-    <div class="w-full mt-4 flex justify-end items-end pt-auto">
-    <button
-    class="bg-primary hover:bg-primary text-white py-2 px-6 rounded-full cursor-pointer mt-auto"
-    (click)="toggleMobileFilter()"
-    >
-    Aplicar
-    </button>
+    <!-- Botón al fondo -->
+    <div class="pt-4">
+      <button
+        class="bg-primary hover:bg-primary text-white py-2 px-6 rounded-full w-full"
+        (click)="toggleMobileFilter()">
+        Aplicar
+      </button>
+    </div>
   </div>
-</div>
-  </div>
-
 }

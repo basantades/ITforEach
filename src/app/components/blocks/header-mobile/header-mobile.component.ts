@@ -20,10 +20,30 @@ export class HeaderMobileComponent {
   isMenuOpen = signal(false);
 
   toggleMenu() {
-    this.isMenuOpen.update(open => !open);
+    this.isMenuOpen.update(open => {
+      const newState = !open;
+      document.body.style.overflow = newState ? 'hidden' : 'auto';
+      return newState;
+    });
   }
-
+  
   closeMenu() {
     this.isMenuOpen.set(false);
+    document.body.style.overflow = 'auto';
+  }
+
+  ngOnInit() {
+    window.addEventListener('resize', this.handleResize);
+  }
+  
+  ngOnDestroy() {
+    window.removeEventListener('resize', this.handleResize);
+  }
+  
+  handleResize = () => {
+    if (window.innerWidth >= 640 && this.isMenuOpen()) {
+      this.closeMenu(); // También reestablece el scroll
+      document.body.style.overflow = 'auto';
+    }
   }
 }

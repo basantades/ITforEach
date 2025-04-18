@@ -1,0 +1,161 @@
+<section class="pt-2">
+    <div class="flex flex-col gap-2 md:gap-4">
+      <!-- Input de búsqueda -->
+      <!-- <div class="relative mb-4">
+        <input
+          type="text"
+          class="w-full p-3 pr-10 rounded-lg bg-white text-gray-700 ring-1 ring-gray-300 hover:ring-primary focus:ring-primary focus:outline-none transition"
+          placeholder="Buscar por palabra..."
+          [value]="searchText()"
+          (input)="searchText.set($any($event.target).value); applyFilters()"
+        />
+        <svg
+          class="w-5 h-5 text-gray-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path stroke-linecap="round" d="M21 21l-3.5-3.5M17 10a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+      </div> -->
+      <!-- Switch de mostrar solo proyectos desplegados -->
+<div class="flex items-center gap-2 mb-2 text-sm text-gray-600">
+    <label class="w-full flex items-center justify-between cursor-pointer pb-2 border-b border-gray-300">
+        <span class="mr-auto text-lg text-gray-500 font-medium">Solo Proyectos publicados</span>
+
+        <input
+  type="checkbox"
+  id="published"
+  class="sr-only peer"
+  [checked]="onlyPublished()"
+  (change)="onlyPublished.set($any($event.target).checked); applyFilters()"
+/>
+      <div
+        class="w-10 h-5 bg-gray-300 rounded-full relative transition-colors duration-300"
+        [class.bg-primary]="onlyPublished()"
+      >
+        <div
+          class="absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full shadow transition-all duration-300"
+          [style.transform]="onlyPublished() ? 'translateX(20px)' : 'translateX(0)'"
+        ></div>
+      </div>
+    </label>
+  </div>
+
+<!-- Filtro por estado -->
+<div>
+<div class="flex items-center gap-2 mb-2 ">
+    <label class="w-full flex items-center justify-between cursor-pointer pb-2 border-b border-gray-300">
+      <span class="mr-auto text-lg text-gray-500 font-medium">Cualquier estado</span>
+  
+      <input
+        type="checkbox"
+        class="sr-only peer"
+        [checked]="statusFilterEnabled()"
+        (change)="toggleStatusFilterEnabled()"
+      />
+      <div
+        class="w-10 h-5 bg-gray-300 rounded-full relative transition-colors duration-300"
+        [class.bg-primary]="statusFilterEnabled()"
+      >
+        <div
+          class="absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full shadow transition-all duration-300"
+          [style.transform]="statusFilterEnabled() ? 'translateX(20px)' : 'translateX(0)'"
+        ></div>
+      </div>
+    </label>
+</div>
+
+      <!-- Switches por estado -->
+  @if (!statusFilterEnabled()) {
+    <div class="flex flex-col gap-3 my-4 text-sm text-gray-600">
+      @for (status of allStatuses; track status) {
+        <label class="w-full flex items-center justify-between cursor-pointer">
+          <span class="text-gray-500 font-medium">{{ statusLabels[status] || status }}</span>
+          <input
+            type="checkbox"
+            class="sr-only peer"
+            [checked]="activeStatuses().includes(status)"
+            (change)="toggleStatusFilter(status)"
+          />
+          <div
+            class="w-10 h-5 bg-gray-300 rounded-full relative transition-colors duration-300"
+            [class.bg-primary]="activeStatuses().includes(status)"
+          >
+            <div
+              class="absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full shadow transition-all duration-300"
+              [style.transform]="activeStatuses().includes(status) ? 'translateX(20px)' : 'translateX(0)'"
+            ></div>
+          </div>
+        </label>
+      }
+    </div>
+    <div class="w-full h-[1px] bg-gray-300 mb-2"></div>
+
+  }
+
+  </div>
+  
+
+  
+  
+  
+  
+      <!-- Etiquetas -->
+      @if (topTags().length > 0) {
+       <div class="w-full flex justify-between items-center gap-4 pb-2 border-b border-gray-300">
+    <h3 class="text-lg text-gray-500 font-medium">Etiquetas</h3>
+    @if (selectedTags().length > 0) {
+        <button
+        aria-label="Limpiar" title="Limpiar"
+        class=" hover:bg-red-500 bg-gray-600 text-gray-500 text-white w-7 h-7 rounded-full cursor-pointer transition-colors duration-300 font-medium text-base flex items-center justify-center gap-2" 
+        (click)="clearFilters()">
+      <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
+        </svg>
+    </button>
+      }
+    </div>
+
+        <div
+        [ngStyle]="{
+          'max-height': !showTags() ? '100px' : '460px',
+        }"
+        class=" overflow-hidden transition-all duration-500 ease-in-out flex flex-wrap items-start justify-start gap-2"
+
+      >
+        @for (tag of topTags(); track tag) {
+          <button
+            (click)="selectTag(tag)"
+            class=" bg-gray-200 text-gray-800 px-3 py-1 rounded-full text-sm transition hover:bg-primary hover:text-white transition cursor-pointer"
+            [class.bg-primary]="selectedTags().includes(tag)"
+            [class.text-white]="selectedTags().includes(tag)"
+          >
+            {{ tag }} ({{ tagCounts()[tag] }})
+          </button>
+        }
+      </div>
+    
+    <div class="flex justify-center items-center">
+        <div class="w-full h-[1px] bg-gray-300"></div>
+        @if (topTags().length > 9) {
+        <button
+    (click)="toggleTags()"
+    class=" flex justify-center items-center gap-1 hover:bg-gray-600 hover:border-gray-600 border-gray-500 border text-gray-500 hover:text-white py-1 px-3 rounded-full cursor-pointer transition-colors duration-300 font-medium text-sm" 
+    >
+    {{ showTags() ? 'Menos' : 'Más' }}
+    <svg class="w-5 h-5 transition-transform duration-300" [ngClass]="{'rotate-180': showTags()}" 
+    aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7"/>
+    </svg>
+  </button>
+    }
+  <div class="w-full h-[1px] bg-gray-300"></div>
+
+</div>
+}
+    </div>
+  </section>
+  

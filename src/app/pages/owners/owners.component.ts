@@ -19,6 +19,7 @@ export class OwnersPageComponent implements OnInit {
   private userService = inject(UserService);
   private projectsService = inject(ProjectsService);
   private authService = inject(AuthService);
+  
 
   owners = signal<{ user: User; lastProject: Project; projectCount: number }[]>([]);
   isLoading = signal(true);

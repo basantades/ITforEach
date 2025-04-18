@@ -1,12 +1,12 @@
-<div class="p-2 opacity-0 animate-fade-zoom  w-full max-w-[500px]" [style.animationDelay]="animationDelay + 'ms'">
+<div class=" opacity-0 animate-fade-zoom  w-full max-w-[500px]" [style.animationDelay]="animationDelay + 'ms'">
     <a [routerLink]="['/', project.githubusername, project.name]"
-    aria-label="Ficha del proyecto" title="Ficha del proyecto"
+    aria-label="Ficha del proyecto" title="Ficha del proyecto {{ project.name }}"
     >
       <div class="relative group overflow-hidden rounded-lg shadow-md bg-white">
 
         <img 
         [ngSrc]="projectsService.transformImageUrl(project.main_image_url ?? '', 500) || '/assets/img/default-placeholder.webp'" 
-        alt="Imagen principal del proyecto:{{ project.name }}" 
+        alt="Imagen principal del proyecto {{ project.name }}" 
         priority
         width="500" 
         height="281"
@@ -14,7 +14,7 @@
       >
         <div>
           <h2 
-            class="text-[clamp(0.7rem,1.2rem,1.5rem)] px-1 absolute text-center break-words text-balance inset-x-0 bottom-4 flex items-center justify-center text-xl font-bold text-white text-shadow-lg z-10"
+            class="text-[clamp(0.7rem,1.2rem,1.5rem)] px-1 absolute text-center break-all text-balance inset-x-0 bottom-4 flex items-center justify-center text-xl font-bold text-white text-shadow-lg z-10"
           >
             {{ project.name }}
           </h2>
@@ -22,16 +22,16 @@
         </div>
       </div>
     </a>
-    <div class="p-2 flex items-center justify-between">
+    <div class="pt-2 flex items-center justify-between gap-3">
       <a [routerLink]="['/', project.githubusername]"
-      aria-label="Ir a la página del autor" title="Ir a la página del autor"
+      aria-label="Ir a la página del creador" title="Ir a la página de {{ project.githubusername }}"
       >
         <div class="flex items-center gap-2">
-          <app-user-avatar [githubusername]="project.githubusername" [size]="32" class="h-8 w-8"></app-user-avatar>
-          <p class="text-gray-500">{{ project.githubusername }}</p>
+          <app-user-avatar [githubusername]="project.githubusername" [size]="32" class="h-8 min-w-8"></app-user-avatar>
+          <p class="break-all text-sm text-gray-500">{{ project.githubusername }}</p>
         </div>
       </a>
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2">
         <app-website-link-icon [url]="project.homepage_url"></app-website-link-icon>
         <app-like-button [projectId]="project.id!" ></app-like-button>
       </div>

@@ -36,23 +36,25 @@ export class AuthService {
     });
   }
 
-  // Establecer el usuario desde la sesión
-
   private async setUserFromSession(session: Session | null) {
     if (!session) {
       this.userSignal.set(null);
       return;
     }
   
-    const userMetadata = session.user.user_metadata;
-    this.userSignal.set({
-      user_id: session.user.id,
-      githubusername: userMetadata['user_name'],
-      fullname: userMetadata['full_name'],
-      avatarurl: userMetadata['avatar_url']
-    });
-  
-    await this.userService.getOrCreateUser(); // Llamar siempre que haya sesión
+    const user = await this.userService.getOrCreateUser();
+    if (user) {
+      this.userSignal.set(user);
+    } else {
+      // fallback si falla getOrCreateUser
+      const userMetadata = session.user.user_metadata;
+      this.userSignal.set({
+        user_id: session.user.id,
+        githubusername: userMetadata['user_name'],
+        fullname: userMetadata['full_name'],
+        avatarurl: userMetadata['avatar_url']
+      });
+    }
   }
 
   // Obtener el token de GitHub desde la sesión

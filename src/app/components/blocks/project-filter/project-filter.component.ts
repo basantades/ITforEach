@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, signal, computed } from '@angular/core';
+import { Component, Input, Output, EventEmitter, signal, computed, OnChanges, SimpleChanges } from '@angular/core';
 import { Project } from '../../../interfaces/project';
 import { CommonModule } from '@angular/common';
 
@@ -8,16 +8,21 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   templateUrl: './project-filter.component.html',
 })
-export class ProjectFilterComponent {
+export class ProjectFilterComponent implements OnChanges {
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['searchTextInput']) {
+      this.applyFilters();
+    }
+  }
+  
   @Input() set projects(value: Project[]) {
     this.allProjects = value;
     this.applyFilters(); // ya extrae los tags correctos
   }
 
-
+  @Input() searchTextInput: string = '';
   @Output() filtered = new EventEmitter<Project[]>();
 
-  searchText = signal('');
   selectedTags = signal<string[]>([]);
   tagCounts = signal<{ [tag: string]: number }>({});
 
@@ -107,13 +112,13 @@ toggleOnlyPublished() {
 }
 
   clearFilters() {
-    this.searchText.set('');
     this.selectedTags.set([]);
     this.applyFilters();
   }
 
   applyFilters() {
-    const search = this.searchText().toLowerCase();
+    
+    const search = this.searchTextInput.toLowerCase();
     const selected = this.selectedTags();
     const showOnlyPublished = this.onlyPublished();
     const useStatusFilter = !this.statusFilterEnabled(); // solo si el switch está desactivado

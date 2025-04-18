@@ -3,34 +3,29 @@
   <div class="flex justify-center ">
     <h1 class="text-xl sm:text-2xl md:text-3xl text-center font-bold text-gradient-primary my-6 animate-fade animation-delay-2">Descubre nuevos Proyectos</h1>
   </div>
+
   <div class="w-full mx-auto flex flex-col lg:flex-row gap-4">
 
     <div class="hidden lg:block min-w-1/4 max-w-1/4 xl:min-w-1/5 xl:max-w-1/5 animate-fade-slide-right">
+      <app-search-input (search)="searchText = $event"></app-search-input>
       <app-project-filter
-        [projects]="allProjects"
-        (filtered)="onFiltered($event)">
+      [projects]="allProjects"
+      [searchTextInput]="searchText"
+      (filtered)="onFiltered($event)">
       </app-project-filter>
     </div>
     <!-- Botón flotante solo en móvil -->
-     <div class="-mt-2">
+     <div class="-mt-2 flex flex-wrap justify-center items-center gap-4">
       <button
-      class="lg:hidden flex gap-2 bg-gray-200 text-gray-500 py-2 px-4 rounded-full cursor-pointer transition-colors duration-300 font-medium"
+      class="lg:hidden flex gap-2 bg-gray-200 text-gray-500 p-2 rounded-full cursor-pointer transition-colors duration-300 font-medium"
       (click)="toggleMobileFilter()"
       >
       <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
         <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M20 6H10m0 0a2 2 0 1 0-4 0m4 0a2 2 0 1 1-4 0m0 0H4m16 6h-2m0 0a2 2 0 1 0-4 0m4 0a2 2 0 1 1-4 0m0 0H4m16 6H10m0 0a2 2 0 1 0-4 0m4 0a2 2 0 1 1-4 0m0 0H4"/>
       </svg>
-      <svg
-      class="w-6 h-6"
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-      stroke-width="2"
-    >
-      <path stroke-linecap="round" d="M21 21l-3.5-3.5M17 10a7 7 0 11-14 0 7 7 0 0114 0z" />
-    </svg>
       </button>
+      <app-search-input (search)="searchText = $event" class="grow"></app-search-input>
+
      </div>
 
 <!-- Modal de filtros para móvil -->
@@ -52,10 +47,10 @@
           </svg>
           </button>
         </div>
-    
         <app-project-filter
-          [projects]="allProjects"
-          (filtered)="onFiltered($event)">
+        [projects]="allProjects"
+        [searchTextInput]="searchText"
+        (filtered)="onFiltered($event)">
         </app-project-filter>
       </div>
 
@@ -73,7 +68,7 @@
 }
 
 <div class="w-full min-w-3/4 xl:min-w-4/5 ">
-<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-3">
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-4 md:gap-6">
   @for (project of paginatedProjects; track project.id; let i = $index) {
 
     <app-project-card 

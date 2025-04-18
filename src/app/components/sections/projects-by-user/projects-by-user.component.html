@@ -10,13 +10,13 @@
     }
   </div>
 } @else if (projects.length === 2) {
-  <div class="grid grid-cols-1 sm:grid-cols-2 gap-1">
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
     @for (project of projects; track project.id; let i = $index) {
       <app-project-card-owner [project]="project" [animationDelay]="i * 100"></app-project-card-owner>
     }
   </div>
 } @else {
-  <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-1">
+  <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
     @for (project of projects; track project.id; let i = $index) {
       <app-project-card-owner [project]="project" [animationDelay]="i * 100"></app-project-card-owner>
     }

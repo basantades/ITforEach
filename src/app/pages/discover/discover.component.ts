@@ -5,9 +5,10 @@ import { RouterModule } from '@angular/router';
 import { ProjectCardComponent } from "../../components/blocks/project-card/project-card.component";
 import { CommonModule } from '@angular/common';
 import { ProjectFilterComponent } from "../../components/blocks/project-filter/project-filter.component";
+import { SearchInputComponent } from "../../components/ui/search-input/search-input.component";
 @Component({
   selector: 'app-discover',
-  imports: [RouterModule, ProjectCardComponent, CommonModule, ProjectFilterComponent],
+  imports: [RouterModule, ProjectCardComponent, CommonModule, ProjectFilterComponent, SearchInputComponent],
   templateUrl: './discover.component.html',
   styleUrl: './discover.component.scss'
 })
@@ -15,7 +16,7 @@ export class DiscoverComponent implements OnInit {
   projectsService = inject(ProjectsService);
   allProjects: Project[] = [];
   filteredProjects: Project[] = [];
-
+  searchText: string = ''; 
   // Paginación
   page = 1;
   pageSize = 12;

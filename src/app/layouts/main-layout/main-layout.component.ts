@@ -8,8 +8,7 @@ import { HeaderMobileComponent } from "../../components/blocks/header-mobile/hea
 @Component({
   selector: 'app-main-layout',
   imports: [RouterOutlet, HeaderComponent, FooterComponent, HeaderMobileComponent],
-  templateUrl: './main-layout.component.html',
-  styleUrl: './main-layout.component.scss'
+  templateUrl: './main-layout.component.html'
 })
 export class MainLayoutComponent {
 

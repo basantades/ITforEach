@@ -9,8 +9,6 @@ import { MainLayoutComponent } from "./layouts/main-layout/main-layout.component
 })
 export class AppComponent  {
   
-
-
   title = 'ITforEach';
 }
 

@@ -7,8 +7,7 @@ import { AuthService } from '../../../services/auth/auth.service';
   selector: 'app-danger-zone',
   standalone: true,
   imports: [CommonModule, ModalComponent ],
-  templateUrl: './danger-zone.component.html',
-  styleUrls: ['./danger-zone.component.scss']
+  templateUrl: './danger-zone.component.html'
 })
 export class DangerZoneComponent {
   confirmStep1 = signal(false);

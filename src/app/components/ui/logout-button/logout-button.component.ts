@@ -5,8 +5,7 @@ import { AuthService } from '../../../services/auth/auth.service';
   selector: 'app-logout-button',
   standalone: true,
   imports: [],
-  templateUrl: './logout-button.component.html',
-  styleUrl: './logout-button.component.scss'
+  templateUrl: './logout-button.component.html'
 })
 export class LogoutButtonComponent {
   constructor(private authService: AuthService) {}

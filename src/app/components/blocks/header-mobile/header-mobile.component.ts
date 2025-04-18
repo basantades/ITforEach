@@ -9,8 +9,7 @@ import { UserAvatarComponent } from "../../ui/user-avatar/user-avatar.component"
 @Component({
   selector: 'app-header-mobile',
   imports: [RouterLink, RouterModule, LoginButtonComponent, LogoutButtonComponent, BackButtonComponent, UserAvatarComponent],
-  templateUrl: './header-mobile.component.html',
-  styleUrl: './header-mobile.component.scss'
+  templateUrl: './header-mobile.component.html'
 })
 
 export class HeaderMobileComponent {

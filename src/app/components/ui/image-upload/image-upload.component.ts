@@ -4,8 +4,7 @@ import { CloudinaryService } from '../../../services/api/cloudinary.service';
 @Component({
   selector: 'app-image-upload',
   standalone: true,
-  templateUrl: './image-upload.component.html',
-  styleUrl: './image-upload.component.scss'
+  templateUrl: './image-upload.component.html'
 })
 export class ImageUploadComponent {
 

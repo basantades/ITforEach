@@ -9,8 +9,7 @@ import { UserAvatarComponent } from "../../ui/user-avatar/user-avatar.component"
   selector: 'app-header',
   standalone: true,
   imports: [RouterLink, RouterModule, LoginButtonComponent, LogoutButtonComponent, UserAvatarComponent], // Agregar LogoutButtonComponent a imports
-  templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  templateUrl: './header.component.html'
 })
 export class HeaderComponent {
   private authService = inject(AuthService);

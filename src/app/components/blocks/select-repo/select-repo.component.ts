@@ -6,7 +6,6 @@ import { LoadingComponent } from "../../ui/loading/loading.component";
 @Component({
   selector: 'app-select-repo',
   templateUrl: './select-repo.component.html',
-  styleUrl: './select-repo.component.scss',
   imports: [LoadingComponent]
 })
 export class SelectRepoComponent {

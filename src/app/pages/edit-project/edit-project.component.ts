@@ -11,8 +11,7 @@ import { LoadingComponent } from "../../components/ui/loading/loading.component"
   selector: 'app-edit-project',
   standalone: true,
   imports: [ProjectFormComponent, GithubProjectInfoComponent, LoadingComponent],
-  templateUrl: './edit-project.component.html',
-  styleUrl: './edit-project.component.scss'
+  templateUrl: './edit-project.component.html'
 })
 export class EditProjectComponent implements OnInit {
   private route = inject(ActivatedRoute);

@@ -6,7 +6,7 @@
 @if (projects.length === 1) {
   <div class="w-full">
     @for (project of projects; track project.id; let i = $index) {
-      <app-project-card-owner [project]="project" [animationDelay]="i * 100"></app-project-card-owner>
+      <app-project-card-owner [project]="project" [animationDelay]="i * 100" ></app-project-card-owner>
     }
   </div>
 } @else if (projects.length === 2) {

@@ -9,7 +9,7 @@
         }
       </div>
       <a routerLink="/" class="w-3/5 flex items-center justify-center">
-        <img src="/assets/img/ITforEach-logo.svg" alt="ITforEach Logo" class="h-5 w-auto" />
+        <img src="/assets/img/ITforEach-logo.svg" alt="ITforEach Logo" class="h-5 w-auto" width="129px" height="20px" />
       </a>
   
       <button (click)="toggleMenu()" 
@@ -30,8 +30,8 @@
     </div>
   
     @if (isMenuOpen()) {
-      <!-- Overlay de menú -->
-      <div class="fixed top-[60px] left-0 w-full h-[calc(100vh-60px)]  backdrop-blur-md bg-white/90 z-40 p-6 overflow-y-auto">
+      <!-- Overlay menú -->
+      <div class="fixed top-[60px] left-0 w-full h-[calc(dvh-60px)] backdrop-blur-md bg-white/90 z-40 p-6 overflow-y-auto">
         <div class="w-full flex flex-col items-center gap-6 text-lg font-medium text-gray-700 pt-6">
           <a routerLink="/discover" (click)="closeMenu()"  routerLinkActive="text-primary" [routerLinkActiveOptions]="{ exact: true }"
            class="hover:text-primary transition-colors">Descubre Proyectos</a>

@@ -4,8 +4,7 @@ import { UserProjectsListComponent } from '../../components/sections/user-projec
 @Component({
   selector: 'app-my-projects',
   imports: [UserProjectsListComponent],
-  templateUrl: './my-projects.component.html',
-  styleUrl: './my-projects.component.scss'
+  templateUrl: './my-projects.component.html'
 })
 export class MyProjectsComponent {
 

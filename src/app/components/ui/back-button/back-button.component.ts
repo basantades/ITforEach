@@ -4,8 +4,7 @@ import { Location } from '@angular/common';
 @Component({
   selector: 'app-back-button',
   standalone: true,
-  templateUrl: './back-button.component.html',
-  styleUrls: ['./back-button.component.scss']
+  templateUrl: './back-button.component.html'
 })
 export class BackButtonComponent {
   @Input() text: string | null = null; // Parámetro opcional para el texto

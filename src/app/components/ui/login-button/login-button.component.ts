@@ -4,8 +4,7 @@ import { SupabaseService } from '../../../services/auth/supabase.service';
 @Component({
   selector: 'app-login-button',
   imports: [],
-  templateUrl: './login-button.component.html',
-  styleUrl: './login-button.component.scss'
+  templateUrl: './login-button.component.html'
 })
 export class LoginButtonComponent {
   

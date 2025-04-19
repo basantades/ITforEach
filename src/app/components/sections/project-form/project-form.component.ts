@@ -11,8 +11,7 @@ import { UploadImgComponent } from "../../blocks/upload-img/upload-img.component
   selector: 'app-project-form',
   standalone: true,
   imports: [ReactiveFormsModule, UploadImgComponent],
-  templateUrl: './project-form.component.html',
-  styleUrl: './project-form.component.scss'
+  templateUrl: './project-form.component.html'
 })
 export class ProjectFormComponent implements OnInit {
   private fb = inject(FormBuilder);

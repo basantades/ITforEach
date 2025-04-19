@@ -8,7 +8,6 @@ import { LikeCounterComponent } from "../like-counter/like-counter.component";
 @Component({
   selector: 'app-delete-project-button',
   templateUrl: './delete-project-button.component.html',
-  styleUrls: ['./delete-project-button.component.scss'],
   imports: [ModalComponent, LikeCounterComponent]
 })
 export class DeleteProjectButtonComponent {

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { SupabaseService } from '../auth/supabase.service';
 import { Project } from '../../interfaces/project';
 import { ToastrService } from 'ngx-toastr'; // Importar ToastrService
+import { AuthService } from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,8 @@ export class ProjectsService {
 
   constructor(
     private supabaseService: SupabaseService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private authService: AuthService
   ) {}
 
   async create(project: Partial<Project>): Promise<Project | null> {
@@ -103,25 +105,29 @@ export class ProjectsService {
     return data as Project;
   }
 
-  async delete(id: number): Promise<boolean> {
-    const session = await this.supabaseService.getSession();
-    const userId = session?.user?.id;
-
-    if (!userId) {
-      throw new Error('❌ No se pudo obtener el ID del usuario.');
-    }
-
-    const { error } = await this.supabaseService.client
-      .from(this.table)
-      .delete()
-      .eq('id', id);
-
-    if (error) {
-      console.error('❌ Error al eliminar el proyecto:', error);
-      throw error;
-    }
-    return true;
+  // CONSISTENTE: usamos `projectId` en todas partes
+async delete(projectId: number): Promise<boolean> {
+  const isOwner = await this.isOwnerOfProject(projectId);
+  if (!isOwner) {
+    this.toastr.error('No tienes permiso para eliminar este proyecto.', 'Error');
+    throw new Error('No autorizado.');
   }
+
+  const { error } = await this.supabaseService.client
+    .from(this.table)
+    .delete()
+    .eq('id', projectId);
+
+  if (error) {
+    console.error('❌ Error al eliminar el proyecto:', error);
+    this.toastr.error('Error al eliminar el proyecto.', 'Error');
+    throw error;
+  }
+
+  return true;
+}
+
+  
 
   async getPaginated(page: number, pageSize: number = 12): Promise<{ data: Project[]; total: number }> {
     const from = (page - 1) * pageSize;
@@ -153,11 +159,17 @@ export class ProjectsService {
   }
 
 
-  async update(projectId: string, updatedData: Partial<Project>): Promise<void> {
+  async update(projectId: number, updatedData: Partial<Project>): Promise<void> {
+    const isOwner = await this.isOwnerOfProject(projectId);
+    if (!isOwner) {
+      this.toastr.error('No tienes permiso para editar este proyecto.', 'Error');
+      throw new Error('No autorizado.');
+    }
+  
     const { error } = await this.supabaseService.client
       .from(this.table)
       .update(updatedData)
-      .eq('id', projectId); // ✅ FIX: usar 'id' en lugar de 'project_id'
+      .eq('id', projectId);
   
     if (error) {
       console.error('❌ Error al actualizar proyecto en Supabase:', error);
@@ -167,6 +179,8 @@ export class ProjectsService {
   
     this.toastr.success('Proyecto actualizado correctamente.', 'Éxito');
   }
+  
+  
 
   async getLatestProjects(limit: number = 4): Promise<Project[]> {
     const { data, error } = await this.supabaseService.client
@@ -196,4 +210,23 @@ export class ProjectsService {
   
     return data as Project[];
   }
+
+  private async isOwnerOfProject(projectId: number): Promise<boolean> {
+    const session = await this.supabaseService.getSession();
+    const userId = session?.user?.id;
+  
+    if (!userId) return false;
+  
+    const { data, error } = await this.supabaseService.client
+      .from(this.table)
+      .select('user_id')
+      .eq('id', projectId)
+      .single();
+  
+    if (error || !data) return false;
+  
+    return data.user_id === userId;
+  }
+  
+
 }

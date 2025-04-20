@@ -8,5 +8,7 @@
     bio?: string | null;
     website?: string | null;
     linkedin?: string | null;
+    created_at?: string; 
+    updated_at?: string;
   }
   

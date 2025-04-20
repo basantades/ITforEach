@@ -87,29 +87,32 @@ export class AuthService {
   }
 
 
-  async deleteUserAccount(): Promise<boolean> {
+  async deleteUserAccount(): Promise<{ success: boolean; message: string }> {
     if (!this.session?.user) {
-      console.error('❌ No hay usuario autenticado.');
-      return false;
+      return { success: false, message: 'No hay usuario autenticado.' };
     }
   
     const userId = this.session.user.id;
   
-    // 🔥 1. Eliminar usuario de la tabla `users`
-    const { error } = await this.supabaseService.client
-      .from('users')
-      .delete()
-      .eq('user_id', userId);
+    try {
+      const { error } = await this.supabaseService.client
+        .from('users')
+        .delete()
+        .eq('user_id', userId);
   
-    if (error) {
-      console.error('❌ Error eliminando el usuario de la base de datos:', error);
-      return false;
+      if (error) {
+        console.error('❌ Error al eliminar usuario:', error);
+        return { success: false, message: 'Error al eliminar tu cuenta. Intenta más tarde.' };
+      }
+  
+      // Logout y limpieza de estado
+      await this.logout();
+      return { success: true, message: 'Cuenta eliminada correctamente.' };
+  
+    } catch (err) {
+      console.error('❌ Error inesperado al eliminar cuenta:', err);
+      return { success: false, message: 'Error inesperado al eliminar tu cuenta.' };
     }
-  
-    // 🔒 2. Cerrar sesión y redirigir
-    await this.logout();
-  
-    return true;
   }
 
 }

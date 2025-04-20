@@ -8,55 +8,64 @@ import { User } from '../../interfaces/user';
 export class UserService {
   constructor(private supabaseService: SupabaseService) {}
 
-  /** 🔥 Obtiene el usuario desde la tabla `users`, o lo crea si no existe */
   async getOrCreateUser(): Promise<User | null> {
-    const session = await this.supabaseService.getSession();
-    if (!session?.user) {
-      console.error('❌ No hay sesión activa o usuario autenticado.');
-      return null;
-    }
-  
-    const userId = session.user.id;
-    const metadata = session.user.user_metadata || {};
-  
-    const { data: existingUser, error: userError } = await this.supabaseService.client
-      .from('users')
-      .select('*')
-      .eq('user_id', userId)
-      .single();
-  
-    if (existingUser) {
-      return existingUser;
-    }
-  
-    if (userError && userError.code !== 'PGRST116') {
-      return null;
-    }
-  
-    const newUser: User = {
-      user_id: userId,
-      githubusername: metadata["user_name"] || '',
-      fullname: metadata["full_name"] || '',
-      avatarurl: metadata["avatar_url"] || '',
-      email: null,
-      bio: null,
-      website: null,
-      linkedin: null,
-    };
-  
-    const { data: newUserData, error: insertError } = await this.supabaseService.client
-      .from('users')
-      .insert(newUser)
-      .select()
-      .single();  // Agregamos `.select().single()` para asegurarnos de que devuelve datos
-  
-    if (insertError) {
-      console.error('❌ Error insertando usuario en users:', insertError);
-      return null;
-    }
-  
-    return newUserData;
+  const session = await this.supabaseService.getSession();
+  if (!session?.user) {
+    console.error('❌ No hay sesión activa o usuario autenticado.');
+    return null;
   }
+
+  const userId = session.user.id;
+  const metadata = session.user.user_metadata || {};
+
+  const githubusername = String(metadata["user_name"] || '').trim();
+  const fullname = String(metadata["full_name"] || '').trim();
+  const avatarurl = String(metadata["avatar_url"] || '').trim();
+
+  const { data: existingUser, error: userError } = await this.supabaseService.client
+    .from('users')
+    .select('*')
+    .eq('user_id', userId)
+    .single();
+
+  if (existingUser) {
+    return existingUser;
+  }
+
+  if (userError) {
+    if (userError.code === 'PGRST116') {
+      console.log('ℹ️ Usuario no existe, se va a crear uno nuevo.');
+    } else {
+      console.error('❌ Error buscando usuario existente:', userError);
+      return null;
+    }
+  }
+
+  const newUser: User = {
+    user_id: userId,
+    githubusername,
+    fullname,
+    avatarurl,
+    email: null,
+    bio: null,
+    website: null,
+    linkedin: null,
+  };
+
+  const { data: newUserData, error: insertError } = await this.supabaseService.client
+    .from('users')
+    .insert(newUser)
+    .select()
+    .single();
+
+  if (insertError) {
+    console.error('❌ Error insertando usuario en users:', insertError);
+    return null;
+  }
+
+  return newUserData;
+}
+
   
 
   /** 🔍 Obtiene un usuario por su GitHub username */
@@ -97,7 +106,8 @@ async updateUser(userId: string, updates: Partial<User>): Promise<User | null> {
 async getAllUsers(): Promise<User[]> {
   const { data, error } = await this.supabaseService.client
     .from('users')
-    .select('*');
+    .select('*')
+    .order('created_at', { ascending: false }); // 👈 ordena por fecha descendente
 
   if (error) {
     console.error('❌ Error al obtener todos los usuarios:', error);

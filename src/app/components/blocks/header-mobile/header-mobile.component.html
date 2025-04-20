@@ -1,6 +1,6 @@
-<nav class="fixed top-0 left-0 w-full z-40 ">
-    <div class="px-4 h-[60px]  backdrop-blur-md bg-white/90 shadow-md fixed z-50 flex justify-between items-center container mx-auto">
-      <div  class="w-1/5 flex items-center justify-center">
+<nav class="fixed top-0 left-0 w-full z-50 bg-white/90 shadow-md backdrop-blur-md">
+    <div class="px-4 h-[60px] w-full   flex justify-between items-center container mx-auto">
+      <div  class="w-1/5 flex items-center justify-start">
 
         @if (isMenuOpen()) {
           <app-back-button (click)="closeMenu()"></app-back-button>
@@ -14,7 +14,7 @@
   
       <button (click)="toggleMenu()" 
       aria-label="Menú" title="Menú"
-      class="text-gray-500 focus:outline-none z-50 w-1/5 flex items-center justify-center">
+      class="text-gray-500 focus:outline-none z-50 w-1/5 flex items-center justify-end">
         @if (!isMenuOpen()) {
           <!-- Icono hamburguesa -->
           <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -28,10 +28,11 @@
         }
       </button>
     </div>
+  </nav>
 
   
     @if (isMenuOpen()) {
-      <div class="fixed top-[60px] left-0 w-full h-[calc(100dvh-60px)] bg-white/90 backdrop-blur-md z-40 p-6 overflow-y-auto flex flex-col justify-center items-center">
+      <div class="fixed top-[60px] left-0 w-full h-[calc(100dvh-60px)] bg-white/95 backdrop-blur-md z-40 p-6 overflow-y-auto flex flex-col justify-center items-center">
     
         <div class="flex flex-col items-center gap-4 text-lg font-medium text-gray-700 w-full">
     

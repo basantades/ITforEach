@@ -2,9 +2,9 @@ import { Injectable, signal } from '@angular/core';
 import { SupabaseService } from './supabase.service';
 import { User } from '../../interfaces/user';
 import { Session } from '@supabase/supabase-js';
-import { UserService } from '../database/user.service'; // Importar UserService
-
-import { Router } from '@angular/router'; // Importar Router
+import { UserService } from '../database/user.service'; 
+import { Router } from '@angular/router'; 
+import { NotificationService } from '../notification.service';
 
 
 @Injectable({
@@ -15,7 +15,10 @@ export class AuthService {
   isOwnerSignal = signal(false); // Indica si el usuario autenticado es el propietario
   private session: Session | null = null; // Sesión actual
 
-  constructor(private supabaseService: SupabaseService, private userService: UserService, private router: Router) { 
+  constructor(private supabaseService: SupabaseService, 
+    private userService: UserService, 
+    private router: Router,
+    private notification: NotificationService) { 
     this.initializeAuthState();
   }
 
@@ -69,7 +72,14 @@ export class AuthService {
 
   // Cerrar sesión
   async logout() {
-    await this.supabaseService.logout();
+
+    try {
+      await this.supabaseService.logout();
+      this.notification.showSuccess('Sesión cerrada correctamente.');
+    } catch (error) {
+      this.notification.logAndThrow(error, 'Error cerrando sesión.');
+    }
+
     this.session = null;
     this.userSignal.set(null); // Limpia el estado del usuario autenticado
     this.isOwnerSignal.set(false); // Restablece isOwner
@@ -89,9 +99,10 @@ export class AuthService {
 
   async deleteUserAccount(): Promise<{ success: boolean; message: string }> {
     if (!this.session?.user) {
+      this.notification.showError('No hay usuario autenticado.');
       return { success: false, message: 'No hay usuario autenticado.' };
     }
-  
+
     const userId = this.session.user.id;
   
     try {
@@ -101,18 +112,18 @@ export class AuthService {
         .eq('user_id', userId);
   
       if (error) {
-        console.error('❌ Error al eliminar usuario:', error);
-        return { success: false, message: 'Error al eliminar tu cuenta. Intenta más tarde.' };
-      }
-  
-      // Logout y limpieza de estado
-      await this.logout();
-      return { success: true, message: 'Cuenta eliminada correctamente.' };
-  
-    } catch (err) {
-      console.error('❌ Error inesperado al eliminar cuenta:', err);
-      return { success: false, message: 'Error inesperado al eliminar tu cuenta.' };
+      this.notification.logAndThrow(error, 'Error al eliminar cuenta.');
+      return { success: false, message: 'Error al eliminar tu cuenta. Intenta más tarde.' };
     }
+  
+    await this.logout();
+    this.notification.showSuccess('Cuenta eliminada correctamente.');
+    return { success: true, message: 'Cuenta eliminada correctamente.' };
+
+  } catch (err) {
+    this.notification.logAndThrow(err, 'Error inesperado al eliminar tu cuenta.');
+    return { success: false, message: 'Error inesperado al eliminar tu cuenta.' };
+  }
   }
 
 }

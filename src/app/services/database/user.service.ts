@@ -1,23 +1,26 @@
 import { Injectable } from '@angular/core';
 import { SupabaseService } from '../auth/supabase.service';
 import { User } from '../../interfaces/user';
+import { NotificationService } from '../notification.service';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  constructor(private supabaseService: SupabaseService) {}
+  constructor(private supabaseService: SupabaseService,
+    private notification: NotificationService) {}
 
   async getOrCreateUser(): Promise<User | null> {
   const session = await this.supabaseService.getSession();
+
   if (!session?.user) {
-    console.error('❌ No hay sesión activa o usuario autenticado.');
+    this.notification.showError('No hay sesión activa o usuario autenticado.');
     return null;
   }
 
   const userId = session.user.id;
   const metadata = session.user.user_metadata || {};
-
   const githubusername = String(metadata["user_name"] || '').trim();
   const fullname = String(metadata["full_name"] || '').trim();
   const avatarurl = String(metadata["avatar_url"] || '').trim();
@@ -31,14 +34,11 @@ export class UserService {
   if (existingUser) {
     return existingUser;
   }
+  
 
-  if (userError) {
-    if (userError.code === 'PGRST116') {
-      console.log('ℹ️ Usuario no existe, se va a crear uno nuevo.');
-    } else {
-      console.error('❌ Error buscando usuario existente:', userError);
-      return null;
-    }
+  if (userError && userError.code !== 'PGRST116') {
+    this.notification.logAndThrow(userError, 'Error buscando usuario existente.');
+    return null;
   }
 
   const newUser: User = {
@@ -59,16 +59,15 @@ export class UserService {
     .single();
 
   if (insertError) {
-    console.error('❌ Error insertando usuario en users:', insertError);
+    this.notification.logAndThrow(insertError, 'Error al crear un nuevo usuario.');
     return null;
   }
 
-  return newUserData;
+  this.notification.showSuccess('Usuario creado correctamente.');
+  return newUserData;  
 }
 
   
-
-  /** 🔍 Obtiene un usuario por su GitHub username */
   async getUserByUsername(githubusername: string): Promise<User | null> {
     const { data, error } = await this.supabaseService.client
       .from('users')
@@ -76,15 +75,14 @@ export class UserService {
       .eq('githubusername', githubusername)
       .single();
 
-    if (error) {
-      console.error('❌ Error obteniendo usuario por GitHub username:', error);
-      return null;
-    }
+      if (error) {
+        this.notification.logAndThrow(error, 'Error obteniendo usuario por GitHub username.');
+        return null;
+      }
 
     return data as User;
   }
 
- /** ✏️ Edita el usuario en la tabla `users` */
 async updateUser(userId: string, updates: Partial<User>): Promise<User | null> {
   const { data, error } = await this.supabaseService.client
     .from('users')
@@ -93,33 +91,27 @@ async updateUser(userId: string, updates: Partial<User>): Promise<User | null> {
     .select()
     .single();
 
-  if (error) {
-    console.error('❌ Error actualizando usuario:', error);
-    return null;
-  }
+    if (error) {
+      this.notification.logAndThrow(error, 'Error actualizando usuario.');
+      return null;
+    }
 
-  return data; // ✅ Retorna el usuario actualizado
+    this.notification.showSuccess('Perfil actualizado correctamente.');
+    return data;
 }
-
-
 
 async getAllUsers(): Promise<User[]> {
   const { data, error } = await this.supabaseService.client
     .from('users')
     .select('*')
-    .order('created_at', { ascending: false }); // 👈 ordena por fecha descendente
+    .order('created_at', { ascending: false }); 
 
-  if (error) {
-    console.error('❌ Error al obtener todos los usuarios:', error);
-    throw error;
-  }
+    if (error) {
+      this.notification.logAndThrow(error, 'Error al obtener todos los usuarios.');
+      throw error;
+    }
 
   return data as User[];
 }
 
-
-
-
 }
-
-

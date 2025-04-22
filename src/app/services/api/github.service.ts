@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Repo } from '../../interfaces/repo';
 import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { ProjectsService } from '../database/projects.service';
+import { NotificationService } from '../notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,7 @@ export class GithubService {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private toastr: ToastrService,
+    private notification: NotificationService,
     private projectsService: ProjectsService
   ) {}
 
@@ -20,7 +20,7 @@ export class GithubService {
   async getUserPublicRepos(): Promise<Repo[]> {
     const token = this.authService.getGitHubToken();
     if (!token) {
-      this.handleAuthError('GitHub token not found. Please log in again.');
+      await this.handleAuthError('GitHub token not found. Please log in again.');
       return [];
     }
 
@@ -39,15 +39,13 @@ export class GithubService {
 
         if (!response.ok) {
           const errorData = await response.json();
-          console.error('GitHub API Error (repos):', errorData);
-
           if (response.status === 403) {
-            throw new Error('GitHub API rate limit exceeded. Try again later.');
+            this.notification.logAndThrow(errorData, 'GitHub API rate limit exceeded. Try again later.');
           } else if (response.status === 401) {
-            this.handleAuthError('Invalid GitHub token. Please reauthenticate.');
+            await this.handleAuthError('Invalid GitHub token. Please reauthenticate.');
             return [];
           } else {
-            throw new Error(`Failed to fetch repositories: ${errorData.message}`);
+            this.notification.logAndThrow(errorData, `Failed to fetch repositories: ${errorData.message}`);
           }
         }
 
@@ -68,16 +66,17 @@ export class GithubService {
       );
       
     } catch (error) {
-      console.error('Error fetching repositories:', error);
+      this.notification.logAndThrow(error, 'Error fetching repositories');
       throw error;
     }
+    
   }
 
   /** Maneja errores de autenticación y redirige a la home */
   private async handleAuthError(message: string): Promise<void> {
-    this.toastr.error(message, 'Error de autenticación');
-    await this.authService.logout(); // 🔹 Cierra la sesión
-    this.router.navigate(['/']); // 🔹 Redirigir a la home
+    this.notification.showError(message, 'Error de autenticación');
+    await this.authService.logout();
+    this.router.navigate(['/']);
   }
 
   /** Obtiene la información completa de un repositorio a partir de su URL */
@@ -91,13 +90,14 @@ async getRepoInfo(repoUrl: string): Promise<{
 }> {
   const token = this.authService.getGitHubToken();
   if (!token) {
-    this.handleAuthError('GitHub token not found. Please log in again.');
+    await this.handleAuthError('GitHub token not found. Please log in again.');
     throw new Error('GitHub token is missing');
   }
 
   // Extraer owner y repo desde la URL
   const match = repoUrl.match(/github\.com\/([^/]+)\/([^/]+)/);
   if (!match) {
+    this.notification.showError('URL del repositorio inválida.');
     throw new Error('Invalid GitHub repository URL');
   }
 
@@ -109,7 +109,10 @@ async getRepoInfo(repoUrl: string): Promise<{
     const repoRes = await fetch(`https://api.github.com/repos/${owner}/${repo}`, {
       headers: { Authorization: `Bearer ${token}` }
     });
-    if (!repoRes.ok) throw new Error('Error fetching repo info');
+    if (!repoRes.ok) {
+      this.notification.showError('Error obteniendo info del repositorio.');
+      throw new Error('Error fetching repo info');
+    }
     const repoData = await repoRes.json();
 
     // Obtener topics
@@ -137,7 +140,7 @@ async getRepoInfo(repoUrl: string): Promise<{
     };
 
   } catch (error) {
-    console.error('Error fetching repo info:', error);
+    this.notification.logAndThrow(error, 'Error fetching repo info');
     throw error;
   }
 }

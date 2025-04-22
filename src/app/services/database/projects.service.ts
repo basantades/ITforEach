@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { SupabaseService } from '../auth/supabase.service';
 import { Project } from '../../interfaces/project';
-import { ToastrService } from 'ngx-toastr'; // Importar ToastrService
+import { NotificationService } from '../notification.service';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,8 @@ export class ProjectsService {
 
   constructor(
     private supabaseService: SupabaseService,
-    private toastr: ToastrService
+    private notification: NotificationService,
+    private authService: AuthService
   ) {}
 
   async create(project: Partial<Project>): Promise<Project | null> {
@@ -19,8 +21,8 @@ export class ProjectsService {
     const token = session?.access_token;
 
     if (!token) {
-      this.toastr.error('No hay token de sesión, el usuario no está autenticado.', 'Error');
-      throw new Error('❌ No hay token de sesión, el usuario no está autenticado.');
+      this.notification.showError('No hay token de sesión, el usuario no está autenticado.', 'Error');
+      throw new Error('No hay token de sesión, el usuario no está autenticado.');
     }
 
     const { data, error } = await this.supabaseService.client
@@ -29,16 +31,16 @@ export class ProjectsService {
       .select();
 
     if (error) {
-      console.error('❌ Error al insertar proyecto en Supabase:', error);
-      this.toastr.error('Error al crear el proyecto.', 'Error');
+      console.error('Error al insertar proyecto en Supabase:', error);
+      this.notification.showError('Error al crear el proyecto.', 'Error');
       throw error;
     }
     if (!data || data.length === 0) {
-      this.toastr.warning('Proyecto creado, pero Supabase no devolvió datos.', 'Advertencia');
+      this.notification.showWarning('Proyecto creado, pero Supabase no devolvió datos.', 'Advertencia');
       return null;
     }
 
-    this.toastr.success('Proyecto creado correctamente.', 'Éxito');
+    this.notification.showSuccess('Proyecto creado correctamente.', 'Éxito');
     return data[0] as Project;
   }
 
@@ -49,14 +51,11 @@ export class ProjectsService {
         .from(this.table)
         .select('*')
         .order('updated_at', { ascending: false }) 
-
         .eq('githubusername', username);
   
       if (error) {
-        console.error('❌ Error al obtener proyectos por username:', error);
-        throw error;
+        this.notification.logAndThrow(error, 'Error al obtener proyectos por username.');
       }
-  
       return data as Project[];
     } else {
       // Obtener proyectos del usuario autenticado
@@ -64,13 +63,14 @@ export class ProjectsService {
       const token = session?.access_token;
   
       if (!token) {
-        throw new Error('❌ No hay token de sesión, el usuario no está autenticado.');
+        this.notification.showError('No hay token de sesión, el usuario no está autenticado.', 'Error'); 
+        throw new Error('No hay token de sesión, el usuario no está autenticado.');
       }
   
       const userId = session?.user?.id;
-  
       if (!userId) {
-        throw new Error('❌ No se pudo obtener el ID del usuario.');
+        this.notification.showError('No se pudo obtener el ID del usuario.', 'Error'); 
+        throw new Error('No se pudo obtener el ID del usuario.');
       }
   
       const { data, error } = await this.supabaseService.client
@@ -80,10 +80,8 @@ export class ProjectsService {
         .eq('user_id', userId);
   
       if (error) {
-        console.error('❌ Error al obtener proyectos del usuario autenticado:', error);
-        throw error;
+        this.notification.logAndThrow(error, 'Error al obtener proyectos del usuario autenticado:');
       }
-  
       return data as Project[];
     }
   }
@@ -95,33 +93,31 @@ export class ProjectsService {
       .eq('name', projectName)
       .single();
 
-    if (error) {
-      console.error('Error al obtener el proyecto:', error);
-      return null;
-    }
+    if (error) this.notification.logAndThrow(error, 'Error al obtener el proyecto');
 
     return data as Project;
   }
 
-  async delete(id: number): Promise<boolean> {
-    const session = await this.supabaseService.getSession();
-    const userId = session?.user?.id;
-
-    if (!userId) {
-      throw new Error('❌ No se pudo obtener el ID del usuario.');
-    }
-
-    const { error } = await this.supabaseService.client
-      .from(this.table)
-      .delete()
-      .eq('id', id);
-
-    if (error) {
-      console.error('❌ Error al eliminar el proyecto:', error);
-      throw error;
-    }
-    return true;
+async delete(projectId: number): Promise<boolean> {
+  const isOwner = await this.isOwnerOfProject(projectId);
+  if (!isOwner) {
+    this.notification.showError('No tienes permiso para eliminar este proyecto.', 'Error');
+    throw new Error('No autorizado.');
   }
+
+  const { error } = await this.supabaseService.client
+    .from(this.table)
+    .delete()
+    .eq('id', projectId);
+
+  if (error) {
+    console.error('Error al eliminar el proyecto:', error);
+    this.notification.showError('Error al eliminar el proyecto.', 'Error');
+    throw error;
+  }
+
+  return true;
+}
 
   async getPaginated(page: number, pageSize: number = 12): Promise<{ data: Project[]; total: number }> {
     const from = (page - 1) * pageSize;
@@ -133,11 +129,8 @@ export class ProjectsService {
       .order('updated_at', { ascending: false }) // Ordenar por fecha de actualización
       .range(from, to); // Paginación
   
-    if (error) {
-      console.error('❌ Error al obtener proyectos paginados:', error);
-      throw error;
-    }
-  
+    if (error) this.notification.logAndThrow(error, 'Error al obtener proyectos paginados.');
+
     return { data: data as Project[], total: count ?? 0 };
   }
 
@@ -153,20 +146,28 @@ export class ProjectsService {
   }
 
 
-  async update(projectId: string, updatedData: Partial<Project>): Promise<void> {
+  async update(projectId: number, updatedData: Partial<Project>): Promise<void> {
+    const isOwner = await this.isOwnerOfProject(projectId);
+    if (!isOwner) {
+      this.notification.showError('No tienes permiso para editar este proyecto.', 'Error');
+      throw new Error('No autorizado.');
+    }
+  
     const { error } = await this.supabaseService.client
       .from(this.table)
       .update(updatedData)
-      .eq('id', projectId); // ✅ FIX: usar 'id' en lugar de 'project_id'
+      .eq('id', projectId);
   
     if (error) {
-      console.error('❌ Error al actualizar proyecto en Supabase:', error);
-      this.toastr.error('Error al actualizar el proyecto.', 'Error');
+      console.error('Error al actualizar proyecto en Supabase:', error);
+      this.notification.showError('Error al actualizar el proyecto.', 'Error');
       throw error;
     }
   
-    this.toastr.success('Proyecto actualizado correctamente.', 'Éxito');
+    this.notification.showSuccess('Proyecto actualizado correctamente.', 'Éxito');
   }
+  
+  
 
   async getLatestProjects(limit: number = 4): Promise<Project[]> {
     const { data, error } = await this.supabaseService.client
@@ -175,11 +176,7 @@ export class ProjectsService {
       .order('updated_at', { ascending: false }) // Cambiar a 'created_at' si prefieres
       .limit(limit);
   
-    if (error) {
-      console.error('❌ Error al obtener los últimos proyectos:', error);
-      throw error;
-    }
-  
+    if (error) this.notification.logAndThrow(error, 'Error al obtener los últimos proyectos.');
     return data as Project[];
   }
 
@@ -189,11 +186,28 @@ export class ProjectsService {
       .select('*')
       .order('updated_at', { ascending: false });
   
-    if (error) {
-      console.error('❌ Error al obtener todos los proyectos:', error);
-      throw error;
-    }
+    if (error) this.notification.logAndThrow(error, 'Error al obtener todos los proyectos.');
   
     return data as Project[];
   }
+
+  private async isOwnerOfProject(projectId: number): Promise<boolean> {
+    const session = await this.supabaseService.getSession();
+    const userId = session?.user?.id;
+  
+    if (!userId) return false;
+  
+    const { data, error } = await this.supabaseService.client
+      .from(this.table)
+      .select('user_id')
+      .eq('id', projectId)
+      .single();
+  
+      if (error || !data) {
+        console.warn('No se pudo verificar propiedad del proyecto:', error);
+        return false;
+      }  
+    return data.user_id === userId;
+  }
+  
 }

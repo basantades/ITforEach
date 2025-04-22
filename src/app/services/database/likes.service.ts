@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SupabaseService } from '../auth/supabase.service';
-import { Like } from '../../interfaces/like';
+import { NotificationService } from '../notification.service';
+
 
 @Injectable({
   providedIn: 'root',
@@ -8,19 +9,17 @@ import { Like } from '../../interfaces/like';
 export class LikesService {
   private table = 'likes';
 
-  constructor(private supabaseService: SupabaseService) {}
+  constructor(private supabaseService: SupabaseService,
+    private notification: NotificationService) {}
 
-  /**
-   * Añade un like a un proyecto.
-   * @param projectId ID del proyecto al que se le da like.
-   * @returns `true` si se añade correctamente, `false` si ya existe.
-   */
+
   async addLike(projectId: number): Promise<boolean> {
     const session = await this.supabaseService.getSession();
     const userId = session?.user?.id;
 
     if (!userId) {
-      throw new Error('❌ No se pudo obtener el ID del usuario.');
+      this.notification.showError('No se pudo obtener el ID del usuario.');
+      throw new Error('No hay ID de usuario.');
     }
 
     // Verificar si el usuario ya ha dado like a este proyecto
@@ -40,25 +39,18 @@ export class LikesService {
       project_id: projectId,
     });
 
-    if (error) {
-      console.error('❌ Error al dar like:', error);
-      throw error;
-    }
+    if (error) this.notification.logAndThrow(error, 'Error al dar like.');
 
     return true; // Like añadido correctamente
   }
 
-  /**
-   * Elimina un like de un proyecto.
-   * @param projectId ID del proyecto al que se le quita el like.
-   * @returns `true` si se elimina correctamente, `false` si no existía.
-   */
   async removeLike(projectId: number): Promise<boolean> {
     const session = await this.supabaseService.getSession();
     const userId = session?.user?.id;
   
     if (!userId) {
-      throw new Error('❌ No se pudo obtener el ID del usuario.');
+      this.notification.showError('No se pudo obtener el ID del usuario.');
+      throw new Error('No hay ID de usuario.');
     }
   
     const { error, data } = await this.supabaseService.client
@@ -66,30 +58,26 @@ export class LikesService {
       .delete()
       .eq('user_id', userId)
       .eq('project_id', projectId)
-      .select(); // 👈 esto devuelve los registros eliminados
+      .select(); 
   
     if (error) {
-      console.error('❌ Error al quitar like:', error);
-      throw error;
+      this.notification.logAndThrow(error, 'Error al quitar like.');
     }
   
-    return data.length > 0;
+    return !!data && data.length > 0;
   }
   
 
   async getLikesCount(projectId: number): Promise<number> {
     const { data, error } = await this.supabaseService.client
       .from('project_likes_count')
-      .select('likes_count') // 👈 CAMBIAR ESTO
+      .select('likes_count') 
       .eq('project_id', projectId)
       .maybeSingle();
   
-    if (error) {
-      console.error('❌ Error al obtener la cantidad de likes:', error);
-      throw error;
-    }
+    if (error) this.notification.logAndThrow(error, 'Error al obtener la cantidad de likes.');
   
-    return data?.likes_count ?? 0; // 👈 CAMBIAR ESTO TAMBIÉN
+    return data?.likes_count ?? 0; 
   }
 
   async hasUserLiked(projectId: number): Promise<boolean> {

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { createClient, SupabaseClient, AuthChangeEvent, Session } from '@supabase/supabase-js';
 import { environment } from '../../../environments/environment';
+import { NotificationService } from '../notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ import { environment } from '../../../environments/environment';
 export class SupabaseService {
   private supabase: SupabaseClient;
 
-  constructor() {
+  constructor(private notification: NotificationService) {
     this.supabase = createClient(environment.supabaseUrl, environment.supabaseAnonKey);
   }
 
@@ -22,12 +23,12 @@ export class SupabaseService {
         }
       });
       if (error) {
-        console.error("❌ Error en login:", error);
+        this.notification.showError("Error iniciando sesión con GitHub.");
       } else {
-        console.log("✅ Redirigiendo a GitHub...");
+        this.notification.showSuccess("Redirigiendo a GitHub...");
       }
     } catch (err) {
-      console.error("❌ Error inesperado en login:", err);
+      this.notification.logAndThrow(err, "Error inesperado al iniciar sesión.");
     }
   }
 
@@ -36,7 +37,7 @@ export class SupabaseService {
     try {
       await this.supabase.auth.signOut();
     } catch (error) {
-      console.error('❌ Error al cerrar sesión:', error);
+      this.notification.logAndThrow(error, 'Error al cerrar sesión.');
     }
   }
 
@@ -44,7 +45,7 @@ export class SupabaseService {
   async getSession(): Promise<Session | null> {
     const { data, error } = await this.supabase.auth.getSession();
     if (error) {
-      console.error("❌ Error obteniendo sesión:", error);
+      this.notification.logAndThrow(error, 'Error obteniendo sesión.');
       return null;
     }
     return data.session;
@@ -54,7 +55,7 @@ export class SupabaseService {
   async getCurrentUser() {
     const { data, error } = await this.supabase.auth.getUser();
     if (error) {
-      console.error("❌ Error obteniendo usuario:", error);
+      this.notification.logAndThrow(error, 'Error obteniendo el usuario actual.');
       return null;
     }
     return data?.user ?? null;

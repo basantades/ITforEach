@@ -36,6 +36,7 @@ export class ProjectFormComponent implements OnInit {
   });
 
   async ngOnInit() {
+    
     const repo = this.repoData();
     if (!repo?.repository_url) return;
 
@@ -92,17 +93,18 @@ export class ProjectFormComponent implements OnInit {
 
     try {
       if (this.mode === 'edit' && repo.id) {
-        await this.projectsService.update(String(repo.id), project); 
+        await this.projectsService.update(repo.id, project); // <-- CORRECTO
         this.router.navigate(['/', project.githubusername, project.name]);
       } else {
         await this.projectsService.create(project);
         this.router.navigate(['/', project.githubusername, project.name]);
       }
-
+    
       this.projectSaved.emit();
     } catch (error) {
       console.error('❌ Error al guardar proyecto:', error);
     }
+    
   }
 
   onImageUploaded(url: string) {

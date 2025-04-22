@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { SupabaseService } from '../auth/supabase.service';
-import { Like } from '../../interfaces/like';
 import { NotificationService } from '../notification.service';
 
 
@@ -59,7 +58,7 @@ export class LikesService {
       .delete()
       .eq('user_id', userId)
       .eq('project_id', projectId)
-      .select(); // 👈 esto devuelve los registros eliminados
+      .select(); 
   
     if (error) {
       this.notification.logAndThrow(error, 'Error al quitar like.');

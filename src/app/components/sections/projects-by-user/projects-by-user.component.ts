@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
   imports: [RouterModule, ProjectCardOwnerComponent, CommonModule ],
   templateUrl: './projects-by-user.component.html'
 })
-export class ProjectsByUserComponent implements OnInit, OnChanges {
+export class ProjectsByUserComponent implements OnChanges {
   @Input() githubusername!: string;
   projects: Project[] = [];
   @Output() projectCount = new EventEmitter<number>();
@@ -21,15 +21,11 @@ export class ProjectsByUserComponent implements OnInit, OnChanges {
         public authService: AuthService,
     public projectsService: ProjectsService) {}
 
-  async ngOnInit() {
-    await this.loadProjectsByUser();
-  }
-
-  async ngOnChanges(changes: SimpleChanges) {
-    if (changes['githubusername'] && !changes['githubusername'].firstChange) {
-      await this.loadProjectsByUser(); // 🔁 Vuelve a cargar si cambia el username
+    async ngOnChanges(changes: SimpleChanges) {
+      if (changes['githubusername'] && this.githubusername) {
+        await this.loadProjectsByUser();
+      }
     }
-  }
 
   async loadProjectsByUser() {
     try {

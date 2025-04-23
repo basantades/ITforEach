@@ -23,7 +23,7 @@ export class CloudinaryService {
       const response = await this.http.post<{ secure_url?: string }>(this.cloudinaryUrl, formData).toPromise();
       
       if (response?.secure_url) {
-        return response.secure_url; // Retorna la URL de la imagen subida
+        return response.secure_url.replace('/upload/', '/upload/f_webp,q_auto/'); // Retorna la URL de la imagen subida y transformada
       } else {
         this.notification.showError('La respuesta de Cloudinary no contiene una URL válida.');
         throw new Error('La respuesta de Cloudinary no contiene una URL válida.');

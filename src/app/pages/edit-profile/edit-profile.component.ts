@@ -74,19 +74,18 @@ export class EditProfileComponent {
       return;
     }
 
+    
     const updatedUser: Partial<User> = {
       ...this.profileForm.value
     };
 
     try {
       await this.userService.updateUser(authUser.user_id, updatedUser);
-      this.toastr.success('Perfil actualizado correctamente', 'Guardado');
       setTimeout(() => {
         this.router.navigate([`/${authUser.githubusername}`]);
       }, 1000);
     } catch (error) {
       console.error('❌ Error al actualizar el perfil:', error);
-      this.toastr.error('Hubo un error al guardar los cambios', 'Error');
     }
   }
 }

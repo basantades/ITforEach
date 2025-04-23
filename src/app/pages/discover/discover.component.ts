@@ -9,8 +9,7 @@ import { SearchInputComponent } from "../../components/ui/search-input/search-in
 @Component({
   selector: 'app-discover',
   imports: [RouterModule, ProjectCardComponent, CommonModule, ProjectFilterComponent, SearchInputComponent],
-  templateUrl: './discover.component.html',
-  styleUrl: './discover.component.scss'
+  templateUrl: './discover.component.html'
 })
 export class DiscoverComponent implements OnInit {
   projectsService = inject(ProjectsService);

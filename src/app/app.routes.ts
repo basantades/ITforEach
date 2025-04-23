@@ -26,14 +26,14 @@ export const routes: Routes = [
     {
       path: ':githubusername/:projectName/edit',
       component: EditProjectComponent,
-      canActivate: [AuthGuard, OwnerGuard], // solo propietario
-      resolve: { user: UserResolver } // Obtiene el usuario antes de cargar la página
+      canActivate: [AuthGuard, OwnerGuard], 
+      resolve: { user: UserResolver } 
     },
   {
     path: 'my-projects/:githubusername',
     component: MyProjectsComponent,
-    canActivate: [AuthGuard, OwnerGuard], // solo usuarios autenticados
-    resolve: { user: UserResolver } // 🔥 Obtiene el usuario antes de cargar la página
+    canActivate: [AuthGuard, OwnerGuard], 
+    resolve: { user: UserResolver } 
   },
   {
     path: 'new-project/:githubusername',
@@ -44,8 +44,8 @@ export const routes: Routes = [
   {
   path: 'edit-profile/:githubusername',
   component: EditProfileComponent,
-  canActivate: [AuthGuard, OwnerGuard], // solo propietario
-  resolve: { user: UserResolver } // Obtiene el usuario antes de cargar la página
+  canActivate: [AuthGuard, OwnerGuard], 
+  resolve: { user: UserResolver } 
   },
   { 
     path: ':githubusername', 

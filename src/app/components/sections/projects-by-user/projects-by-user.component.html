@@ -25,8 +25,15 @@
   
   @if (authService.isOwnerSignal()) {
     <div class="flex justify-center flex-wrap items-center gap-4 mt-6 animate-fade animation-delay-4">
-      @if (projects.length >= 1) {
+      @if (projects.length === 0) {
+      <div class="mb-8 p-4 bg-pink-100 border-l-4 border-pink-500 text-primary rounded">
+        Publica tu <a [routerLink]="['/', 'new-project', authService.userSignal()?.githubusername]"  class="font-semibold hover:underline">primer proyecto
+        </a> para empezar a ser visible en la comunidad y tener ejemplos que mostrar en tu perfil.
 
+      </div>
+      }
+      
+      @if (projects.length >= 1) {
       <a [routerLink]="['/', 'my-projects', authService.userSignal()?.githubusername]" 
       class="hover:bg-primary border-primary border text-primary hover:text-white py-2 px-6 xl:ml-auto rounded-full cursor-pointer transition-colors duration-300 font-medium" 
       >

@@ -5,9 +5,22 @@
   <img src="public/assets/img/screenshot-itforeach.webp" alt="Capturas de pantalla del proyecto ITforEach" />
 </p>
 
+
 ## 📄 Descripción
 
 **ITforEach** es una plataforma donde desarrolladores comparten sus proyectos, descubren el trabajo de otros y se conectan con la comunidad. Permite publicar proyectos personales sincronizados con GitHub, ver el perfil de otros usuarios y explorar nuevos desarrollos.
+
+---
+
+🎥 **Presentación del proyecto:**  
+Descubre todas las funcionalidades, diseño y decisiones técnicas en esta presentación completa:  
+👉 [Ver presentación ITforEach](https://gamma.app/docs/Descubre-y-comparte-tus-proyectos-7dxf0kf8e2u6lqs?mode=doc)
+
+💭 **Introducción personal (antes de presentar):**  
+Un enfoque simpático y reflexivo para romper el hielo y explicar cómo surgió la idea del proyecto:  
+👉 [Ver introducción - ¿Qué pensáis al ver las presentaciones de proyectos?](https://gamma.app/docs/Que-pensais-al-ver-las-presentaciones-de-proyectos-finales-hscscy0gopbh38c?mode=doc)
+
+
 
 ## ✨ Características
 
